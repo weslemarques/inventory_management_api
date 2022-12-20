@@ -5,12 +5,15 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataIntegrityViolationException;
+import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import br.com.reinan.dscatalog.dto.CategoryDto;
 import br.com.reinan.dscatalog.entities.Category;
 import br.com.reinan.dscatalog.repositories.CategoryRepository;
+import br.com.reinan.dscatalog.services.exceptions.DataBaseException;
 import br.com.reinan.dscatalog.services.exceptions.ResorceNotFoundException;
 import jakarta.persistence.EntityExistsException;
 
@@ -44,6 +47,7 @@ public class CategorySevice {
     }
 
     @Transactional
+    @SuppressWarnings("deprecation")
     public CategoryDto update(Long id, CategoryDto dto) {
         try {
             Category entity = repository.getOne(id);
@@ -52,6 +56,16 @@ public class CategorySevice {
             return new CategoryDto(entity);
         } catch (EntityExistsException e) {
             throw new ResorceNotFoundException("Id not found " + id);
+        }
+    }
+
+    public void delete(Long id) {
+        try {
+            repository.deleteById(id);
+        } catch (EmptyResultDataAccessException e) {
+            throw new ResorceNotFoundException("Id not found");
+        } catch (DataIntegrityViolationException e) {
+            throw new DataBaseException("Data Base Violation");
         }
     }
 
