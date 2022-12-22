@@ -1,12 +1,12 @@
 package br.com.reinan.dscatalog.services;
 
-import java.util.List;
 import java.util.Optional;
-import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.dao.EmptyResultDataAccessException;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -24,9 +24,9 @@ public class CategorySevice {
     private CategoryRepository repository;
 
     @Transactional(readOnly = true)
-    public List<CategoryDto> findAll() {
-        List<Category> list = repository.findAll();
-        return list.stream().map(c -> new CategoryDto(c)).collect(Collectors.toList());
+    public Page<CategoryDto> findAllByPage(PageRequest pageable) {
+        Page<Category> list = repository.findAll(pageable);
+        return list.map(c -> new CategoryDto(c));
     }
 
     @Transactional(readOnly = true)
@@ -47,9 +47,9 @@ public class CategorySevice {
     }
 
     @Transactional
-    @SuppressWarnings("deprecation")
     public CategoryDto update(Long id, CategoryDto dto) {
         try {
+            @SuppressWarnings("deprecation")
             Category entity = repository.getOne(id);
             entity.setName(dto.getName());
             entity = repository.save(entity);
@@ -59,6 +59,7 @@ public class CategorySevice {
         }
     }
 
+    @Transactional
     public void delete(Long id) {
         try {
             repository.deleteById(id);
