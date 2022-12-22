@@ -1,7 +1,9 @@
 package br.com.reinan.dscatalog.entities;
 
 import java.io.Serializable;
+import java.time.Instant;
 
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -15,6 +17,12 @@ public class Category implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String name;
+
+    @Column(columnDefinition = "TIMESTAMP WITHOUT TIME ZONE")
+    private Instant createdAt;
+
+    @Column(columnDefinition = "TIMESTAMP WITHOUT TIME ZONE")
+    private Instant updatedAt;
 
     public Category() {
 

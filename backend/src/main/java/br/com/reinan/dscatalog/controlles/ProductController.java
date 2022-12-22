@@ -17,36 +17,36 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
-import br.com.reinan.dscatalog.dto.CategoryDto;
-import br.com.reinan.dscatalog.services.CategoryService;
+import br.com.reinan.dscatalog.dto.ProductDto;
+import br.com.reinan.dscatalog.services.ProductService;
 
 @RestController
-@RequestMapping("/categories")
-public class CategoryController {
+@RequestMapping("/products")
+public class ProductController {
 
     @Autowired
-    private CategoryService service;
+    private ProductService service;
 
     @GetMapping
-    public ResponseEntity<Page<CategoryDto>> findAll(
+    public ResponseEntity<Page<ProductDto>> findAll(
             @RequestParam(value = "page", defaultValue = "0") Integer page,
             @RequestParam(value = "linesPerPage", defaultValue = "12") Integer linesPerPage,
             @RequestParam(value = "direction", defaultValue = "ASC") String direction,
             @RequestParam(value = "orderBy", defaultValue = "name") String orderBy) {
         PageRequest pageRequest = PageRequest.of(page, linesPerPage, Direction.valueOf(direction), orderBy);
 
-        Page<CategoryDto> list = service.findAllByPage(pageRequest);
+        Page<ProductDto> list = service.findAllByPage(pageRequest);
         return ResponseEntity.ok(list);
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<CategoryDto> findById(@PathVariable Long id) {
-        CategoryDto category = service.findById(id);
-        return ResponseEntity.ok(category);
+    public ResponseEntity<ProductDto> findById(@PathVariable Long id) {
+        ProductDto product = service.findById(id);
+        return ResponseEntity.ok(product);
     }
 
     @PostMapping
-    public ResponseEntity<CategoryDto> insert(@RequestBody CategoryDto dto) {
+    public ResponseEntity<ProductDto> insert(@RequestBody ProductDto dto) {
         dto = service.insert(dto);
         URI uri = ServletUriComponentsBuilder
                 .fromCurrentRequest()
@@ -57,7 +57,7 @@ public class CategoryController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<CategoryDto> update(@PathVariable Long id, @RequestBody CategoryDto dto) {
+    public ResponseEntity<ProductDto> update(@PathVariable Long id, @RequestBody ProductDto dto) {
         dto = service.update(id, dto);
 
         return ResponseEntity.ok(dto);

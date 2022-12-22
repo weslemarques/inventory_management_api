@@ -1,51 +1,37 @@
-package br.com.reinan.dscatalog.entities;
+package br.com.reinan.dscatalog.dto;
 
 import java.io.Serializable;
 import java.time.Instant;
 import java.util.HashSet;
 import java.util.Set;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.JoinTable;
-import jakarta.persistence.ManyToMany;
-import jakarta.persistence.Table;
+import br.com.reinan.dscatalog.entities.Product;
 
-@Entity
-@Table(name = "tb_product")
-public class Product implements Serializable {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+public class ProductDto implements Serializable {
+
     private Long id;
     private String name;
-
-    @Column(columnDefinition = "TEXT")
     private String description;
     private Double price;
+
     private String imgUrl;
 
-    @Column(columnDefinition = "TIMESTAMP WITHOUT TIME ZONE")
     private Instant date;
 
-    @ManyToMany
-    @JoinTable(name = "tb_product_category", joinColumns = @JoinColumn(name = "product_id"), inverseJoinColumns = @JoinColumn(name = "category_id"))
-    Set<Category> categories = new HashSet<>();
+    private Set<CategoryDto> categories = new HashSet<>();
 
-    public Product() {
+    public ProductDto() {
 
     }
 
     // name, price, date, description, img_url
-    public Product(String name, Double price, Instant date, String description, String imgUrl, Category category) {
-        this.name = name;
-        this.description = description;
-        this.price = price;
-        this.imgUrl = imgUrl;
-        this.date = date;
+    public ProductDto(Product prod) {
+        this.id = prod.getId();
+        this.name = prod.getName();
+        this.description = prod.getDescription();
+        this.price = prod.getPrice();
+        this.imgUrl = prod.getImgUrl();
+        this.date = prod.getDate();
     }
 
     public Long getId() {
@@ -88,7 +74,7 @@ public class Product implements Serializable {
         this.imgUrl = imgUrl;
     }
 
-    public Set<Category> getCategories() {
+    public Set<CategoryDto> getCategories() {
         return categories;
     }
 
@@ -116,7 +102,7 @@ public class Product implements Serializable {
             return false;
         if (getClass() != obj.getClass())
             return false;
-        Product other = (Product) obj;
+        ProductDto other = (ProductDto) obj;
         if (id == null) {
             if (other.id != null)
                 return false;
