@@ -2,9 +2,11 @@ package br.com.reinan.dscatalog.dto;
 
 import java.io.Serializable;
 import java.time.Instant;
-import java.util.HashSet;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Set;
 
+import br.com.reinan.dscatalog.entities.Category;
 import br.com.reinan.dscatalog.entities.Product;
 
 public class ProductDto implements Serializable {
@@ -18,10 +20,19 @@ public class ProductDto implements Serializable {
 
     private Instant date;
 
-    private Set<CategoryDto> categories = new HashSet<>();
+    private List<CategoryDto> categories = new ArrayList<>();
 
     public ProductDto() {
 
+    }
+
+    public ProductDto(Long id, String name, String description, Double price, String imgUrl, Instant date) {
+        this.id = id;
+        this.name = name;
+        this.description = description;
+        this.price = price;
+        this.imgUrl = imgUrl;
+        this.date = date;
     }
 
     // name, price, date, description, img_url
@@ -32,6 +43,11 @@ public class ProductDto implements Serializable {
         this.price = prod.getPrice();
         this.imgUrl = prod.getImgUrl();
         this.date = prod.getDate();
+    }
+
+    public ProductDto(Product prod, Set<Category> categories) {
+        this(prod);
+        categories.forEach(cat -> this.categories.add(new CategoryDto(cat)));
     }
 
     public Long getId() {
@@ -74,10 +90,6 @@ public class ProductDto implements Serializable {
         this.imgUrl = imgUrl;
     }
 
-    public Set<CategoryDto> getCategories() {
-        return categories;
-    }
-
     public Instant getDate() {
         return date;
     }
@@ -109,6 +121,10 @@ public class ProductDto implements Serializable {
         } else if (!id.equals(other.id))
             return false;
         return true;
+    }
+
+    public List<CategoryDto> getCategories() {
+        return categories;
     }
 
 }

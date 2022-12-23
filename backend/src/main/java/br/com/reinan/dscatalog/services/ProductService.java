@@ -10,8 +10,11 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import br.com.reinan.dscatalog.dto.CategoryDto;
 import br.com.reinan.dscatalog.dto.ProductDto;
+import br.com.reinan.dscatalog.entities.Category;
 import br.com.reinan.dscatalog.entities.Product;
+import br.com.reinan.dscatalog.repositories.CategoryRepository;
 import br.com.reinan.dscatalog.repositories.ProductRepository;
 import br.com.reinan.dscatalog.services.exceptions.DataBaseException;
 import br.com.reinan.dscatalog.services.exceptions.ResorceNotFoundException;
@@ -23,6 +26,9 @@ public class ProductService {
     @Autowired
     private ProductRepository repository;
 
+    @Autowired
+    private CategoryRepository categoryRepository;
+
     @Transactional(readOnly = true)
     public Page<ProductDto> findAllByPage(PageRequest pageable) {
         Page<Product> list = repository.findAll(pageable);
@@ -33,14 +39,14 @@ public class ProductService {
     public ProductDto findById(Long id) {
 
         Optional<Product> obj = repository.findById(id);
-        Product product = obj.orElseThrow(() -> new ResorceNotFoundException("Entity Not Found "));
-        return new ProductDto(product);
+        Product entity = obj.orElseThrow(() -> new ResorceNotFoundException("Entity Not Found "));
+        return new ProductDto(entity, entity.getCategories());
     }
 
     @Transactional
     public ProductDto insert(ProductDto dto) {
         Product entity = new Product();
-        entity.setName(dto.getName());
+        copyDtoToEntity(dto, entity);
         entity = repository.save(entity);
         return new ProductDto(entity);
 
@@ -51,7 +57,7 @@ public class ProductService {
         try {
             @SuppressWarnings("deprecation")
             Product entity = repository.getOne(id);
-            entity.setName(dto.getName());
+            copyDtoToEntity(dto, entity);
             entity = repository.save(entity);
             return new ProductDto(entity);
         } catch (EntityExistsException e) {
@@ -67,6 +73,21 @@ public class ProductService {
             throw new ResorceNotFoundException("Id not found");
         } catch (DataIntegrityViolationException e) {
             throw new DataBaseException("Data Base Violation");
+        }
+    }
+
+    private void copyDtoToEntity(ProductDto dto, Product entity) {
+        entity.setName(dto.getName());
+        entity.setDescription(dto.getDescription());
+        entity.setPrice(dto.getPrice());
+        entity.setImgUrl(dto.getImgUrl());
+        entity.setDate(dto.getDate());
+
+        entity.getCategories().clear();
+        for (CategoryDto cat : dto.getCategories()) {
+            @SuppressWarnings("deprecation")
+            Category category = categoryRepository.getOne(cat.getId());
+            entity.getCategories().add(category);
         }
     }
 

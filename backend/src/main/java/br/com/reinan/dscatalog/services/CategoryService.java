@@ -43,7 +43,6 @@ public class CategoryService {
         entity.setName(dto.getName());
         entity = repository.save(entity);
         return new CategoryDto(entity);
-
     }
 
     @Transactional
