@@ -1,4 +1,4 @@
-package br.com.reinan.dscatalog.controlles;
+package br.com.reinan.dscatalog.controllers;
 
 import java.net.URI;
 import org.springframework.beans.factory.annotation.Autowired;

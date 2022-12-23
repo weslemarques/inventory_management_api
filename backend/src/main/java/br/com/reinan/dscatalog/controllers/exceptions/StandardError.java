@@ -1,4 +1,4 @@
-package br.com.reinan.dscatalog.controlles.exceptions;
+package br.com.reinan.dscatalog.controllers.exceptions;
 
 import java.time.Instant;
 
