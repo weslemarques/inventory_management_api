@@ -33,7 +33,7 @@ public class ControllerExceptionHandler {
 
     @ExceptionHandler(DataBaseException.class)
     public ResponseEntity<StandardError> DataBaseViolation(
-            ResorceNotFoundException e,
+            DataBaseException e,
             HttpServletRequest request) {
         HttpStatus status = HttpStatus.BAD_REQUEST;
         StandardError err = new StandardError();

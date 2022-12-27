@@ -28,7 +28,7 @@ public class ProductController {
     private ProductService service;
 
     @GetMapping
-    public ResponseEntity<Page<ProductDto>> findAll(
+    public ResponseEntity<Page<ProductDto>> findAllByPage(
             @RequestParam(value = "page", defaultValue = "0") Integer page,
             @RequestParam(value = "linesPerPage", defaultValue = "12") Integer linesPerPage,
             @RequestParam(value = "direction", defaultValue = "ASC") String direction,
@@ -64,7 +64,7 @@ public class ProductController {
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> update(@PathVariable Long id) {
+    public ResponseEntity<Void> delete(@PathVariable Long id) {
         service.delete(id);
 
         return ResponseEntity.noContent().build();
