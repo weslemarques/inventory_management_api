@@ -1,10 +1,10 @@
-package br.com.reinan.backend;
+package br.com.reinan.dscatalog;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
 @SpringBootTest
-class BackendApplicationTests {
+public class DscatalogApplicationTests {
 
 	@Test
 	void contextLoads() {
