@@ -16,6 +16,14 @@ public class Factory {
         return product;
     }
 
+    public static Product createProductUpdate() {
+        Product product = new Product("Percy Jackson", 40.0, Instant.parse("2020-07-20T10:00:00Z"),
+                "Percy Jackson Book", "");
+
+        product.getCategories().add(new Category(1L, "Books"));
+        return product;
+    }
+
     public static ProductDto createProductDto() {
         Product prod = createProduct();
         return new ProductDto(prod, prod.getCategories());
