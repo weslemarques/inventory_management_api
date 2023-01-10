@@ -14,7 +14,9 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Mockito;
+import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 
@@ -111,5 +113,23 @@ public class ProductServiceTests {
         });
 
         Mockito.verify(repository).findById(notExistingId);
+    }
+
+    @Test
+    public void findAllShouldReturnPage() {
+        Pageable page = PageRequest.of(1, 10);
+
+        Page<ProductDto> result = service.findAll(page);
+
+        Assertions.assertNotNull(result);
+
+        Mockito.verify(repository).findAll(page);
+    }
+
+    @Test
+    public void insertShouldPersistEntityInDataBase() {
+        Assertions.assertDoesNotThrow(() -> {
+            service.insert(new ProductDto(product));
+        });
     }
 }
