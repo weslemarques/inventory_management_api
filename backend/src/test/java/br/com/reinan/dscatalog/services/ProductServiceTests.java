@@ -2,7 +2,11 @@ package br.com.reinan.dscatalog.services;
 
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyLong;
+import static org.mockito.Mockito.doNothing;
+import static org.mockito.Mockito.doThrow;
 import static org.mockito.Mockito.times;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
 
 import java.util.List;
 import java.util.Optional;
@@ -52,13 +56,13 @@ public class ProductServiceTests {
         product = Factory.createProduct();
         page = new PageImpl<>(List.of(product));
 
-        Mockito.when(repository.getOne(existingId)).thenReturn(product);
-        Mockito.when(repository.getOne(notExistingId)).thenThrow(ResorceNotFoundException.class);
-        Mockito.when(repository.findById(existingId)).thenReturn(Optional.of(product));
-        Mockito.when(repository.findById(notExistingId)).thenReturn(Optional.empty());
-        Mockito.when(repository.save(any())).thenReturn(product);
-        Mockito.doNothing().when(repository).deleteById(existingId);
-        Mockito.doThrow(ResorceNotFoundException.class).when(repository).deleteById(notExistingId);
+        when(repository.getOne(existingId)).thenReturn(product);
+        when(repository.getOne(notExistingId)).thenThrow(ResorceNotFoundException.class);
+        when(repository.findById(existingId)).thenReturn(Optional.of(product));
+        when(repository.findById(notExistingId)).thenReturn(Optional.empty());
+        when(repository.save(any())).thenReturn(product);
+        doNothing().when(repository).deleteById(existingId);
+        doThrow(ResorceNotFoundException.class).when(repository).deleteById(notExistingId);
         Mockito.when(repository.findAll((Pageable) any())).thenReturn(page);
     }
 
@@ -68,7 +72,7 @@ public class ProductServiceTests {
             service.delete(existingId);
         });
 
-        Mockito.verify(repository, times(1)).deleteById(anyLong());
+        verify(repository, times(1)).deleteById(anyLong());
     }
 
     @Test
@@ -78,7 +82,7 @@ public class ProductServiceTests {
             service.delete(notExistingId);
         });
 
-        Mockito.verify(repository, times(1)).deleteById(notExistingId);
+        verify(repository, times(1)).deleteById(notExistingId);
     }
 
     @SuppressWarnings("deprecation")
@@ -87,7 +91,7 @@ public class ProductServiceTests {
         ProductDto entity = service.update(existingId, Factory.createProductDto());
 
         Assertions.assertNotNull(entity);
-        Mockito.verify(repository, times(1)).getOne(existingId);
+        verify(repository, times(1)).getOne(existingId);
     }
 
     @Test
@@ -103,7 +107,7 @@ public class ProductServiceTests {
 
         Assertions.assertNotNull(obj);
 
-        Mockito.verify(repository).findById(existingId);
+        verify(repository).findById(existingId);
     }
 
     @Test
@@ -112,7 +116,7 @@ public class ProductServiceTests {
             service.findById(notExistingId);
         });
 
-        Mockito.verify(repository).findById(notExistingId);
+        verify(repository).findById(notExistingId);
     }
 
     @Test
@@ -123,7 +127,7 @@ public class ProductServiceTests {
 
         Assertions.assertNotNull(result);
 
-        Mockito.verify(repository).findAll(page);
+        verify(repository).findAll(page);
     }
 
     @Test
