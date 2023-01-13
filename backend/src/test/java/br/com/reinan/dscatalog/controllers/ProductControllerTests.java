@@ -1,50 +1,45 @@
 package br.com.reinan.dscatalog.controllers;
 
 import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
+import java.util.List;
 
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.extension.ExtendWith;
-import org.mockito.InjectMocks;
-import org.mockito.Mock;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
-import org.springframework.test.context.junit.jupiter.SpringExtension;
-import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
-import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 
 import br.com.reinan.dscatalog.dto.ProductDto;
 import br.com.reinan.dscatalog.services.ProductService;
 
 @WebMvcTest(ProductController.class)
 public class ProductControllerTests {
-
-    @InjectMocks
-    private ProductController controller;
-
     @Autowired
     private MockMvc mvc;
 
-    @Mock
+    @MockBean
     private ProductService service;
 
-    private Page<ProductDto> page;
-
     @Test
-    public void testGet() throws Exception {
-        // configurar o comportamento do myService.get()
-        when(service.findAll(any())).thenReturn(page);
- 
-        // executar a requisição GET
-        mvc.perform(get("/products"))
+    public void testFindAll() throws Exception {
+        // Configure o comportamento do objeto mockado
+        Page<ProductDto> products = new PageImpl<>(List.of());
+        when(service.findAll(any(Pageable.class))).thenReturn(products);
+
+        // Execute o método que você deseja testar
+        MockMvc.perform(get("/products"))
                 .andExpect(status().isOk())
-                .andExpect(content().json(page.toString()));
+                .andExpect(content().json(toJson(products)));
 
-
-
+        // Verifique se o método foi chamado corretamente
+        verify(service).findAll(any(Pageable.class));
     }
+
 }
