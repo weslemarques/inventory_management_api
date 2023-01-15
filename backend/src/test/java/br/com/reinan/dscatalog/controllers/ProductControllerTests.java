@@ -18,6 +18,10 @@ import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.test.web.servlet.ResultActions;
+
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 
 import br.com.reinan.dscatalog.dto.ProductDto;
 import br.com.reinan.dscatalog.services.ProductService;
@@ -38,6 +42,7 @@ public class ProductControllerTests {
     private Long existId;
     private Long notExistId;
     private Long dependenceId;
+    private ObjectMapper objMapper;
 
     @BeforeEach
     void setUpI() throws Exception {
@@ -45,16 +50,23 @@ public class ProductControllerTests {
         existId = 1L;
         notExistId = 2L;
         dependenceId = 3L;
-
+        objMapper = new ObjectMapper();
         productDto = Factory.createProductDto();
         page = new PageImpl<>(List.of(productDto));
 
         when(service.findAll(any())).thenReturn(page);
+
         when(service.findById(existId)).thenReturn(productDto);
         doThrow(ResorceNotFoundException.class).when(service).findById(notExistId);
+
         doNothing().when(service).delete(existId);
         doThrow(ResorceNotFoundException.class).when(service).delete(notExistId);
         doThrow(DataBaseException.class).when(service).delete(dependenceId);
+
+        when(service.insert(productDto)).thenReturn(productDto);
+
+        when(service.update(existId, productDto)).thenReturn(productDto);
+        doThrow(ResorceNotFoundException.class).when(service).update(notExistId, productDto);
 
     }
 
@@ -80,18 +92,76 @@ public class ProductControllerTests {
     public void testFindByIdThrowsResorceNotFoundException() throws Exception {
         mvc.perform(get("/products/{id}", notExistId))
                 .andExpect(status().isNotFound());
+
+        verify(service).findById(notExistId);
     }
 
     @Test
     public void testDeleteVoid() throws Exception {
         mvc.perform(delete("/products/{id}", existId))
                 .andExpect(status().isNoContent());
+
+        verify(service).delete(existId);
     }
 
     @Test
     public void testDeleteThrowsResorceNotFoundException() throws Exception {
         mvc.perform(delete("/products/{id}", notExistId))
                 .andExpect(status().isNotFound());
+        verify(service).delete(notExistId);
+    }
+
+    @Test
+    public void testDeleteThrowsDataBaseExcepition() throws Exception {
+        mvc.perform(delete("/products/{id}", dependenceId))
+                .andExpect(status().isBadRequest());
+
+        verify(service).delete(dependenceId);
+    }
+
+    @Test
+    public void testInsert() throws Exception {
+        objMapper.registerModule(new JavaTimeModule());
+        String jsonBody = objMapper.writeValueAsString(productDto);
+
+        ResultActions result = mvc.perform(post("/products")
+                .content(jsonBody)
+                .contentType(MediaType.APPLICATION_JSON)
+                .accept(MediaType.APPLICATION_JSON));
+
+        result.andExpect(status().isCreated());
+        result.andExpect(jsonPath("$.price").exists());
+        result.andExpect(jsonPath("$.name").exists());
+        result.andExpect(jsonPath("$.description").exists());
+    }
+
+    @Test
+    public void testUpdate() throws Exception {
+        objMapper.registerModule(new JavaTimeModule());
+        String jsonBody = objMapper.writeValueAsString(productDto);
+
+        ResultActions result = mvc.perform(put("/products/{id}", existId)
+                .content(jsonBody)
+                .contentType(MediaType.APPLICATION_JSON)
+                .accept(MediaType.APPLICATION_JSON));
+
+        result.andExpect(status().isOk());
+        result.andExpect(jsonPath("$.price").exists());
+        result.andExpect(jsonPath("$.name").exists());
+        result.andExpect(jsonPath("$.description").exists());
+    }
+
+    @Test
+    public void testThrowsResorceNotFoundException() throws Exception {
+        objMapper.registerModule(new JavaTimeModule());
+        String jsonBody = objMapper.writeValueAsString(productDto);
+
+        ResultActions result = mvc.perform(put("/products/{id}", notExistId)
+                .content(jsonBody)
+                .contentType(MediaType.APPLICATION_JSON)
+                .accept(MediaType.APPLICATION_JSON));
+
+        result.andExpect(status().isNotFound());
     }
 
 }

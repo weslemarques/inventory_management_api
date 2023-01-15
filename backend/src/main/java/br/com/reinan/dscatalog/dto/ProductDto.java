@@ -11,10 +11,9 @@ import br.com.reinan.dscatalog.entities.Product;
 
 public class ProductDto implements Serializable {
 
-   
-	private static final long serialVersionUID = 1L;
-	
-	private Long id;
+    private static final long serialVersionUID = 1L;
+
+    private Long id;
     private String name;
     private String description;
     private Double price;
@@ -129,13 +128,5 @@ public class ProductDto implements Serializable {
     public List<CategoryDto> getCategories() {
         return categories;
     }
-
-	@Override
-	public String toString() {
-		return "ProductDto [id=" + id + ", name=" + name + ", description=" + description + ", price=" + price
-				+ ", imgUrl=" + imgUrl + ", date=" + date + ", categories=" + categories + "]";
-	}
-    
-    
 
 }
