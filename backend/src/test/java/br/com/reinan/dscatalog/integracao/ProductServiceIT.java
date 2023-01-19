@@ -3,13 +3,11 @@ package br.com.reinan.dscatalog.integracao;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
-import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.transaction.annotation.Transactional;
 
 import br.com.reinan.dscatalog.dto.ProductDto;
@@ -19,7 +17,6 @@ import br.com.reinan.dscatalog.services.exceptions.ResorceNotFoundException;
 import br.com.reinan.dscatalog.tests.Factory;
 
 @SpringBootTest
-@ExtendWith(SpringExtension.class)
 @Transactional
 public class ProductServiceIT {
 
