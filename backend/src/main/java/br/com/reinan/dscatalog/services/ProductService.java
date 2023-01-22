@@ -56,8 +56,8 @@ public class ProductService {
     @Transactional
     public ProductDto update(Long id, ProductDto dto) {
         try {
-            @SuppressWarnings("deprecation")
-            Product entity = repository.getOne(id);
+            Optional<Product> obj = repository.findById(id);
+            Product entity = obj.get();
             copyDtoToEntity(dto, entity);
             entity = repository.save(entity);
             return new ProductDto(entity);
