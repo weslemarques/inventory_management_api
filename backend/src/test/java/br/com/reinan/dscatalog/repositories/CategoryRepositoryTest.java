@@ -36,9 +36,22 @@ public class CategoryRepositoryTest {
     }
 
     @Test
-    public void deleteShouldThrowsResorceNotFoundExceptionWhenNotExistsId() {
+    public void deleteShouldThrowsEmptyResultDataAccessExceptionWhenNotExistsId() {
         Assertions.assertThrows(EmptyResultDataAccessException.class, () -> {
             repository.deleteById(notExistsId);
         });
+    }
+
+    @Test
+    public void findByIdShouldReturnObjectNotNullWhenExistsId() {
+        Optional<Category> obj = repository.findById(existsId);
+
+        Assertions.assertTrue(obj.isPresent());
+    }
+
+    @Test
+    public void findByIdShouldReturnObjectNullWhenExistsId() {
+        Optional<Category> obj = repository.findById(notExistsId);
+        Assertions.assertTrue(obj.isEmpty());
     }
 }
