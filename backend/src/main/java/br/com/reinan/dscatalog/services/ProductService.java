@@ -1,5 +1,6 @@
 package br.com.reinan.dscatalog.services;
 
+import java.util.NoSuchElementException;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,8 +19,6 @@ import br.com.reinan.dscatalog.repositories.CategoryRepository;
 import br.com.reinan.dscatalog.repositories.ProductRepository;
 import br.com.reinan.dscatalog.services.exceptions.DataBaseException;
 import br.com.reinan.dscatalog.services.exceptions.ResorceNotFoundException;
-import jakarta.persistence.EntityExistsException;
-import jakarta.persistence.EntityNotFoundException;
 
 @Service
 public class ProductService {
@@ -61,9 +60,7 @@ public class ProductService {
             copyDtoToEntity(dto, entity);
             entity = repository.save(entity);
             return new ProductDto(entity);
-        } catch (EntityExistsException e) {
-            throw new ResorceNotFoundException("Id not found " + id);
-        } catch (EntityNotFoundException e) {
+        } catch (NoSuchElementException e) {
             throw new ResorceNotFoundException("Id not found " + id);
         }
     }

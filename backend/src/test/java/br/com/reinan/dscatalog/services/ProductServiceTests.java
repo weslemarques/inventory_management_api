@@ -48,7 +48,6 @@ public class ProductServiceTests {
     private Product product;
     private PageImpl<Product> page;
 
-    @SuppressWarnings("deprecation")
     @BeforeEach
     void setUp() throws Exception {
         existingId = 1L;
@@ -56,8 +55,6 @@ public class ProductServiceTests {
         product = Factory.createProduct();
         page = new PageImpl<>(List.of(product));
 
-        when(repository.getOne(existingId)).thenReturn(product);
-        when(repository.getOne(notExistingId)).thenThrow(ResorceNotFoundException.class);
         when(repository.findById(existingId)).thenReturn(Optional.of(product));
         when(repository.findById(notExistingId)).thenReturn(Optional.empty());
         when(repository.save(any())).thenReturn(product);
@@ -85,13 +82,12 @@ public class ProductServiceTests {
         verify(repository, times(1)).deleteById(notExistingId);
     }
 
-    @SuppressWarnings("deprecation")
     @Test
     public void updateShouldReturnEntityUpadate() {
         ProductDto entity = service.update(existingId, Factory.createProductDto());
 
         Assertions.assertNotNull(entity);
-        verify(repository, times(1)).getOne(existingId);
+        verify(repository, times(1)).findById(existingId);
     }
 
     @Test
