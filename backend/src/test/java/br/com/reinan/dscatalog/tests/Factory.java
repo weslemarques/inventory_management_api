@@ -29,4 +29,9 @@ public class Factory {
         return new ProductDto(prod, prod.getCategories());
     }
 
+    public static Category createCategory() {
+
+        return new Category(null, "category");
+    }
+
 }
