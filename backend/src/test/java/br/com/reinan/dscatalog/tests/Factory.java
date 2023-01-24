@@ -2,6 +2,7 @@ package br.com.reinan.dscatalog.tests;
 
 import java.time.Instant;
 
+import br.com.reinan.dscatalog.dto.CategoryDto;
 import br.com.reinan.dscatalog.dto.ProductDto;
 import br.com.reinan.dscatalog.entities.Category;
 import br.com.reinan.dscatalog.entities.Product;
@@ -32,6 +33,11 @@ public class Factory {
     public static Category createCategory() {
 
         return new Category(null, "category");
+    }
+
+    public static CategoryDto createCategoryDto() {
+        Category cate = createCategory();
+        return new CategoryDto(cate);
     }
 
 }

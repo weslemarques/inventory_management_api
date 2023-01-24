@@ -1,7 +1,9 @@
 package br.com.reinan.dscatalog.services;
 
+import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.doNothing;
 import static org.mockito.Mockito.doThrow;
+import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 import java.util.Optional;
@@ -33,9 +35,11 @@ public class CategoryServiceTests {
     private Long existsId;
     private Long notExistsId;
     private Category category;
+    private CategoryDto dto;
 
     @BeforeEach
     public void setUp() {
+        dto = Factory.createCategoryDto();
         existsId = 1L;
         category = Factory.createCategory();
         notExistsId = 1000L;
@@ -43,6 +47,8 @@ public class CategoryServiceTests {
         doThrow(EmptyResultDataAccessException.class).when(repository).deleteById(notExistsId);
         when(repository.findById(existsId)).thenReturn(Optional.of(category));
         when(repository.findById(notExistsId)).thenReturn(Optional.empty());
+        when(repository.save(any())).thenReturn(category);
+
     }
 
     @Test
@@ -50,6 +56,7 @@ public class CategoryServiceTests {
         Assertions.assertDoesNotThrow(() -> {
             service.delete(existsId);
         });
+        verify(repository).deleteById(existsId);
     }
 
     @Test
@@ -57,6 +64,8 @@ public class CategoryServiceTests {
         Assertions.assertThrows(ResorceNotFoundException.class, () -> {
             service.delete(notExistsId);
         });
+
+        verify(repository).deleteById(notExistsId);
     }
 
     @Test
@@ -65,12 +74,32 @@ public class CategoryServiceTests {
 
         Assertions.assertNotNull(dto);
         Assertions.assertEquals("category", dto.getName());
+
+        verify(repository).findById(existsId);
     }
 
     @Test
     public void findByIdShouldReturnOptionalEmptyWhenIdExists() {
         Assertions.assertThrows(ResorceNotFoundException.class, () -> {
             service.findById(notExistsId);
+        });
+
+        verify(repository).findById(notExistsId);
+    }
+
+    @Test
+    public void insertShouldPersitObjectInDataBase() {
+        Assertions.assertDoesNotThrow(() -> {
+            service.insert(dto);
+        });
+
+        verify(repository).save(any());
+    }
+
+    @Test
+    public void updateShouldReturnEntityUpadate() {
+        Assertions.assertDoesNotThrow(() -> {
+            service.update(existsId, dto);
         });
     }
 
