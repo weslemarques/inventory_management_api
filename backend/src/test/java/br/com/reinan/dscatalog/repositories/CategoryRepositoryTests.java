@@ -15,7 +15,7 @@ import br.com.reinan.dscatalog.entities.Category;
 import br.com.reinan.dscatalog.tests.Factory;
 
 @DataJpaTest
-public class CategoryRepositoryTest {
+public class CategoryRepositoryTests {
 
     @Autowired
     private CategoryRepository repository;
