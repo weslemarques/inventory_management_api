@@ -1,5 +1,6 @@
 package br.com.reinan.dscatalog.services;
 
+import java.util.NoSuchElementException;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,7 +16,6 @@ import br.com.reinan.dscatalog.entities.Category;
 import br.com.reinan.dscatalog.repositories.CategoryRepository;
 import br.com.reinan.dscatalog.services.exceptions.DataBaseException;
 import br.com.reinan.dscatalog.services.exceptions.ResorceNotFoundException;
-import jakarta.persistence.EntityExistsException;
 
 @Service
 public class CategoryService {
@@ -52,7 +52,7 @@ public class CategoryService {
             entity.setName(dto.getName());
             entity = repository.save(entity);
             return new CategoryDto(entity);
-        } catch (EntityExistsException e) {
+        } catch (NoSuchElementException e) {
             throw new ResorceNotFoundException("Id not found " + id);
         }
     }
