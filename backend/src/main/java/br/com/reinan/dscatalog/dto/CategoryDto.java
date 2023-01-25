@@ -6,7 +6,10 @@ import br.com.reinan.dscatalog.entities.Category;
 
 public class CategoryDto implements Serializable {
 
-    private Long id;
+  
+	private static final long serialVersionUID = 1L;
+	
+	private Long id;
     private String name;
 
     public CategoryDto() {

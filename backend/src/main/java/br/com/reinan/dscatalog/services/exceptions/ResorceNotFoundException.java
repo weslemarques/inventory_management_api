@@ -2,7 +2,9 @@ package br.com.reinan.dscatalog.services.exceptions;
 
 public class ResorceNotFoundException extends RuntimeException {
 
-    public ResorceNotFoundException(String msg) {
+	private static final long serialVersionUID = 1L;
+
+	public ResorceNotFoundException(String msg) {
         super(msg);
     }
 
