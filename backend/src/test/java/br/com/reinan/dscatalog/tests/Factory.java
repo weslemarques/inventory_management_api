@@ -2,8 +2,8 @@ package br.com.reinan.dscatalog.tests;
 
 import java.time.Instant;
 
-import br.com.reinan.dscatalog.dto.CategoryDto;
-import br.com.reinan.dscatalog.dto.ProductDto;
+import br.com.reinan.dscatalog.dto.CategoryDTO;
+import br.com.reinan.dscatalog.dto.ProductDTO;
 import br.com.reinan.dscatalog.entities.Category;
 import br.com.reinan.dscatalog.entities.Product;
 
@@ -25,9 +25,9 @@ public class Factory {
         return product;
     }
 
-    public static ProductDto createProductDto() {
+    public static ProductDTO createProductDto() {
         Product prod = createProduct();
-        return new ProductDto(prod, prod.getCategories());
+        return new ProductDTO(prod, prod.getCategories());
     }
 
     public static Category createCategory() {
@@ -35,9 +35,9 @@ public class Factory {
         return new Category(null, "category");
     }
 
-    public static CategoryDto createCategoryDto() {
+    public static CategoryDTO createCategoryDto() {
         Category cate = createCategory();
-        return new CategoryDto(cate);
+        return new CategoryDTO(cate);
     }
 
 }

@@ -24,7 +24,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 
-import br.com.reinan.dscatalog.dto.ProductDto;
+import br.com.reinan.dscatalog.dto.ProductDTO;
 import br.com.reinan.dscatalog.entities.Product;
 import br.com.reinan.dscatalog.repositories.CategoryRepository;
 import br.com.reinan.dscatalog.repositories.ProductRepository;
@@ -84,7 +84,7 @@ public class ProductServiceTests {
 
     @Test
     public void updateShouldReturnEntityUpadate() {
-        ProductDto entity = service.update(existingId, Factory.createProductDto());
+        ProductDTO entity = service.update(existingId, Factory.createProductDto());
 
         Assertions.assertNotNull(entity);
         verify(repository, times(1)).findById(existingId);
@@ -93,13 +93,13 @@ public class ProductServiceTests {
     @Test
     public void updateShouldThrowsResorceNotFoundExceptionWhenNotExistsId() {
         Assertions.assertThrows(ResorceNotFoundException.class, () -> {
-            service.update(notExistingId, new ProductDto());
+            service.update(notExistingId, new ProductDTO());
         });
     }
 
     @Test
     public void findByIdShouldReturnObjectNotNullWhenExistsId() {
-        ProductDto obj = service.findById(existingId);
+        ProductDTO obj = service.findById(existingId);
 
         Assertions.assertNotNull(obj);
 
@@ -119,7 +119,7 @@ public class ProductServiceTests {
     public void findAllShouldReturnPage() {
         Pageable page = PageRequest.of(1, 10);
 
-        Page<ProductDto> result = service.findAll(page);
+        Page<ProductDTO> result = service.findAll(page);
 
         Assertions.assertNotNull(result);
 
@@ -129,7 +129,7 @@ public class ProductServiceTests {
     @Test
     public void insertShouldPersistEntityInDataBase() {
         Assertions.assertDoesNotThrow(() -> {
-            service.insert(new ProductDto(product));
+            service.insert(new ProductDTO(product));
         });
     }
 }

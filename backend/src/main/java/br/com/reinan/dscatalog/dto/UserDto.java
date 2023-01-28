@@ -7,7 +7,7 @@ import java.util.Set;
 import br.com.reinan.dscatalog.entities.Role;
 import br.com.reinan.dscatalog.entities.User;
 
-public class UserDto implements Serializable {
+public class UserDTO implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
@@ -17,30 +17,30 @@ public class UserDto implements Serializable {
     private String email;
     private String password;
 
-    private Set<RoleDto> roles = new HashSet<>();
+    private Set<RoleDTO> roles = new HashSet<>();
 
-    public UserDto() {
+    public UserDTO() {
 
     }
 
-    public UserDto(Long id, String firstName, String lastName, String email) {
+    public UserDTO(Long id, String firstName, String lastName, String email) {
         this.id = id;
         this.firstName = firstName;
         this.lastName = lastName;
         this.email = email;
     }
 
-    public UserDto(User user) {
+    public UserDTO(User user) {
         id = user.getId();
         firstName = user.getFirstName();
         lastName = user.getLastName();
         email = user.getEmail();
     }
 
-    public UserDto(User user, Set<Role> roles) {
+    public UserDTO(User user, Set<Role> roles) {
         this(user);
 
-        roles.forEach(r -> this.roles.add(new RoleDto(r)));
+        roles.forEach(r -> this.roles.add(new RoleDTO(r)));
     }
 
     public Long getId() {
@@ -83,7 +83,7 @@ public class UserDto implements Serializable {
         this.password = password;
     }
 
-    public Set<RoleDto> getRoles() {
+    public Set<RoleDTO> getRoles() {
         return roles;
     }
 
@@ -103,7 +103,7 @@ public class UserDto implements Serializable {
             return false;
         if (getClass() != obj.getClass())
             return false;
-        UserDto other = (UserDto) obj;
+        UserDTO other = (UserDTO) obj;
         if (id == null) {
             if (other.id != null)
                 return false;

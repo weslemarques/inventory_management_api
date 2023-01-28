@@ -11,8 +11,8 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import br.com.reinan.dscatalog.dto.CategoryDto;
-import br.com.reinan.dscatalog.dto.ProductDto;
+import br.com.reinan.dscatalog.dto.CategoryDTO;
+import br.com.reinan.dscatalog.dto.ProductDTO;
 import br.com.reinan.dscatalog.entities.Category;
 import br.com.reinan.dscatalog.entities.Product;
 import br.com.reinan.dscatalog.repositories.CategoryRepository;
@@ -30,36 +30,36 @@ public class ProductService {
     private CategoryRepository categoryRepository;
 
     @Transactional(readOnly = true)
-    public Page<ProductDto> findAll(Pageable pageable) {
+    public Page<ProductDTO> findAll(Pageable pageable) {
         Page<Product> list = repository.findAll(pageable);
-        return list.map(c -> new ProductDto(c));
+        return list.map(c -> new ProductDTO(c));
     }
 
     @Transactional(readOnly = true)
-    public ProductDto findById(Long id) {
+    public ProductDTO findById(Long id) {
 
         Optional<Product> obj = repository.findById(id);
         Product entity = obj.orElseThrow(() -> new ResorceNotFoundException("Entity Not Found "));
-        return new ProductDto(entity, entity.getCategories());
+        return new ProductDTO(entity, entity.getCategories());
     }
 
     @Transactional
-    public ProductDto insert(ProductDto dto) {
+    public ProductDTO insert(ProductDTO dto) {
         Product entity = new Product();
         copyDtoToEntity(dto, entity);
         entity = repository.save(entity);
-        return new ProductDto(entity);
+        return new ProductDTO(entity);
 
     }
 
     @Transactional
-    public ProductDto update(Long id, ProductDto dto) {
+    public ProductDTO update(Long id, ProductDTO dto) {
         try {
             Optional<Product> obj = repository.findById(id);
             Product entity = obj.get();
             copyDtoToEntity(dto, entity);
             entity = repository.save(entity);
-            return new ProductDto(entity);
+            return new ProductDTO(entity);
         } catch (NoSuchElementException e) {
             throw new ResorceNotFoundException("Id not found " + id);
         }
@@ -76,7 +76,7 @@ public class ProductService {
         }
     }
 
-    private void copyDtoToEntity(ProductDto dto, Product entity) {
+    private void copyDtoToEntity(ProductDTO dto, Product entity) {
         entity.setName(dto.getName());
         entity.setDescription(dto.getDescription());
         entity.setPrice(dto.getPrice());
@@ -85,7 +85,7 @@ public class ProductService {
         entity.setDate(dto.getDate());
 
         entity.getCategories().clear();
-        for (CategoryDto cat : dto.getCategories()) {
+        for (CategoryDTO cat : dto.getCategories()) {
             @SuppressWarnings("deprecation")
             Category category = categoryRepository.getOne(cat.getId());
             entity.getCategories().add(category);

@@ -4,23 +4,22 @@ import java.io.Serializable;
 
 import br.com.reinan.dscatalog.entities.Category;
 
-public class CategoryDto implements Serializable {
+public class CategoryDTO implements Serializable {
 
-  
-	private static final long serialVersionUID = 1L;
-	
-	private Long id;
+    private static final long serialVersionUID = 1L;
+
+    private Long id;
     private String name;
 
-    public CategoryDto() {
+    public CategoryDTO() {
     }
 
-    public CategoryDto(Long id, String name) {
+    public CategoryDTO(Long id, String name) {
         this.id = id;
         this.name = name;
     }
 
-    public CategoryDto(Category category) {
+    public CategoryDTO(Category category) {
         this.id = category.getId();
         this.name = category.getName();
     }

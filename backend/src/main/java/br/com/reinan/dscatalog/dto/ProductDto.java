@@ -9,7 +9,7 @@ import java.util.Set;
 import br.com.reinan.dscatalog.entities.Category;
 import br.com.reinan.dscatalog.entities.Product;
 
-public class ProductDto implements Serializable {
+public class ProductDTO implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
@@ -22,13 +22,13 @@ public class ProductDto implements Serializable {
 
     private Instant date;
 
-    private List<CategoryDto> categories = new ArrayList<>();
+    private List<CategoryDTO> categories = new ArrayList<>();
 
-    public ProductDto() {
+    public ProductDTO() {
 
     }
 
-    public ProductDto(Long id, String name, String description, Double price, String imgUrl, Instant date) {
+    public ProductDTO(Long id, String name, String description, Double price, String imgUrl, Instant date) {
         this.id = id;
         this.name = name;
         this.description = description;
@@ -38,7 +38,7 @@ public class ProductDto implements Serializable {
     }
 
     // name, price, date, description, img_url
-    public ProductDto(Product prod) {
+    public ProductDTO(Product prod) {
         this.id = prod.getId();
         this.name = prod.getName();
         this.description = prod.getDescription();
@@ -47,9 +47,9 @@ public class ProductDto implements Serializable {
         this.date = prod.getDate();
     }
 
-    public ProductDto(Product prod, Set<Category> categories) {
+    public ProductDTO(Product prod, Set<Category> categories) {
         this(prod);
-        categories.forEach(cat -> this.categories.add(new CategoryDto(cat)));
+        categories.forEach(cat -> this.categories.add(new CategoryDTO(cat)));
     }
 
     public Long getId() {
@@ -116,7 +116,7 @@ public class ProductDto implements Serializable {
             return false;
         if (getClass() != obj.getClass())
             return false;
-        ProductDto other = (ProductDto) obj;
+        ProductDTO other = (ProductDTO) obj;
         if (id == null) {
             if (other.id != null)
                 return false;
@@ -125,7 +125,7 @@ public class ProductDto implements Serializable {
         return true;
     }
 
-    public List<CategoryDto> getCategories() {
+    public List<CategoryDTO> getCategories() {
         return categories;
     }
 

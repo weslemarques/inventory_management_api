@@ -4,23 +4,23 @@ import java.io.Serializable;
 
 import br.com.reinan.dscatalog.entities.Role;
 
-public class RoleDto implements Serializable {
+public class RoleDTO implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
     private Long id;
     private String authority;
 
-    public RoleDto() {
+    public RoleDTO() {
 
     }
 
-    public RoleDto(Long id, String authority) {
+    public RoleDTO(Long id, String authority) {
         this.id = id;
         this.authority = authority;
     }
 
-    public RoleDto(Role entity) {
+    public RoleDTO(Role entity) {
         id = entity.getId();
         authority = entity.getAuthority();
     }
@@ -57,7 +57,7 @@ public class RoleDto implements Serializable {
             return false;
         if (getClass() != obj.getClass())
             return false;
-        RoleDto other = (RoleDto) obj;
+        RoleDTO other = (RoleDTO) obj;
         if (id == null) {
             if (other.id != null)
                 return false;

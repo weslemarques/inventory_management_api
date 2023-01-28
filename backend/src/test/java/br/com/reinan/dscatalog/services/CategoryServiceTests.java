@@ -22,7 +22,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 
-import br.com.reinan.dscatalog.dto.CategoryDto;
+import br.com.reinan.dscatalog.dto.CategoryDTO;
 import br.com.reinan.dscatalog.entities.Category;
 import br.com.reinan.dscatalog.repositories.CategoryRepository;
 import br.com.reinan.dscatalog.services.exceptions.ResorceNotFoundException;
@@ -40,7 +40,7 @@ public class CategoryServiceTests {
     private Long existsId;
     private Long notExistsId;
     private Category category;
-    private CategoryDto dto;
+    private CategoryDTO dto;
     private PageImpl<Category> page;
 
     @BeforeEach
@@ -78,7 +78,7 @@ public class CategoryServiceTests {
 
     @Test
     public void findByIdShouldReturnOptionalNotEmptyWhenIdExists() {
-        CategoryDto dto = service.findById(existsId);
+        CategoryDTO dto = service.findById(existsId);
 
         Assertions.assertNotNull(dto);
         Assertions.assertEquals("category", dto.getName());
@@ -126,7 +126,7 @@ public class CategoryServiceTests {
 
     @Test
     public void findAllShouldReturnPage() {
-        Page<CategoryDto> pageImpl = service.findAll(PageRequest.of(0, 10));
+        Page<CategoryDTO> pageImpl = service.findAll(PageRequest.of(0, 10));
 
         Assertions.assertNotNull(pageImpl);
         Assertions.assertEquals(pageImpl.getNumber(), 0);

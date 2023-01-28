@@ -10,7 +10,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.transaction.annotation.Transactional;
 
-import br.com.reinan.dscatalog.dto.ProductDto;
+import br.com.reinan.dscatalog.dto.ProductDTO;
 import br.com.reinan.dscatalog.entities.Product;
 import br.com.reinan.dscatalog.services.ProductService;
 import br.com.reinan.dscatalog.services.exceptions.ResorceNotFoundException;
@@ -25,7 +25,7 @@ public class ProductServiceIT {
     private Long existingId;
     private Long notExistingId;
     private Product product;
-    private ProductDto dto;
+    private ProductDTO dto;
 
     @BeforeEach
     void setUp() throws Exception {
@@ -54,7 +54,7 @@ public class ProductServiceIT {
 
     @Test
     public void updateShouldReturnEntityUpadate() {
-        ProductDto entity = service.update(existingId, new ProductDto(product));
+        ProductDTO entity = service.update(existingId, new ProductDTO(product));
 
         Assertions.assertNotNull(entity);
         Assertions.assertEquals("PS5", entity.getName());
@@ -71,7 +71,7 @@ public class ProductServiceIT {
 
     @Test
     public void findByIdShouldReturnObjectNotNullWhenExistsId() {
-        ProductDto obj = service.findById(existingId);
+        ProductDTO obj = service.findById(existingId);
 
         Assertions.assertNotNull(obj);
         Assertions.assertEquals("The Lord of the Rings", obj.getName());
@@ -90,7 +90,7 @@ public class ProductServiceIT {
     public void findAllShouldReturnPage() {
         Pageable page = PageRequest.of(1, 10);
 
-        Page<ProductDto> result = service.findAll(page);
+        Page<ProductDTO> result = service.findAll(page);
 
         Assertions.assertNotNull(result);
         Assertions.assertEquals(10, result.getSize());
@@ -101,7 +101,7 @@ public class ProductServiceIT {
     @Test
     public void insertShouldPersistEntityInDataBase() {
         Assertions.assertDoesNotThrow(() -> {
-            service.insert(new ProductDto(product));
+            service.insert(new ProductDTO(product));
         });
     }
 }

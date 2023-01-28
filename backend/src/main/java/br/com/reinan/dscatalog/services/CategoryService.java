@@ -11,7 +11,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import br.com.reinan.dscatalog.dto.CategoryDto;
+import br.com.reinan.dscatalog.dto.CategoryDTO;
 import br.com.reinan.dscatalog.entities.Category;
 import br.com.reinan.dscatalog.repositories.CategoryRepository;
 import br.com.reinan.dscatalog.services.exceptions.DataBaseException;
@@ -24,34 +24,34 @@ public class CategoryService {
     private CategoryRepository repository;
 
     @Transactional(readOnly = true)
-    public Page<CategoryDto> findAll(Pageable pageable) {
+    public Page<CategoryDTO> findAll(Pageable pageable) {
         Page<Category> list = repository.findAll(pageable);
-        return list.map(c -> new CategoryDto(c));
+        return list.map(c -> new CategoryDTO(c));
     }
 
     @Transactional(readOnly = true)
-    public CategoryDto findById(Long id) {
+    public CategoryDTO findById(Long id) {
         Optional<Category> obj = repository.findById(id);
         Category category = obj.orElseThrow(() -> new ResorceNotFoundException("Entity Not Found "));
-        return new CategoryDto(category);
+        return new CategoryDTO(category);
     }
 
     @Transactional
-    public CategoryDto insert(CategoryDto dto) {
+    public CategoryDTO insert(CategoryDTO dto) {
         Category entity = new Category();
         entity.setName(dto.getName());
         entity = repository.save(entity);
-        return new CategoryDto(entity);
+        return new CategoryDTO(entity);
     }
 
     @Transactional
-    public CategoryDto update(Long id, CategoryDto dto) {
+    public CategoryDTO update(Long id, CategoryDTO dto) {
         try {
             Optional<Category> obj = repository.findById(id);
             Category entity = obj.get();
             entity.setName(dto.getName());
             entity = repository.save(entity);
-            return new CategoryDto(entity);
+            return new CategoryDTO(entity);
         } catch (NoSuchElementException e) {
             throw new ResorceNotFoundException("Id not found " + id);
         }
