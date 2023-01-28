@@ -11,9 +11,12 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import br.com.reinan.dscatalog.dto.UserDto;
+import br.com.reinan.dscatalog.dto.RoleDTO;
+import br.com.reinan.dscatalog.dto.UserDTO;
+import br.com.reinan.dscatalog.entities.Role;
 import br.com.reinan.dscatalog.entities.User;
 import br.com.reinan.dscatalog.repositories.UserRepository;
+import br.com.reinan.dscatalog.repositories.RoleRepository;
 import br.com.reinan.dscatalog.services.exceptions.DataBaseException;
 import br.com.reinan.dscatalog.services.exceptions.ResorceNotFoundException;
 
@@ -23,34 +26,36 @@ public class UserService {
     @Autowired
     private UserRepository repository;
 
+    private RoleRepository roleRepository;
+
     @Transactional(readOnly = true)
-    public Page<UserDto> findAll(Pageable pageable) {
+    public Page<UserDTO> findAll(Pageable pageable) {
         Page<User> list = repository.findAll(pageable);
-        return list.map(c -> new UserDto(c));
+        return list.map(c -> new UserDTO(c));
     }
 
     @Transactional(readOnly = true)
-    public UserDto findById(Long id) {
+    public UserDTO findById(Long id) {
         Optional<User> obj = repository.findById(id);
         User entity = obj.orElseThrow(() -> new ResorceNotFoundException("Entity Not Found "));
-        return new UserDto(entity);
+        return new UserDTO(entity);
     }
 
     @Transactional
-    public UserDto insert(UserDto dto) {
+    public UserDTO insert(UserDTO dto) {
         User entity = new User();
         copyDtoToEntity(dto, entity);
-        return new UserDto(entity);
+        return new UserDTO(entity);
     }
 
     @Transactional
-    public UserDto update(Long id, UserDto dto) {
+    public UserDTO update(Long id, UserDTO dto) {
         try {
             Optional<User> obj = repository.findById(id);
             User entity = obj.get();
             copyDtoToEntity(dto, entity);
             entity = repository.save(entity);
-            return new UserDto(entity);
+            return new UserDTO(entity);
         } catch (NoSuchElementException e) {
             throw new ResorceNotFoundException("Id not found " + id);
         }
@@ -67,11 +72,18 @@ public class UserService {
         }
     }
 
-    private void copyDtoToEntity(UserDto dto, User entity) {
+    private void copyDtoToEntity(UserDTO dto, User entity) {
         entity.setFirstName(dto.getFirstName());
         entity.setLastName(dto.getLastName());
         entity.setEmail(dto.getEmail());
 
+        entity.getRoles().clear();
+
+        for (RoleDTO roleDto : dto.getRoles()) {
+            Optional<Role> obj = roleRepository.findById(roleDto.getId());
+            Role role = obj.get();
+            entity.getRoles().add(role);
+        }
     }
 
 }

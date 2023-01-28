@@ -40,7 +40,7 @@ public class UserDTO implements Serializable {
     public UserDTO(User user, Set<Role> roles) {
         this(user);
 
-        roles.forEach(r -> this.roles.add(new RoleDTO(r)));
+        roles.forEach(role -> this.roles.add(new RoleDTO(role)));
     }
 
     public Long getId() {

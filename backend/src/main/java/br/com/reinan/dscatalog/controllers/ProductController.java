@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
-import br.com.reinan.dscatalog.dto.ProductDto;
+import br.com.reinan.dscatalog.dto.ProductDTO;
 import br.com.reinan.dscatalog.services.ProductService;
 
 @RestController
@@ -26,19 +26,19 @@ public class ProductController {
     private ProductService service;
 
     @GetMapping
-    public ResponseEntity<Page<ProductDto>> findAll(Pageable pageable) {
-        Page<ProductDto> list = service.findAll(pageable);
+    public ResponseEntity<Page<ProductDTO>> findAll(Pageable pageable) {
+        Page<ProductDTO> list = service.findAll(pageable);
         return ResponseEntity.ok(list);
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<ProductDto> findById(@PathVariable Long id) {
-        ProductDto productDto = service.findById(id);
+    public ResponseEntity<ProductDTO> findById(@PathVariable Long id) {
+        ProductDTO productDto = service.findById(id);
         return ResponseEntity.ok(productDto);
     }
 
     @PostMapping
-    public ResponseEntity<ProductDto> insert(@RequestBody ProductDto dto) {
+    public ResponseEntity<ProductDTO> insert(@RequestBody ProductDTO dto) {
         dto = service.insert(dto);
         URI uri = ServletUriComponentsBuilder
                 .fromCurrentRequest()
@@ -49,7 +49,7 @@ public class ProductController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<ProductDto> update(@PathVariable Long id, @RequestBody ProductDto dto) {
+    public ResponseEntity<ProductDTO> update(@PathVariable Long id, @RequestBody ProductDTO dto) {
         dto = service.update(id, dto);
 
         return ResponseEntity.ok(dto);

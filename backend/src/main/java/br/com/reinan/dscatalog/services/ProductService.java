@@ -86,8 +86,8 @@ public class ProductService {
 
         entity.getCategories().clear();
         for (CategoryDTO cat : dto.getCategories()) {
-            @SuppressWarnings("deprecation")
-            Category category = categoryRepository.getOne(cat.getId());
+            Optional<Category> obj = categoryRepository.findById(cat.getId());
+            Category category = obj.get();
             entity.getCategories().add(category);
         }
     }
