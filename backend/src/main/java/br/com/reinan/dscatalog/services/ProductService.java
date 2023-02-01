@@ -86,6 +86,7 @@ public class ProductService {
 
         entity.getCategories().clear();
         for (CategoryDTO cat : dto.getCategories()) {
+
             Optional<Category> obj = categoryRepository.findById(cat.getId());
             Category category = obj.get();
             entity.getCategories().add(category);

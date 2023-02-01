@@ -32,19 +32,20 @@ public class ControllerExceptionHandler {
     }
 
     @ExceptionHandler(DataBaseException.class)
-    public ResponseEntity<StandardError> DataBaseViolation(
+    public ResponseEntity<StandardError> dataBaseViolation(
             DataBaseException e,
             HttpServletRequest request) {
-        HttpStatus status = HttpStatus.BAD_REQUEST;
+        HttpStatus status = HttpStatus.OK;
         StandardError err = new StandardError();
 
         err.setTimestamp(Instant.now());
         err.setStatus(status.value());
-        err.setError("Controller Not Found");
+        err.setError("Data Base Violation");
         err.setMessage(e.getMessage());
         err.setPath(request.getRequestURI());
 
         return ResponseEntity.status(status).body(err);
 
     }
+
 }
