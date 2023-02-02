@@ -4,7 +4,6 @@ import java.io.Serializable;
 import java.util.HashSet;
 import java.util.Set;
 
-import br.com.reinan.dscatalog.entities.Role;
 import br.com.reinan.dscatalog.entities.User;
 
 public class UserDTO implements Serializable {
@@ -30,17 +29,13 @@ public class UserDTO implements Serializable {
         this.email = email;
     }
 
-    public UserDTO(User user) {
-        id = user.getId();
-        firstName = user.getFirstName();
-        lastName = user.getLastName();
-        email = user.getEmail();
-    }
+    public UserDTO(User entity) {
+        id = entity.getId();
+        firstName = entity.getFirstName();
+        lastName = entity.getLastName();
+        email = entity.getEmail();
 
-    public UserDTO(User user, Set<Role> roles) {
-        this(user);
-
-        roles.forEach(role -> this.roles.add(new RoleDTO(role)));
+        entity.getRoles().forEach(role -> this.roles.add(new RoleDTO(role)));
     }
 
     public Long getId() {
