@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import br.com.reinan.dscatalog.dto.UserDTO;
+import br.com.reinan.dscatalog.dto.UserInsertDTO;
 import br.com.reinan.dscatalog.services.UserService;
 
 @RestController
@@ -39,8 +40,8 @@ public class UserController {
     }
 
     @PostMapping
-    public ResponseEntity<UserDTO> insert(@RequestBody UserDTO dto) {
-        dto = service.insert(dto);
+    public ResponseEntity<UserDTO> insert(@RequestBody UserInsertDTO dtoInsert) {
+        UserDTO dto = service.insert(dtoInsert);
         URI uri = ServletUriComponentsBuilder
                 .fromCurrentRequest()
                 .path("/{id}")

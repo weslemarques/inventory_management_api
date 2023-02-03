@@ -13,6 +13,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import br.com.reinan.dscatalog.dto.RoleDTO;
 import br.com.reinan.dscatalog.dto.UserDTO;
+import br.com.reinan.dscatalog.dto.UserInsertDTO;
 import br.com.reinan.dscatalog.entities.Role;
 import br.com.reinan.dscatalog.entities.User;
 import br.com.reinan.dscatalog.repositories.UserRepository;
@@ -42,9 +43,11 @@ public class UserService {
     }
 
     @Transactional
-    public UserDTO insert(UserDTO dto) {
+    public UserDTO insert(UserInsertDTO dto) {
         User entity = new User();
         copyDtoToEntity(dto, entity);
+        entity.setPassword(dto.getPassword());
+        entity = repository.save(entity);
         return new UserDTO(entity);
     }
 
