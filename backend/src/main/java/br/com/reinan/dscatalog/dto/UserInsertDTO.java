@@ -1,10 +1,6 @@
 package br.com.reinan.dscatalog.dto;
 
-import java.io.Serializable;
-
-public class UserInsertDTO extends UserDTO implements Serializable {
-
-    private static final long serialVersionUID = 1L;
+public class UserInsertDTO extends UserDTO {
 
     private String password;
 
