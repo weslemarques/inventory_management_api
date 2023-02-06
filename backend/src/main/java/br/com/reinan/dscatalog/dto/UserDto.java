@@ -5,14 +5,19 @@ import java.util.HashSet;
 import java.util.Set;
 
 import br.com.reinan.dscatalog.entities.User;
+import jakarta.validation.constraints.Email;
+import jakarta.validation.constraints.NotBlank;
 
 public class UserDTO implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
     private Long id;
+    @NotBlank(message = "field riquered")
     private String firstName;
+    @NotBlank(message = "field required")
     private String lastName;
+    @Email(message = "email not valid")
     private String email;
 
     private Set<RoleDTO> roles = new HashSet<>();

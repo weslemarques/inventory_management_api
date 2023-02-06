@@ -23,7 +23,7 @@ public class ControllerExceptionHandler {
 
         err.setTimestamp(Instant.now());
         err.setStatus(status.value());
-        err.setError("Controller Not Found");
+        err.setError("Entity Not Found");
         err.setMessage(e.getMessage());
         err.setPath(request.getRequestURI());
 
