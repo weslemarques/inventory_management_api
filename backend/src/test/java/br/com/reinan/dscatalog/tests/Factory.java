@@ -13,7 +13,7 @@ public class Factory {
         Product product = new Product("PS5", 600.0, Instant.parse("2020-07-20T10:00:00Z"),
                 "The new generation PS5 video game", "");
 
-        product.getCategories().add(new Category(2L, "Eletronics"));
+        product.getCategories().add(new Category(1L, "Eletronics"));
         return product;
     }
 
@@ -27,12 +27,13 @@ public class Factory {
 
     public static ProductDTO createProductDto() {
         Product prod = createProduct();
-        return new ProductDTO(prod, prod.getCategories());
+        ProductDTO dto = new ProductDTO(prod, prod.getCategories());
+        return dto;
     }
 
     public static Category createCategory() {
-
-        return new Category(null, "category");
+        Category category = new Category(1L, "category");
+        return category;
     }
 
     public static CategoryDTO createCategoryDto() {

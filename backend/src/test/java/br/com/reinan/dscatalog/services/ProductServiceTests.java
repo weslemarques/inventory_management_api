@@ -25,6 +25,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 
 import br.com.reinan.dscatalog.dto.ProductDTO;
+import br.com.reinan.dscatalog.entities.Category;
 import br.com.reinan.dscatalog.entities.Product;
 import br.com.reinan.dscatalog.repositories.CategoryRepository;
 import br.com.reinan.dscatalog.repositories.ProductRepository;
@@ -47,15 +48,20 @@ public class ProductServiceTests {
     private Long notExistingId;
     private Product product;
     private PageImpl<Product> page;
+    private Category category;
+    private ProductDTO dto;
 
     @BeforeEach
     void setUp() throws Exception {
         existingId = 1L;
         notExistingId = 1000L;
         product = Factory.createProduct();
+        category = Factory.createCategory();
+        dto = Factory.createProductDto();
         page = new PageImpl<>(List.of(product));
 
         when(repository.findById(existingId)).thenReturn(Optional.of(product));
+        when(categoryRepository.findById(existingId)).thenReturn(Optional.of(category));
         when(repository.findById(notExistingId)).thenReturn(Optional.empty());
         when(repository.save(any())).thenReturn(product);
         doNothing().when(repository).deleteById(existingId);
@@ -84,10 +90,10 @@ public class ProductServiceTests {
 
     @Test
     public void updateShouldReturnEntityUpadate() {
-        ProductDTO entity = service.update(existingId, Factory.createProductDto());
+        ProductDTO entity = service.update(existingId, dto);
 
         Assertions.assertNotNull(entity);
-        verify(repository, times(1)).findById(existingId);
+        verify(repository).findById(existingId);
     }
 
     @Test
@@ -95,6 +101,8 @@ public class ProductServiceTests {
         Assertions.assertThrows(ResorceNotFoundException.class, () -> {
             service.update(notExistingId, new ProductDTO());
         });
+
+        verify(repository).findById(notExistingId);
     }
 
     @Test

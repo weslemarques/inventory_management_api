@@ -1,6 +1,5 @@
 package br.com.reinan.dscatalog.services;
 
-import java.util.NoSuchElementException;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -54,15 +53,12 @@ public class ProductService {
 
     @Transactional
     public ProductDTO update(Long id, ProductDTO dto) {
-        try {
-            Optional<Product> obj = repository.findById(id);
-            Product entity = obj.get();
-            copyDtoToEntity(dto, entity);
-            entity = repository.save(entity);
-            return new ProductDTO(entity);
-        } catch (NoSuchElementException e) {
-            throw new ResorceNotFoundException("Id not found " + id);
-        }
+
+        Product entity = repository.findById(id)
+                .orElseThrow(() -> new ResorceNotFoundException("Id not found " + id));
+        copyDtoToEntity(dto, entity);
+        entity = repository.save(entity);
+        return new ProductDTO(entity);
     }
 
     @Transactional
@@ -86,9 +82,7 @@ public class ProductService {
 
         entity.getCategories().clear();
         for (CategoryDTO cat : dto.getCategories()) {
-
-            Optional<Category> obj = categoryRepository.findById(cat.getId());
-            Category category = obj.get();
+            Category category = categoryRepository.findById(cat.getId()).get();
             entity.getCategories().add(category);
         }
     }
