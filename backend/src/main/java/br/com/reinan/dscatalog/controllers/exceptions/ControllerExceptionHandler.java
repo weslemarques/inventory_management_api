@@ -4,6 +4,7 @@ import java.time.Instant;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 
@@ -42,6 +43,23 @@ public class ControllerExceptionHandler {
         err.setStatus(status.value());
         err.setError("Data Base Violation");
         err.setMessage(e.getMessage());
+        err.setPath(request.getRequestURI());
+
+        return ResponseEntity.status(status).body(err);
+
+    }
+
+    @ExceptionHandler(MethodArgumentNotValidException.class)
+    public ResponseEntity<StandardError> validationEntity(
+            MethodArgumentNotValidException e,
+            HttpServletRequest request) {
+        HttpStatus status = HttpStatus.OK;
+        StandardError err = new StandardError();
+
+        err.setTimestamp(Instant.now());
+        err.setStatus(status.value());
+        err.setError("failure in validation");
+        err.setMessage(e.getAllErrors().get(0).getDefaultMessage());
         err.setPath(request.getRequestURI());
 
         return ResponseEntity.status(status).body(err);
