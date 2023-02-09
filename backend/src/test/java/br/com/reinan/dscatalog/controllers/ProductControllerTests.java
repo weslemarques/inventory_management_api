@@ -11,12 +11,16 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+
 import java.util.List;
+
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.mockito.junit.jupiter.MockitoSettings;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.context.annotation.Import;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.MediaType;
@@ -26,6 +30,7 @@ import org.springframework.test.web.servlet.ResultActions;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 
+import br.com.reinan.dscatalog.config.SecurityConfig;
 import br.com.reinan.dscatalog.dto.ProductDTO;
 import br.com.reinan.dscatalog.services.ProductService;
 import br.com.reinan.dscatalog.services.exceptions.DataBaseException;
@@ -33,10 +38,10 @@ import br.com.reinan.dscatalog.services.exceptions.ResorceNotFoundException;
 import br.com.reinan.dscatalog.tests.Factory;
 
 @WebMvcTest(ProductController.class)
+@Import(SecurityConfig.class)
 public class ProductControllerTests {
     @Autowired
     private MockMvc mvc;
-
     @MockBean
     private ProductService service;
 

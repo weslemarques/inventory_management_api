@@ -57,7 +57,7 @@ public class ProductServiceIT {
         ProductDTO entity = service.update(existingId, new ProductDTO(product));
 
         Assertions.assertNotNull(entity);
-        Assertions.assertEquals("PS5", entity.getName());
+        Assertions.assertEquals("PS5 Plus", entity.getName());
         Assertions.assertEquals(600.0, entity.getPrice());
 
     }

@@ -28,7 +28,7 @@ public class CategoryRepositoryTests {
     public void setUp() {
         existsId = 1L;
         notExistsId = 1000L;
-        category = Factory.createCategory();
+        category = Factory.createInsertCategory();
     }
 
     @Test

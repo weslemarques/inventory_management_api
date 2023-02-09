@@ -10,7 +10,7 @@ import br.com.reinan.dscatalog.entities.Product;
 public class Factory {
 
     public static Product createProduct() {
-        Product product = new Product("PS5", 600.0, Instant.parse("2020-07-20T10:00:00Z"),
+        Product product = new Product("PS5 Plus", 600.0, Instant.parse("2020-07-20T10:00:00Z"),
                 "The new generation PS5 video game", "");
 
         product.getCategories().add(new Category(1L, "Eletronics"));
@@ -33,6 +33,11 @@ public class Factory {
 
     public static Category createCategory() {
         Category category = new Category(1L, "category");
+        return category;
+    }
+
+    public static Category createInsertCategory() {
+        Category category = new Category("category");
         return category;
     }
 
