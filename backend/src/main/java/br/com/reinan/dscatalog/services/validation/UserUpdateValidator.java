@@ -2,34 +2,47 @@ package br.com.reinan.dscatalog.services.validation;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
+
+import jakarta.servlet.http.HttpServletRequest;
 import jakarta.validation.ConstraintValidator;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.servlet.HandlerMapping;
 
 import br.com.reinan.dscatalog.controllers.exceptions.FieldMessage;
-import br.com.reinan.dscatalog.dto.UserInsertDTO;
+import br.com.reinan.dscatalog.dto.UserUpdateDTO;
+import br.com.reinan.dscatalog.entities.User;
 import br.com.reinan.dscatalog.repositories.UserRepository;
 import jakarta.validation.ConstraintValidatorContext;
 
-public class UserInsertValidator implements ConstraintValidator<UserInsertValid, UserInsertDTO> {
+public class UserUpdateValidator implements ConstraintValidator<UserUpdateValid, UserUpdateDTO> {
+
+    @Autowired
+    private HttpServletRequest request;
 
     @Autowired
     private UserRepository repository;
 
     @Override
-    public void initialize(UserInsertValid ann) {
+    public void initialize(UserUpdateValid ann) {
     }
 
     @Override
-    public boolean isValid(UserInsertDTO dto, ConstraintValidatorContext context) {
+    public boolean isValid(UserUpdateDTO dto, ConstraintValidatorContext context) {
 
         List<FieldMessage> list = new ArrayList<>();
 
-        Boolean emailExists = repository.existsByEmail(dto.getEmail());
+        @SuppressWarnings("unchecked")
+        var uriVars = (Map<String, String>) request.getAttribute(HandlerMapping.URI_TEMPLATE_VARIABLES_ATTRIBUTE);
 
-        if (emailExists) {
+        long userId = Long.parseLong(uriVars.get("id"));
+        User entity = repository.findByEmail(dto.getEmail());
+
+        if (entity != null && userId != entity.getId()) {
             list.add(new FieldMessage("email", "Email ja Existe"));
         }
+
         // Coloque aqui seus testes de validação, acrescentando objetos FieldMessage à
         // lista
 
