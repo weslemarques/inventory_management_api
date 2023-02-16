@@ -30,6 +30,7 @@ import br.com.reinan.dscatalog.tests.Factory;
 @Import(SecurityConfig.class)
 public class CategotyControllerTests {
 
+
     @Autowired
     private MockMvc mvc;
     @MockBean
