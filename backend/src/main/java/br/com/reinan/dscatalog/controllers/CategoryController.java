@@ -2,6 +2,7 @@ package br.com.reinan.dscatalog.controllers;
 
 import java.net.URI;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
@@ -18,6 +19,7 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import br.com.reinan.dscatalog.dto.CategoryDTO;
 import br.com.reinan.dscatalog.services.CategoryService;
+import br.com.reinan.dscatalog.services.exceptions.DataBaseException;
 
 @RestController
 @CrossOrigin("*")
@@ -59,8 +61,12 @@ public class CategoryController {
 
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> delete(@PathVariable Long id) {
-        service.delete(id);
+        try {
+            service.delete(id);
 
+        } catch (DataIntegrityViolationException e) {
+            throw new DataBaseException("Esse recurso esta atrelado a outro recurso");
+        }
         return ResponseEntity.noContent().build();
     }
 }

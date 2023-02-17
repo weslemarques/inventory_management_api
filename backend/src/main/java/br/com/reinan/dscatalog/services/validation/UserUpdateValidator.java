@@ -3,6 +3,7 @@ package br.com.reinan.dscatalog.services.validation;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.validation.ConstraintValidator;
@@ -37,9 +38,9 @@ public class UserUpdateValidator implements ConstraintValidator<UserUpdateValid,
         var uriVars = (Map<String, String>) request.getAttribute(HandlerMapping.URI_TEMPLATE_VARIABLES_ATTRIBUTE);
 
         long userId = Long.parseLong(uriVars.get("id"));
-        User entity = repository.findByEmail(dto.getEmail());
+        Optional<User> entity = repository.findByEmail(dto.getEmail());
 
-        if (entity != null && userId != entity.getId()) {
+        if (entity.isPresent() && userId != entity.get().getId()) {
             list.add(new FieldMessage("email", "Email ja Existe"));
         }
 
