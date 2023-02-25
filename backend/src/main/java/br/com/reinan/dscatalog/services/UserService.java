@@ -34,6 +34,7 @@ public class UserService implements UserDetailsService {
     @Autowired
     private UserRepository repository;
 
+    @Autowired
     private RoleRepository roleRepository;
 
     @Transactional(readOnly = true)
@@ -52,6 +53,7 @@ public class UserService implements UserDetailsService {
     @Transactional
     public UserDTO insert(UserInsertDTO dto) {
         User entity = new User();
+        System.out.println(dto.getRoles().size());
         copyDtoToEntity(dto, entity);
         entity.setPassword(passwordEncoder.encode(dto.getPassword()));
         entity = repository.save(entity);
