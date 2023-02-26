@@ -17,9 +17,9 @@ public class WebSecurityConfig {
                 .httpBasic()
                 .and()
                 .authorizeHttpRequests()
-                .requestMatchers(HttpMethod.GET, "/products**").permitAll()
-                .requestMatchers(HttpMethod.PUT, "/products","/users").hasRole("ROLE_USER")
-                .requestMatchers(HttpMethod.DELETE, "/products/**","/users").hasRole("ROLE_ADMIN")
+                .requestMatchers(HttpMethod.GET, "/products/**","/categories/**").permitAll()
+                .requestMatchers(HttpMethod.GET, "/users").hasRole("ADMIN")
+                .requestMatchers(HttpMethod.DELETE, "/users/**", "/products", "/categories").hasRole("ADMIN")
                 .anyRequest().permitAll()
                 .and()
                 .csrf().disable();
