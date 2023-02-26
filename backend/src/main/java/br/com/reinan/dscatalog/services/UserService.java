@@ -53,7 +53,6 @@ public class UserService implements UserDetailsService {
     @Transactional
     public UserDTO insert(UserInsertDTO dto) {
         User entity = new User();
-        System.out.println(dto.getRoles().size());
         copyDtoToEntity(dto, entity);
         entity.setPassword(passwordEncoder.encode(dto.getPassword()));
         entity = repository.save(entity);
