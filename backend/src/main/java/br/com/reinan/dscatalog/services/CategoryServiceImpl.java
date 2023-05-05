@@ -3,6 +3,7 @@ package br.com.reinan.dscatalog.services;
 import java.util.NoSuchElementException;
 import java.util.Optional;
 
+import br.com.reinan.dscatalog.services.contract.CategoryService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.dao.EmptyResultDataAccessException;
@@ -18,7 +19,7 @@ import br.com.reinan.dscatalog.services.exceptions.DataBaseException;
 import br.com.reinan.dscatalog.services.exceptions.ResorceNotFoundException;
 
 @Service
-public class CategoryServiceImpl {
+public class CategoryServiceImpl implements CategoryService {
 
     @Autowired
     private CategoryRepository repository;
