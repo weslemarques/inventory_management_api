@@ -1,10 +1,16 @@
 package br.com.reinan.dscatalog.services;
 
-import java.util.NoSuchElementException;
-import java.util.Optional;
-
+import br.com.reinan.dscatalog.dto.RoleDTO;
+import br.com.reinan.dscatalog.dto.UserDTO;
+import br.com.reinan.dscatalog.dto.UserInsertDTO;
+import br.com.reinan.dscatalog.dto.UserUpdateDTO;
+import br.com.reinan.dscatalog.entities.Role;
+import br.com.reinan.dscatalog.entities.User;
+import br.com.reinan.dscatalog.repositories.RoleRepository;
+import br.com.reinan.dscatalog.repositories.UserRepository;
 import br.com.reinan.dscatalog.services.contract.UserService;
-import org.springframework.beans.factory.annotation.Autowired;
+import br.com.reinan.dscatalog.services.exceptions.DataBaseException;
+import br.com.reinan.dscatalog.services.exceptions.ResorceNotFoundException;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.data.domain.Page;
@@ -16,27 +22,22 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import br.com.reinan.dscatalog.dto.RoleDTO;
-import br.com.reinan.dscatalog.dto.UserDTO;
-import br.com.reinan.dscatalog.dto.UserInsertDTO;
-import br.com.reinan.dscatalog.dto.UserUpdateDTO;
-import br.com.reinan.dscatalog.entities.Role;
-import br.com.reinan.dscatalog.entities.User;
-import br.com.reinan.dscatalog.repositories.UserRepository;
-import br.com.reinan.dscatalog.repositories.RoleRepository;
-import br.com.reinan.dscatalog.services.exceptions.DataBaseException;
-import br.com.reinan.dscatalog.services.exceptions.ResorceNotFoundException;
+import java.util.NoSuchElementException;
+import java.util.Optional;
 
 @Service
 public class UserServiceImpl implements UserDetailsService, UserService {
 
-    @Autowired
-    private BCryptPasswordEncoder passwordEncoder;
-    @Autowired
-    private UserRepository repository;
+    private final BCryptPasswordEncoder passwordEncoder;
+    private final UserRepository repository;
 
-    @Autowired
-    private RoleRepository roleRepository;
+    private final RoleRepository roleRepository;
+
+    public UserServiceImpl(BCryptPasswordEncoder passwordEncoder, UserRepository repository, RoleRepository roleRepository) {
+        this.passwordEncoder = passwordEncoder;
+        this.repository = repository;
+        this.roleRepository = roleRepository;
+    }
 
     @Transactional(readOnly = true)
     public Page<UserDTO> findAll(Pageable pageable) {
@@ -100,10 +101,10 @@ public class UserServiceImpl implements UserDetailsService, UserService {
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        User user = repository.findByEmail(username)
+        var  user = repository.findByEmail(username)
                 .orElseThrow(() -> new UsernameNotFoundException("User not found with this e-mail : " + username));
 
-            return new org.springframework.security.core.userdetails.User(user.getEmail(), user.getPassword(), true, true, true, true, user.getAuthorities());
+            return  user;
     }
 
 }
