@@ -2,6 +2,7 @@ package br.com.reinan.dscatalog.services;
 
 import java.util.Optional;
 
+import br.com.reinan.dscatalog.services.contract.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.dao.EmptyResultDataAccessException;
@@ -20,7 +21,7 @@ import br.com.reinan.dscatalog.services.exceptions.DataBaseException;
 import br.com.reinan.dscatalog.services.exceptions.ResorceNotFoundException;
 
 @Service
-public class ProductService {
+public class ProductServiceImpl  implements ProductService {
 
     @Autowired
     private ProductRepository repository;

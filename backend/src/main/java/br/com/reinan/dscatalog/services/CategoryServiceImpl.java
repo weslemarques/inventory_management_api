@@ -18,7 +18,7 @@ import br.com.reinan.dscatalog.services.exceptions.DataBaseException;
 import br.com.reinan.dscatalog.services.exceptions.ResorceNotFoundException;
 
 @Service
-public class CategoryService {
+public class CategoryServiceImpl {
 
     @Autowired
     private CategoryRepository repository;

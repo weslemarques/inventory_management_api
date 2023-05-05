@@ -19,7 +19,7 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import br.com.reinan.dscatalog.dto.CategoryDTO;
-import br.com.reinan.dscatalog.services.CategoryService;
+import br.com.reinan.dscatalog.services.CategoryServiceImpl;
 import br.com.reinan.dscatalog.services.exceptions.DataBaseException;
 
 @RestController
@@ -28,7 +28,7 @@ import br.com.reinan.dscatalog.services.exceptions.DataBaseException;
 public class CategoryController {
 
     @Autowired
-    private CategoryService service;
+    private CategoryServiceImpl service;
 
     @GetMapping
     public ResponseEntity<Page<CategoryDTO>> findAll(Pageable pageable) {

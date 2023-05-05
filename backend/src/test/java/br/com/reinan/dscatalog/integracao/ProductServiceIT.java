@@ -12,7 +12,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import br.com.reinan.dscatalog.dto.ProductDTO;
 import br.com.reinan.dscatalog.entities.Product;
-import br.com.reinan.dscatalog.services.ProductService;
+import br.com.reinan.dscatalog.services.ProductServiceImpl;
 import br.com.reinan.dscatalog.services.exceptions.ResorceNotFoundException;
 import br.com.reinan.dscatalog.tests.Factory;
 
@@ -21,7 +21,7 @@ import br.com.reinan.dscatalog.tests.Factory;
 public class ProductServiceIT {
 
     @Autowired
-    private ProductService service;
+    private ProductServiceImpl service;
     private Long existingId;
     private Long notExistingId;
     private Product product;

@@ -31,7 +31,7 @@ import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 
 import br.com.reinan.dscatalog.config.WebSecurityConfig;
 import br.com.reinan.dscatalog.dto.ProductDTO;
-import br.com.reinan.dscatalog.services.ProductService;
+import br.com.reinan.dscatalog.services.ProductServiceImpl;
 import br.com.reinan.dscatalog.services.exceptions.DataBaseException;
 import br.com.reinan.dscatalog.services.exceptions.ResorceNotFoundException;
 import br.com.reinan.dscatalog.tests.Factory;
@@ -42,7 +42,7 @@ public class ProductControllerTests {
     @Autowired
     private MockMvc mvc;
     @MockBean
-    private ProductService service;
+    private ProductServiceImpl service;
 
     private ProductDTO productDto;
     private PageImpl<ProductDTO> page;

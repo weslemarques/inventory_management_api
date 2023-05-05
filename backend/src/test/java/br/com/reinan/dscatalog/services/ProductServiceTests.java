@@ -42,7 +42,7 @@ public class ProductServiceTests {
     private CategoryRepository categoryRepository;
 
     @InjectMocks
-    private ProductService service;
+    private ProductServiceImpl service;
 
     private Long existingId;
     private Long notExistingId;

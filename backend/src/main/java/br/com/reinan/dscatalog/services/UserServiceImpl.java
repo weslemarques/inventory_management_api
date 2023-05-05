@@ -3,6 +3,7 @@ package br.com.reinan.dscatalog.services;
 import java.util.NoSuchElementException;
 import java.util.Optional;
 
+import br.com.reinan.dscatalog.services.contract.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.dao.EmptyResultDataAccessException;
@@ -27,7 +28,7 @@ import br.com.reinan.dscatalog.services.exceptions.DataBaseException;
 import br.com.reinan.dscatalog.services.exceptions.ResorceNotFoundException;
 
 @Service
-public class UserService implements UserDetailsService {
+public class UserServiceImpl implements UserDetailsService, UserService {
 
     @Autowired
     private BCryptPasswordEncoder passwordEncoder;
@@ -40,7 +41,7 @@ public class UserService implements UserDetailsService {
     @Transactional(readOnly = true)
     public Page<UserDTO> findAll(Pageable pageable) {
         Page<User> list = repository.findAll(pageable);
-        return list.map(c -> new UserDTO(c));
+        return list.map(u -> new UserDTO(u));
     }
 
     @Transactional(readOnly = true)

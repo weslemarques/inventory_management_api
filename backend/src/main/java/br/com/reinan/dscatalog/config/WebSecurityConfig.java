@@ -17,7 +17,7 @@ public class WebSecurityConfig {
                 .httpBasic()
                 .and()
                 .authorizeHttpRequests()
-                .requestMatchers(HttpMethod.GET, "/products/**","/categories/**").permitAll()
+                .requestMatchers(HttpMethod.GET, "/products/**","/categories/**", "/login").permitAll()
                 .requestMatchers(HttpMethod.GET, "/users/**").hasRole("ADMIN")
                 .requestMatchers(HttpMethod.DELETE, "/users/**", "/products", "/categories").hasRole("ADMIN")
                 .anyRequest().authenticated()

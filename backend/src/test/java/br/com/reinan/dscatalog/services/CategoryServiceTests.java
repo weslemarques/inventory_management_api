@@ -35,7 +35,7 @@ public class CategoryServiceTests {
     private CategoryRepository repository;
 
     @InjectMocks
-    private CategoryService service;
+    private CategoryServiceImpl service;
 
     private Long existsId;
     private Long notExistsId;

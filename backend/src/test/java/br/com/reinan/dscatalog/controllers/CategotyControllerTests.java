@@ -23,7 +23,7 @@ import org.springframework.test.web.servlet.MockMvc;
 
 import br.com.reinan.dscatalog.config.WebSecurityConfig;
 import br.com.reinan.dscatalog.dto.CategoryDTO;
-import br.com.reinan.dscatalog.services.CategoryService;
+import br.com.reinan.dscatalog.services.CategoryServiceImpl;
 import br.com.reinan.dscatalog.tests.Factory;
 
 @WebMvcTest(CategoryController.class)
@@ -33,7 +33,7 @@ public class CategotyControllerTests {
     @Autowired
     private MockMvc mvc;
     @MockBean
-    private CategoryService service;
+    private CategoryServiceImpl service;
 
     private PageImpl<CategoryDTO> page;
     private CategoryDTO dto;
