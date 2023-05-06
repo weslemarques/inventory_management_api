@@ -3,7 +3,11 @@ package br.com.reinan.dscatalog.dto;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 
-public class UserLoginDTO {
+import java.io.Serializable;
+
+public class UserLoginDTO implements Serializable {
+
+    private static final long serialVersionUID = 1L;
 
     @Email
     @NotBlank
