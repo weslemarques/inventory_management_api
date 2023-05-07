@@ -26,28 +26,28 @@ import java.util.NoSuchElementException;
 import java.util.Optional;
 
 @Service
-public class UserServiceImpl implements UserDetailsService, UserService {
+public class UserServiceImpl implements  UserService {
 
     private final BCryptPasswordEncoder passwordEncoder;
-    private final UserRepository repository;
+    private final UserRepository userRepository;
 
     private final RoleRepository roleRepository;
 
     public UserServiceImpl(BCryptPasswordEncoder passwordEncoder, UserRepository repository, RoleRepository roleRepository) {
         this.passwordEncoder = passwordEncoder;
-        this.repository = repository;
+        this.userRepository = repository;
         this.roleRepository = roleRepository;
     }
 
     @Transactional(readOnly = true)
     public Page<UserDTO> findAll(Pageable pageable) {
-        Page<User> list = repository.findAll(pageable);
+        Page<User> list = userRepository.findAll(pageable);
         return list.map(u -> new UserDTO(u));
     }
 
     @Transactional(readOnly = true)
     public UserDTO findById(Long id) {
-        Optional<User> obj = repository.findById(id);
+        Optional<User> obj = userRepository.findById(id);
         User entity = obj.orElseThrow(() -> new ResorceNotFoundException("Entity Not Found "));
         return new UserDTO(entity);
     }
@@ -57,17 +57,17 @@ public class UserServiceImpl implements UserDetailsService, UserService {
         User entity = new User();
         copyDtoToEntity(dto, entity);
         entity.setPassword(passwordEncoder.encode(dto.getPassword()));
-        entity = repository.save(entity);
+        entity = userRepository.save(entity);
         return new UserDTO(entity);
     }
 
     @Transactional
     public UserDTO update(Long id, UserUpdateDTO dto) {
         try {
-            Optional<User> obj = repository.findById(id);
+            Optional<User> obj = userRepository.findById(id);
             User entity = obj.get();
             copyDtoToEntity(dto, entity);
-            entity = repository.save(entity);
+            entity = userRepository.save(entity);
             return new UserDTO(entity);
         } catch (NoSuchElementException e) {
             throw new ResorceNotFoundException("Id not found " + id);
@@ -77,7 +77,7 @@ public class UserServiceImpl implements UserDetailsService, UserService {
     @Transactional
     public void delete(Long id) {
         try {
-            repository.deleteById(id);
+            userRepository.deleteById(id);
         } catch (EmptyResultDataAccessException e) {
             throw new ResorceNotFoundException("Id not found");
         } catch (DataIntegrityViolationException e) {
@@ -100,11 +100,10 @@ public class UserServiceImpl implements UserDetailsService, UserService {
     }
 
     @Override
-    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        var  user = repository.findByEmail(username)
-                .orElseThrow(() -> new UsernameNotFoundException("User not found with this e-mail : " + username));
+    public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
+        return userRepository.findByEmail(email)
+                .orElseThrow(() -> new UsernameNotFoundException("No user found with email address " + email));
 
-            return  user;
     }
 
 }

@@ -5,8 +5,9 @@ import br.com.reinan.dscatalog.dto.UserInsertDTO;
 import br.com.reinan.dscatalog.dto.UserUpdateDTO;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.security.core.userdetails.UserDetailsService;
 
-public interface UserService {
+public interface UserService extends UserDetailsService {
 
     public Page<UserDTO> findAll(Pageable pageable);
     public UserDTO findById(Long id);

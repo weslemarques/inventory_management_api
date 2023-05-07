@@ -2,20 +2,13 @@ package br.com.reinan.dscatalog.controllers;
 
 import br.com.reinan.dscatalog.dto.UserDTO;
 import br.com.reinan.dscatalog.dto.UserInsertDTO;
-import br.com.reinan.dscatalog.dto.UserLoginDTO;
 import br.com.reinan.dscatalog.dto.UserUpdateDTO;
-import br.com.reinan.dscatalog.entities.User;
 import br.com.reinan.dscatalog.services.contract.UserService;
-import br.com.reinan.dscatalog.util.TokenUtil;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.security.authentication.AuthenticationManager;
-import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
@@ -23,16 +16,10 @@ import java.net.URI;
 
 @RestController
 @RequestMapping("/users")
-@PreAuthorize("hasRole('ADMIN')")
 public class UserController {
 
     @Autowired
     private UserService service;
-    @Autowired
-    private TokenUtil tokenUtil;
-
-    @Autowired
-    private AuthenticationManager authenticationManager;
 
     @GetMapping
     public ResponseEntity<Page<UserDTO>> findAll(Pageable pageable) {
@@ -71,22 +58,5 @@ public class UserController {
 
         return ResponseEntity.noContent().build();
     }
-
-    @PostMapping("/login")
-    public String authentication(@RequestBody UserLoginDTO login) {
-
-        UsernamePasswordAuthenticationToken usernamePasswordAuthenticationToken =
-                new UsernamePasswordAuthenticationToken(login.getEmail(), login.getPassword());
-
-        Authentication authenticate = this.authenticationManager
-                .authenticate(usernamePasswordAuthenticationToken);
-
-        var usuario = (UserDTO) authenticate.getPrincipal();
-
-        String tokenJwt = tokenUtil.generateToken(usuario);
-        System.out.println(tokenJwt);
-        return tokenJwt;
-    }
-
 
 }
