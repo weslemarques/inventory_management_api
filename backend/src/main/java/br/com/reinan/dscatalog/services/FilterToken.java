@@ -7,6 +7,8 @@ import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -34,14 +36,14 @@ public class FilterToken extends OncePerRequestFilter {
 
         if(authorizationHeader != null) {
             token = authorizationHeader.replace("Bearer ", "");
+
             var subject = this.tokenService.getSubject(token);
 
             User user = this.userRepository.findByEmail(subject).orElseThrow((() -> new ResorceNotFoundException("nao foi possivel encontrar esse usuario ")));
-
             var authentication = new UsernamePasswordAuthenticationToken(user,
                     null, user.getAuthorities());
-
             SecurityContextHolder.getContext().setAuthentication(authentication);
+
         }
 
         filterChain.doFilter(request, response);

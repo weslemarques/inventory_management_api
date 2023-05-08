@@ -4,12 +4,12 @@ import br.com.reinan.dscatalog.dto.UserDTO;
 import br.com.reinan.dscatalog.dto.UserInsertDTO;
 import br.com.reinan.dscatalog.dto.UserUpdateDTO;
 import br.com.reinan.dscatalog.services.contract.UserService;
+import jakarta.annotation.security.RolesAllowed;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
@@ -17,11 +17,10 @@ import java.net.URI;
 
 @RestController
 @RequestMapping("/users")
-@PreAuthorize("ADMIN")
 public class UserController {
 
     @Autowired
-    private UserService service;
+    private UserService service;09
 
     @GetMapping
     public ResponseEntity<Page<UserDTO>> findAll(Pageable pageable) {
