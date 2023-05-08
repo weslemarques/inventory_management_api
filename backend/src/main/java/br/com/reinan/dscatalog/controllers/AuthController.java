@@ -34,7 +34,6 @@ public class AuthController {
         var user = (User) authenticate.getPrincipal();
 
         String tokenJwt = tokenUtil.generateToken(user);
-        System.out.println(tokenJwt);
         return ResponseEntity.ok(tokenJwt);
     }
 }
