@@ -28,8 +28,11 @@ public class WebSecurityConfig {
                 .and()
                 .authorizeHttpRequests()
                 .requestMatchers(HttpMethod.GET, "/products/**", "/categories/**").permitAll()
-                .requestMatchers(HttpMethod.POST, "/auth/**").permitAll()
+                .requestMatchers("/auth/**").permitAll()
+                .requestMatchers("/users/**").hasRole("ADMIN")
                 .anyRequest().authenticated()
+                .and()
+                .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
                 .and().addFilterBefore(filter, UsernamePasswordAuthenticationFilter.class);
         return http.build();
     }

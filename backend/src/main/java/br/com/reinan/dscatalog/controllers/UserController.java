@@ -20,7 +20,7 @@ import java.net.URI;
 public class UserController {
 
     @Autowired
-    private UserService service;09
+    private UserService service;
 
     @GetMapping
     public ResponseEntity<Page<UserDTO>> findAll(Pageable pageable) {

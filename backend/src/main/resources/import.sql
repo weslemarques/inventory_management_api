@@ -1,6 +1,7 @@
 INSERT INTO tb_user (first_name, last_name, email, password) VALUES ('Alex', 'Brown', 'alex@gmail.com', '$2a$12$A8Wv1JRWHPzUyX4q4bzTAOexAzJ1Oad5h386Bg9APYFjfCnOoTlSC');
 INSERT INTO tb_user (first_name, last_name, email, password) VALUES ('Maria', 'Green', 'maria@gmail.com', '$2a$12$Lmu/u2lwmSNge6RBaZNwAOCNcD84lWdbNg/IWhkPT1d6OHMW2KOWO');
 INSERT INTO tb_user (first_name, last_name, email, password) VALUES ('Joao', 'Green', 'joao@gmail.com', '$2a$12$c0BQfIlABzR2SA758MSkpeLWPYsK3FkUUuZpFOLBKVhxi/L0VOX6q');
+INSERT INTO tb_user (first_name, last_name, email, password) VALUES ('Pedro', 'Green', 'pedro@gmail.com', '$2a$12$uazcbF9P0zawTGJwVfWS0.hqON2WKdJ9yJ5F4lhBHbViiUFwcDVze');
 
 INSERT INTO tb_role (authority) VALUES ('ROLE_OPERATOR');
 INSERT INTO tb_role (authority) VALUES ('ROLE_ADMIN');
