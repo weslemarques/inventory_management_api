@@ -1,16 +1,12 @@
 package br.com.reinan.dscatalog.services;
 
-import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.ArgumentMatchers.anyLong;
-import static org.mockito.Mockito.doNothing;
-import static org.mockito.Mockito.doThrow;
-import static org.mockito.Mockito.times;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
-
-import java.util.List;
-import java.util.Optional;
-
+import br.com.reinan.dscatalog.dto.ProductDTO;
+import br.com.reinan.dscatalog.entities.Category;
+import br.com.reinan.dscatalog.entities.Product;
+import br.com.reinan.dscatalog.repositories.CategoryRepository;
+import br.com.reinan.dscatalog.repositories.ProductRepository;
+import br.com.reinan.dscatalog.services.exceptions.ResorceNotFoundException;
+import br.com.reinan.dscatalog.tests.Factory;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -24,13 +20,12 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 
-import br.com.reinan.dscatalog.dto.ProductDTO;
-import br.com.reinan.dscatalog.entities.Category;
-import br.com.reinan.dscatalog.entities.Product;
-import br.com.reinan.dscatalog.repositories.CategoryRepository;
-import br.com.reinan.dscatalog.repositories.ProductRepository;
-import br.com.reinan.dscatalog.services.exceptions.ResorceNotFoundException;
-import br.com.reinan.dscatalog.tests.Factory;
+import java.util.List;
+import java.util.Optional;
+
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.anyLong;
+import static org.mockito.Mockito.*;
 
 @ExtendWith(SpringExtension.class)
 public class ProductServiceTests {
@@ -53,6 +48,7 @@ public class ProductServiceTests {
 
     @BeforeEach
     void setUp() throws Exception {
+
         existingId = 1L;
         notExistingId = 1000L;
         product = Factory.createProduct();
@@ -140,4 +136,5 @@ public class ProductServiceTests {
             service.insert(new ProductDTO(product));
         });
     }
+
 }

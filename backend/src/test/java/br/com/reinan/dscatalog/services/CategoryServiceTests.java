@@ -1,14 +1,10 @@
 package br.com.reinan.dscatalog.services;
 
-import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.Mockito.doNothing;
-import static org.mockito.Mockito.doThrow;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
-
-import java.util.List;
-import java.util.Optional;
-
+import br.com.reinan.dscatalog.dto.CategoryDTO;
+import br.com.reinan.dscatalog.entities.Category;
+import br.com.reinan.dscatalog.repositories.CategoryRepository;
+import br.com.reinan.dscatalog.services.exceptions.ResorceNotFoundException;
+import br.com.reinan.dscatalog.tests.Factory;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -22,11 +18,11 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 
-import br.com.reinan.dscatalog.dto.CategoryDTO;
-import br.com.reinan.dscatalog.entities.Category;
-import br.com.reinan.dscatalog.repositories.CategoryRepository;
-import br.com.reinan.dscatalog.services.exceptions.ResorceNotFoundException;
-import br.com.reinan.dscatalog.tests.Factory;
+import java.util.List;
+import java.util.Optional;
+
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.Mockito.*;
 
 @ExtendWith(SpringExtension.class)
 public class CategoryServiceTests {
@@ -42,6 +38,7 @@ public class CategoryServiceTests {
     private Category category;
     private CategoryDTO dto;
     private PageImpl<Category> page;
+
 
     @BeforeEach
     public void setUp() {
@@ -133,5 +130,8 @@ public class CategoryServiceTests {
         Assertions.assertEquals(pageImpl.getSize(), 1);
         Assertions.assertEquals(pageImpl.getContent().get(0).getName(), "category");
     }
+
+
+
 
 }

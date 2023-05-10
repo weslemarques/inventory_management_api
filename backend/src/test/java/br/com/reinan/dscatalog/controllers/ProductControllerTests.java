@@ -1,19 +1,13 @@
 package br.com.reinan.dscatalog.controllers;
 
-import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.Mockito.doNothing;
-import static org.mockito.Mockito.doThrow;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
-
-import java.util.List;
-
+import br.com.reinan.dscatalog.config.WebSecurityConfig;
+import br.com.reinan.dscatalog.dto.ProductDTO;
+import br.com.reinan.dscatalog.services.ProductServiceImpl;
+import br.com.reinan.dscatalog.services.exceptions.DataBaseException;
+import br.com.reinan.dscatalog.services.exceptions.ResorceNotFoundException;
+import br.com.reinan.dscatalog.tests.Factory;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,15 +20,13 @@ import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.ResultActions;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
+import java.util.List;
 
-import br.com.reinan.dscatalog.config.WebSecurityConfig;
-import br.com.reinan.dscatalog.dto.ProductDTO;
-import br.com.reinan.dscatalog.services.ProductServiceImpl;
-import br.com.reinan.dscatalog.services.exceptions.DataBaseException;
-import br.com.reinan.dscatalog.services.exceptions.ResorceNotFoundException;
-import br.com.reinan.dscatalog.tests.Factory;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.Mockito.*;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @WebMvcTest(ProductController.class)
 @Import(WebSecurityConfig.class)

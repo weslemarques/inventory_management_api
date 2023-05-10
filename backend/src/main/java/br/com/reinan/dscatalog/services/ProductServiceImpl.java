@@ -1,5 +1,6 @@
 package br.com.reinan.dscatalog.services;
 
+import br.com.reinan.dscatalog.Util.mapper.ProductMapper;
 import br.com.reinan.dscatalog.dto.CategoryDTO;
 import br.com.reinan.dscatalog.dto.ProductDTO;
 import br.com.reinan.dscatalog.entities.Category;
@@ -17,10 +18,8 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.Optional;
-
 @Service
-public class ProductServiceImpl  implements ProductService {
+public class ProductServiceImpl implements ProductService {
 
     @Autowired
     private ProductRepository repository;
@@ -31,24 +30,22 @@ public class ProductServiceImpl  implements ProductService {
     @Transactional(readOnly = true)
     public Page<ProductDTO> findAll(Pageable pageable) {
         Page<Product> list = repository.findAll(pageable);
-        return list.map(c -> new ProductDTO(c));
+        return list.map(ProductMapper::toDto);
     }
 
     @Transactional(readOnly = true)
     public ProductDTO findById(Long id) {
 
-        Optional<Product> obj = repository.findById(id);
-        Product entity = obj.orElseThrow(() -> new ResorceNotFoundException("Entity Not Found "));
-        return new ProductDTO(entity, entity.getCategories());
+        Product obj = repository.findById(id).orElseThrow(() -> new ResorceNotFoundException("Entity Not Found "));
+        return ProductMapper.toDto(obj);
     }
 
     @Transactional
     public ProductDTO insert(ProductDTO dto) {
         Product entity = new Product();
-        copyDtoToEntity(dto, entity);
+        ProductMapper.toEntity(dto, entity);
         entity = repository.save(entity);
         return new ProductDTO(entity);
-
     }
 
     @Transactional
@@ -56,7 +53,7 @@ public class ProductServiceImpl  implements ProductService {
 
         Product entity = repository.findById(id)
                 .orElseThrow(() -> new ResorceNotFoundException("Id not found " + id));
-        copyDtoToEntity(dto, entity);
+        ProductMapper.toEntity(dto, entity);
         entity = repository.save(entity);
         return new ProductDTO(entity);
     }
