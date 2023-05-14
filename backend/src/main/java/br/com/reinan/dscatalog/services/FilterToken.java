@@ -29,8 +29,6 @@ public class FilterToken extends OncePerRequestFilter {
     protected void doFilterInternal(HttpServletRequest request,
                                     HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
 
-
-
         String jwtToken = recoverToken(request);
 
         if(jwtToken != null) {

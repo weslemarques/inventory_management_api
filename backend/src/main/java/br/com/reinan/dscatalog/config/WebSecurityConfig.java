@@ -23,9 +23,7 @@ public class WebSecurityConfig {
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http
-                .csrf().disable().cors().disable()
-                .httpBasic()
-                .and()
+                .csrf().disable().cors().disable()git s
                 .authorizeHttpRequests()
                 .requestMatchers(HttpMethod.GET, "/products/**", "/categories/**").permitAll()
                 .requestMatchers("/auth/**").permitAll()
