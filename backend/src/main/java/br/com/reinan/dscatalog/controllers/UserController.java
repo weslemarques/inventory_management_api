@@ -4,7 +4,6 @@ import br.com.reinan.dscatalog.dto.UserDTO;
 import br.com.reinan.dscatalog.dto.UserInsertDTO;
 import br.com.reinan.dscatalog.dto.UserUpdateDTO;
 import br.com.reinan.dscatalog.services.contract.UserService;
-import jakarta.annotation.security.RolesAllowed;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
