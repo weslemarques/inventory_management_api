@@ -30,7 +30,8 @@ public class AuthServiceImpl implements AuthService {
         SecurityContextHolder.getContext().setAuthentication(authenticate);
 
         var user = (User) authenticate.getPrincipal();
+        List<String> roles = user.
 
-        return tokenUtil.generateToken(user);
+        return tokenUtil.generateToken(user, user.getAuthorities());
     }
 }
