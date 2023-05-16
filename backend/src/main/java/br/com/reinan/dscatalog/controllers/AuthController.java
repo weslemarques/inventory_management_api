@@ -1,6 +1,7 @@
 package br.com.reinan.dscatalog.controllers;
 
 import br.com.reinan.dscatalog.dto.request.UserLoginDTO;
+import br.com.reinan.dscatalog.dto.security.TokenRefreshDTO;
 import br.com.reinan.dscatalog.services.contract.AuthService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -17,10 +18,10 @@ public class AuthController {
     @Autowired
     private AuthService authService;
 
-    @PostMapping("/signin")
-    public ResponseEntity<String> authentication(@RequestBody UserLoginDTO login) {
-
-        String tokenJwt = authService.authentication(login);
-        return ResponseEntity.ok(tokenJwt);
-    }
+//    @PostMapping("/signin")
+//    public ResponseEntity<TokenRefreshDTO> authentication(@RequestBody UserLoginDTO login) {
+//
+//        String tokenJwt = authService.authentication(login);
+//        return ResponseEntity.ok(tokenJwt);
+//    }
 }

@@ -35,6 +35,7 @@ public class AuthServiceImpl implements AuthService {
         var user = (User) authenticate.getPrincipal();
         Set<Role> roles = user.getAuthorities();
 
-        return tokenUtil.generateToken(user, roles.stream().map(Role::getAuthority).toList());
+        String token = tokenUtil.generateToken(user);
+        return tokenUtil.generateToken(user);
     }
 }

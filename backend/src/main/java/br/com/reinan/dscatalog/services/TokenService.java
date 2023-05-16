@@ -14,11 +14,10 @@ import java.util.Set;
 @Service
 public class TokenService {
 
-    public String generateToken(User user, List<String> roles) {
+    public String generateToken(User user) {
 
         String token = JWT.create()
                 .withIssuer("Produtos")
-                .withClaim("roles", roles)
                 .withSubject(user.getEmail())
                 .withClaim("id", user.getId())
                 .withExpiresAt(LocalDateTime.now()
