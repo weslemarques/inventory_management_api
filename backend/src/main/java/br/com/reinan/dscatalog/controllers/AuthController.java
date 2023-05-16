@@ -18,10 +18,10 @@ public class AuthController {
     @Autowired
     private AuthService authService;
 
-//    @PostMapping("/signin")
-//    public ResponseEntity<TokenRefreshDTO> authentication(@RequestBody UserLoginDTO login) {
-//
-//        String tokenJwt = authService.authentication(login);
-//        return ResponseEntity.ok(tokenJwt);
-//    }
+    @PostMapping("/signin")
+    public ResponseEntity<TokenRefreshDTO> authentication(@RequestBody UserLoginDTO login) {
+
+        TokenRefreshDTO tokenJwt = authService.authentication(login);
+        return ResponseEntity.ok(tokenJwt);
+    }
 }

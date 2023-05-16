@@ -1,6 +1,7 @@
 package br.com.reinan.dscatalog.services;
 
 import br.com.reinan.dscatalog.dto.request.UserLoginDTO;
+import br.com.reinan.dscatalog.dto.security.TokenRefreshDTO;
 import br.com.reinan.dscatalog.entities.Role;
 import br.com.reinan.dscatalog.entities.User;
 import br.com.reinan.dscatalog.services.contract.AuthService;
@@ -22,7 +23,7 @@ public class AuthServiceImpl implements AuthService {
     @Autowired
     private TokenService tokenUtil;
     @Override
-    public String authentication(UserLoginDTO login) {
+    public TokenRefreshDTO authentication(UserLoginDTO login) {
 
         UsernamePasswordAuthenticationToken usernamePasswordAuthenticationToken =
                 new UsernamePasswordAuthenticationToken(login.getEmail(), login.getPassword());
@@ -36,6 +37,7 @@ public class AuthServiceImpl implements AuthService {
         Set<Role> roles = user.getAuthorities();
 
         String token = tokenUtil.generateToken(user);
-        return tokenUtil.generateToken(user);
+        String refreshRToken = tokenUtil.generateToken(user);
+        return new TokenRefreshDTO(token, refreshRToken);
     }
 }
