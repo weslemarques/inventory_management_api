@@ -19,7 +19,7 @@ public class AuthController {
     @Autowired
     private AuthService authService;
 
-    @PostMapping("/login")
+    @PostMapping()
     public ResponseEntity<String> authentication(@RequestBody UserLoginDTO login) {
 
         String tokenJwt = authService.authentication(login);

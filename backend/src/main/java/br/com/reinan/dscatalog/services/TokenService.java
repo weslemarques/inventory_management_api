@@ -14,7 +14,7 @@ import java.util.Set;
 @Service
 public class TokenService {
 
-    public String generateToken(User user, Set<String> roles) {
+    public String generateToken(User user, List<String> roles) {
 
         String token = JWT.create()
                 .withIssuer("Produtos")
