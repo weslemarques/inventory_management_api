@@ -1,6 +1,6 @@
 package br.com.reinan.dscatalog.services.contract;
 
-import br.com.reinan.dscatalog.dto.ProductDTO;
+import br.com.reinan.dscatalog.dto.response.ProductDTO;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 

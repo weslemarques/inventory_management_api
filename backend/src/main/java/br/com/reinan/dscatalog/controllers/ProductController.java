@@ -1,6 +1,6 @@
 package br.com.reinan.dscatalog.controllers;
 
-import br.com.reinan.dscatalog.dto.ProductDTO;
+import br.com.reinan.dscatalog.dto.response.ProductDTO;
 import br.com.reinan.dscatalog.services.contract.ProductService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;

@@ -1,4 +1,4 @@
-package br.com.reinan.dscatalog.dto;
+package br.com.reinan.dscatalog.dto.request;
 
 import jakarta.validation.constraints.NotBlank;
 

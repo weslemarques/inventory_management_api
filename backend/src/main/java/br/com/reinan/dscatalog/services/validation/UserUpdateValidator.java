@@ -12,7 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.servlet.HandlerMapping;
 
 import br.com.reinan.dscatalog.controllers.exceptions.FieldMessage;
-import br.com.reinan.dscatalog.dto.UserUpdateDTO;
+import br.com.reinan.dscatalog.dto.request.UserUpdateDTO;
 import br.com.reinan.dscatalog.entities.User;
 import br.com.reinan.dscatalog.repositories.UserRepository;
 import jakarta.validation.ConstraintValidatorContext;

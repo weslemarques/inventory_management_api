@@ -1,6 +1,6 @@
 package br.com.reinan.dscatalog.Util.mapper;
 
-import br.com.reinan.dscatalog.dto.ProductDTO;
+import br.com.reinan.dscatalog.dto.response.ProductDTO;
 import br.com.reinan.dscatalog.entities.Product;
 import org.modelmapper.ModelMapper;
 

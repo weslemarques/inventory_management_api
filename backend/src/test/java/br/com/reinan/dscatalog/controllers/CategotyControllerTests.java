@@ -1,7 +1,7 @@
 package br.com.reinan.dscatalog.controllers;
 
 import br.com.reinan.dscatalog.config.WebSecurityConfig;
-import br.com.reinan.dscatalog.dto.CategoryDTO;
+import br.com.reinan.dscatalog.dto.response.CategoryDTO;
 import br.com.reinan.dscatalog.services.CategoryServiceImpl;
 import br.com.reinan.dscatalog.tests.Factory;
 import org.junit.jupiter.api.BeforeEach;

@@ -2,8 +2,8 @@ package br.com.reinan.dscatalog.tests;
 
 import java.time.Instant;
 
-import br.com.reinan.dscatalog.dto.CategoryDTO;
-import br.com.reinan.dscatalog.dto.ProductDTO;
+import br.com.reinan.dscatalog.dto.response.CategoryDTO;
+import br.com.reinan.dscatalog.dto.response.ProductDTO;
 import br.com.reinan.dscatalog.entities.Category;
 import br.com.reinan.dscatalog.entities.Product;
 

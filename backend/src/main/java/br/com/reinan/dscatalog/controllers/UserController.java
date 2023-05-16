@@ -1,8 +1,8 @@
 package br.com.reinan.dscatalog.controllers;
 
-import br.com.reinan.dscatalog.dto.UserDTO;
-import br.com.reinan.dscatalog.dto.UserInsertDTO;
-import br.com.reinan.dscatalog.dto.UserUpdateDTO;
+import br.com.reinan.dscatalog.dto.response.UserDTO;
+import br.com.reinan.dscatalog.dto.request.UserInsertDTO;
+import br.com.reinan.dscatalog.dto.request.UserUpdateDTO;
 import br.com.reinan.dscatalog.services.contract.UserService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;

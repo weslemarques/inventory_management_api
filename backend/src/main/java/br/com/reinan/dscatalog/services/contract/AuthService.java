@@ -1,6 +1,6 @@
 package br.com.reinan.dscatalog.services.contract;
 
-import br.com.reinan.dscatalog.dto.UserLoginDTO;
+import br.com.reinan.dscatalog.dto.request.UserLoginDTO;
 
 public interface AuthService {
 

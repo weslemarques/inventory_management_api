@@ -1,8 +1,8 @@
 package br.com.reinan.dscatalog.services.contract;
 
-import br.com.reinan.dscatalog.dto.UserDTO;
-import br.com.reinan.dscatalog.dto.UserInsertDTO;
-import br.com.reinan.dscatalog.dto.UserUpdateDTO;
+import br.com.reinan.dscatalog.dto.response.UserDTO;
+import br.com.reinan.dscatalog.dto.request.UserInsertDTO;
+import br.com.reinan.dscatalog.dto.request.UserUpdateDTO;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.security.core.userdetails.UserDetailsService;

@@ -1,8 +1,8 @@
 package br.com.reinan.dscatalog.services;
 
 import br.com.reinan.dscatalog.Util.mapper.ProductMapper;
-import br.com.reinan.dscatalog.dto.CategoryDTO;
-import br.com.reinan.dscatalog.dto.ProductDTO;
+import br.com.reinan.dscatalog.dto.response.CategoryDTO;
+import br.com.reinan.dscatalog.dto.response.ProductDTO;
 import br.com.reinan.dscatalog.entities.Category;
 import br.com.reinan.dscatalog.entities.Product;
 import br.com.reinan.dscatalog.repositories.CategoryRepository;

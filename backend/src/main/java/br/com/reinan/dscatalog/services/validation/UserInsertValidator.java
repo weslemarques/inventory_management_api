@@ -7,7 +7,7 @@ import jakarta.validation.ConstraintValidator;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import br.com.reinan.dscatalog.controllers.exceptions.FieldMessage;
-import br.com.reinan.dscatalog.dto.UserInsertDTO;
+import br.com.reinan.dscatalog.dto.request.UserInsertDTO;
 import br.com.reinan.dscatalog.repositories.UserRepository;
 import jakarta.validation.ConstraintValidatorContext;
 

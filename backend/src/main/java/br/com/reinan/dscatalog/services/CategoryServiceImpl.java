@@ -1,6 +1,6 @@
 package br.com.reinan.dscatalog.services;
 
-import br.com.reinan.dscatalog.dto.CategoryDTO;
+import br.com.reinan.dscatalog.dto.response.CategoryDTO;
 import br.com.reinan.dscatalog.entities.Category;
 import br.com.reinan.dscatalog.repositories.CategoryRepository;
 import br.com.reinan.dscatalog.services.contract.CategoryService;

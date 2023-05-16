@@ -1,6 +1,6 @@
 package br.com.reinan.dscatalog.services;
 
-import br.com.reinan.dscatalog.dto.UserLoginDTO;
+import br.com.reinan.dscatalog.dto.request.UserLoginDTO;
 import br.com.reinan.dscatalog.entities.Role;
 import br.com.reinan.dscatalog.entities.User;
 import br.com.reinan.dscatalog.services.contract.AuthService;
@@ -11,7 +11,6 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
 import java.util.Set;
 
 @Service
