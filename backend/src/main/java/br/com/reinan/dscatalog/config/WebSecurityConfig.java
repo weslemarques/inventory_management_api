@@ -23,15 +23,15 @@ public class WebSecurityConfig {
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http
-                .csrf().disable().cors().disable();
-//                .authorizeHttpRequests()
-//                .requestMatchers(HttpMethod.GET, "/products/**", "/categories/**").permitAll()
-//                .requestMatchers("/auth/**").permitAll()
-//                .requestMatchers("/users/**").hasRole("ADMIN")
-//                .anyRequest().authenticated()
-//                .and()
-//                .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
-//                .and().addFilterBefore(filter, UsernamePasswordAuthenticationFilter.class);
+                .csrf().disable().cors().disable()
+                .authorizeHttpRequests()
+                .requestMatchers(HttpMethod.GET, "/products/**", "/categories/**").permitAll()
+                .requestMatchers("/auth/**").permitAll()
+                .requestMatchers("/users/**").hasRole("ADMIN")
+                .anyRequest().authenticated()
+                .and()
+                .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
+                .and().addFilterBefore(filter, UsernamePasswordAuthenticationFilter.class);
         return http.build();
     }
 }

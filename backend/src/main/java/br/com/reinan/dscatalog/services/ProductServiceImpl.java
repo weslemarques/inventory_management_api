@@ -30,14 +30,14 @@ public class ProductServiceImpl implements ProductService {
     @Transactional(readOnly = true)
     public Page<ProductDTO> findAll(Pageable pageable) {
         Page<Product> list = repository.findAll(pageable);
-        return list.map(p -> new ProductDTO(p, p.getCategories()));
+        return list.map(ProductDTO::new);
     }
 
     @Transactional(readOnly = true)
     public ProductDTO findById(Long id) {
 
-        Product obj = repository.findById(id).orElseThrow(() -> new ResorceNotFoundException("Entity Not Found "));
-        return ProductMapper.toDto(obj);
+        Product entity = repository.findById(id).orElseThrow(() -> new ResorceNotFoundException("Entity Not Found "));
+        return new ProductDTO(entity, entity.getCategories());
     }
 
     @Transactional
