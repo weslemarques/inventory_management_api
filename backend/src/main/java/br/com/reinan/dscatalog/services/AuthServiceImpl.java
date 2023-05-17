@@ -5,6 +5,10 @@ import br.com.reinan.dscatalog.dto.security.TokenRefreshResponseDTO;
 import br.com.reinan.dscatalog.entities.Role;
 import br.com.reinan.dscatalog.entities.User;
 import br.com.reinan.dscatalog.services.contract.AuthService;
+import com.auth0.jwt.JWT;
+import com.auth0.jwt.JWTVerifier;
+import com.auth0.jwt.algorithms.Algorithm;
+import com.auth0.jwt.interfaces.DecodedJWT;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -36,8 +40,8 @@ public class AuthServiceImpl implements AuthService {
         var user = (User) authenticate.getPrincipal();
         Set<Role> roles = user.getAuthorities();
 
-        String token = tokenUtil.generateToken(user);
-        String refreshRToken = tokenUtil.generateRefreshToken(user);
-        return new TokenRefreshResponseDTO(token, refreshRToken);
+       return tokenUtil.generateToken(user);
     }
+
+
 }
