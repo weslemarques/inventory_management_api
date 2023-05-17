@@ -14,3 +14,9 @@ spring:
   jpa:
     show-sql: true
 
+
+
+security:
+  jwt:
+    secret: gferwgqewgqfaqf
+    expiration: 30

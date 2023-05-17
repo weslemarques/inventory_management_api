@@ -37,7 +37,7 @@ public class AuthServiceImpl implements AuthService {
         Set<Role> roles = user.getAuthorities();
 
         String token = tokenUtil.generateToken(user);
-        String refreshRToken = tokenUtil.generateToken(user);
+        String refreshRToken = tokenUtil.generateRefreshToken(user);
         return new TokenRefreshResponseDTO(token, refreshRToken);
     }
 }
