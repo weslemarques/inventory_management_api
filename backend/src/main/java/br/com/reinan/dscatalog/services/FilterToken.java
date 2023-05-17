@@ -2,6 +2,7 @@ package br.com.reinan.dscatalog.services;
 
 import br.com.reinan.dscatalog.entities.User;
 import br.com.reinan.dscatalog.repositories.UserRepository;
+import br.com.reinan.dscatalog.services.exceptions.AuthenticationFailed;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;

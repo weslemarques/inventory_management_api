@@ -2,6 +2,7 @@ package br.com.reinan.dscatalog.controllers.exceptions;
 
 import java.time.Instant;
 
+import br.com.reinan.dscatalog.services.exceptions.AuthenticationFailed;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -87,6 +88,24 @@ public class ControllerExceptionHandler {
         err.setTimestamp(Instant.now());
         err.setStatus(status.value());
         err.setError("Validation exception");
+        err.setMessage(e.getMessage());
+        err.setPath(request.getRequestURI());
+
+        return ResponseEntity.status(status).body(err);
+
+    }
+
+    @ExceptionHandler(AuthenticationFailed.class)
+    @ResponseStatus(HttpStatus.UNAUTHORIZED)
+    public ResponseEntity<StandardError> authenticationFailed(
+            AuthenticationFailed e,
+            HttpServletRequest request) {
+        HttpStatus status = HttpStatus.UNAUTHORIZED;
+        StandardError err = new StandardError();
+
+        err.setTimestamp(Instant.now());
+        err.setStatus(status.value());
+        err.setError("Authentication Failed, Verify Credentials");
         err.setMessage(e.getMessage());
         err.setPath(request.getRequestURI());
 

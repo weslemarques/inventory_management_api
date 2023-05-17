@@ -21,16 +21,16 @@ public class AuthController {
     private AuthService authService;
 
     @PostMapping("/signin")
-    public ResponseEntity<TokenRefreshResponseDTO> authentication(  @Valid @RequestBody UserLoginDTO login) {
+    public ResponseEntity<TokenRefreshResponseDTO> authentication(@Valid @RequestBody UserLoginDTO login) {
 
         TokenRefreshResponseDTO tokenJwt = authService.authentication(login);
         return ResponseEntity.ok(tokenJwt);
     }
 
-    @PostMapping("/signin")
-    public ResponseEntity<TokenRefreshResponseDTO> refreshToken(@RequestBody TokenRefreshRequestDTO refreshToken) {
-
-        String  tokenRefresh = refreshToken.getRefreshToken();
-        return ResponseEntity.ok();
-    }
+//    @PostMapping("/refreshtoken")
+//    public ResponseEntity<TokenRefreshResponseDTO> refreshToken(@Valid @RequestBody TokenRefreshRequestDTO refreshToken) {
+//
+//        String tokenRefresh = refreshToken.getRefreshToken();
+//
+//    }
 }
