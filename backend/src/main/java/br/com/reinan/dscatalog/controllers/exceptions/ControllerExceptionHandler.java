@@ -13,11 +13,13 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import br.com.reinan.dscatalog.services.exceptions.DataBaseException;
 import br.com.reinan.dscatalog.services.exceptions.ResorceNotFoundException;
 import jakarta.servlet.http.HttpServletRequest;
+import org.springframework.web.bind.annotation.ResponseStatus;
 
 @ControllerAdvice
 public class ControllerExceptionHandler {
 
     @ExceptionHandler(ResorceNotFoundException.class)
+    @ResponseStatus(HttpStatus.NOT_FOUND)
     public ResponseEntity<StandardError> entityNotFound(
             ResorceNotFoundException e,
             HttpServletRequest request) {
@@ -35,6 +37,7 @@ public class ControllerExceptionHandler {
     }
 
     @ExceptionHandler(DataBaseException.class)
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
     public ResponseEntity<StandardError> dataBaseViolation(
             DataBaseException e,
             HttpServletRequest request) {
@@ -52,6 +55,7 @@ public class ControllerExceptionHandler {
     }
 
     @ExceptionHandler(MethodArgumentNotValidException.class)
+    @ResponseStatus(HttpStatus.UNPROCESSABLE_ENTITY)
     public ResponseEntity<StandardError> validationEntity(
             MethodArgumentNotValidException e,
             HttpServletRequest request) {
@@ -73,6 +77,7 @@ public class ControllerExceptionHandler {
     }
 
     @ExceptionHandler(UsernameNotFoundException.class)
+    @ResponseStatus(HttpStatus.UNPROCESSABLE_ENTITY)
     public ResponseEntity<StandardError> usernameNotFoundException(
             UsernameNotFoundException e,
             HttpServletRequest request) {

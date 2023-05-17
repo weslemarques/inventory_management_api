@@ -1,11 +1,11 @@
 package br.com.reinan.dscatalog.entities;
 
+import jakarta.persistence.*;
+
 import java.io.Serializable;
 import java.time.Instant;
 import java.util.HashSet;
 import java.util.Set;
-
-import jakarta.persistence.*;
 
 @Entity
 @Table(name = "tb_product")
