@@ -1,8 +1,9 @@
 package br.com.reinan.dscatalog.controllers.exceptions;
 
-import java.time.Instant;
-
-import br.com.reinan.dscatalog.services.exceptions.AuthenticationFailed;
+import br.com.reinan.dscatalog.services.exceptions.DataBaseException;
+import br.com.reinan.dscatalog.services.exceptions.ResorceNotFoundException;
+import br.com.reinan.dscatalog.services.exceptions.TokenInvalido;
+import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -10,14 +11,14 @@ import org.springframework.validation.FieldError;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
-
-import br.com.reinan.dscatalog.services.exceptions.DataBaseException;
-import br.com.reinan.dscatalog.services.exceptions.ResorceNotFoundException;
-import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.web.bind.annotation.ResponseStatus;
+import org.springframework.web.bind.annotation.RestController;
+
+import java.time.Instant;
 
 @ControllerAdvice
-public class ControllerExceptionHandler {
+@RestController
+public class ControllerExceptionHandler{
 
     @ExceptionHandler(ResorceNotFoundException.class)
     @ResponseStatus(HttpStatus.NOT_FOUND)
@@ -95,17 +96,17 @@ public class ControllerExceptionHandler {
 
     }
 
-    @ExceptionHandler(AuthenticationFailed.class)
+    @ExceptionHandler(TokenInvalido.class)
     @ResponseStatus(HttpStatus.UNAUTHORIZED)
     public ResponseEntity<StandardError> authenticationFailed(
-            AuthenticationFailed e,
+            TokenInvalido e,
             HttpServletRequest request) {
         HttpStatus status = HttpStatus.UNAUTHORIZED;
         StandardError err = new StandardError();
 
         err.setTimestamp(Instant.now());
         err.setStatus(status.value());
-        err.setError("Authentication Failed, Verify Credentials");
+        err.setError("Token Invalido");
         err.setMessage(e.getMessage());
         err.setPath(request.getRequestURI());
 

@@ -2,7 +2,7 @@ package br.com.reinan.dscatalog.services;
 
 import br.com.reinan.dscatalog.entities.User;
 import br.com.reinan.dscatalog.repositories.UserRepository;
-import br.com.reinan.dscatalog.services.exceptions.AuthenticationFailed;
+import br.com.reinan.dscatalog.services.exceptions.TokenInvalido;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
@@ -26,9 +26,8 @@ public class FilterToken extends OncePerRequestFilter {
         this.userRepository = userRepository;
     }
 
-    protected void doFilterInternal(HttpServletRequest request,
-                                    HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
-
+    protected  void doFilterInternal(HttpServletRequest request,
+                                             HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
         String jwtToken = recoverToken(request);
 
         if (jwtToken != null) {
@@ -45,13 +44,12 @@ public class FilterToken extends OncePerRequestFilter {
 
     private User recoverUser(String tokenJWT) {
         String subject = tokenService.getSubject(tokenJWT);
-        User user = userRepository.findByEmail(subject).get();
-        return user;
+        return userRepository.findByEmail(subject).orElseThrow(() -> new TokenInvalido("Token Invalido"));
     }
 
     private String recoverToken(HttpServletRequest request) {
         String authorizationHeader = request.getHeader("Authorization");
-        if (authorizationHeader != null) {
+        if (authorizationHeader != null || authorizationHeader.startsWith("Bearer ")) {
             return authorizationHeader.replace("Bearer ", "");
         }
 
