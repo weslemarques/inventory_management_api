@@ -21,7 +21,7 @@ public class AuthServiceImpl implements AuthService {
     private AuthenticationManager authenticationManager;
 
     @Autowired
-    private TokenService tokenUtil;
+    private TokenService tokenService;
     @Override
     public TokenRefreshResponseDTO authentication(UserLoginDTO login) {
 
@@ -36,7 +36,7 @@ public class AuthServiceImpl implements AuthService {
         var user = (User) authenticate.getPrincipal();
         Set<Role> roles = user.getAuthorities();
 
-       return tokenUtil.generateToken(user);
+       return tokenService.generateToken(user);
     }
 
 
