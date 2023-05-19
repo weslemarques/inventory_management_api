@@ -27,7 +27,8 @@ public class FilterToken extends OncePerRequestFilter {
     }
 
     protected  void doFilterInternal(HttpServletRequest request,
-                                             HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
+                                  HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
+
         String jwtToken = recoverToken(request);
 
         if (jwtToken != null) {
@@ -49,7 +50,7 @@ public class FilterToken extends OncePerRequestFilter {
 
     private String recoverToken(HttpServletRequest request) {
         String authorizationHeader = request.getHeader("Authorization");
-        if (authorizationHeader != null || authorizationHeader.startsWith("Bearer ")) {
+        if (authorizationHeader != null){
             return authorizationHeader.replace("Bearer ", "");
         }
 

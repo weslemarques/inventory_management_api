@@ -19,10 +19,18 @@ public class Category implements Serializable {
     private String name;
 
     @Column(columnDefinition = "TIMESTAMP WITHOUT TIME ZONE")
-    private Instant createdAt;
+    private Instant createdAt = Instant.now();
 
     @Column(columnDefinition = "TIMESTAMP WITHOUT TIME ZONE")
     private Instant updatedAt;
+
+    public void setCreatedAt(Instant createdAt) {
+        this.createdAt = createdAt;
+    }
+
+    public void setUpdatedAt(Instant updatedAt) {
+        this.updatedAt = updatedAt;
+    }
 
     @ManyToMany(mappedBy = "categories")
     private Set<Product> products = new HashSet<>();

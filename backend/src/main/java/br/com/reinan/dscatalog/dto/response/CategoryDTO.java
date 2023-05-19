@@ -1,8 +1,10 @@
 package br.com.reinan.dscatalog.dto.response;
 
 import java.io.Serializable;
+import java.time.Instant;
 
 import br.com.reinan.dscatalog.entities.Category;
+import jakarta.persistence.Column;
 
 public class CategoryDTO implements Serializable {
 
@@ -10,6 +12,27 @@ public class CategoryDTO implements Serializable {
 
     private Long id;
     private String name;
+
+    public Instant getCreatedAt() {
+        return createdAt;
+    }
+
+    public void setCreatedAt(Instant createdAt) {
+        this.createdAt = createdAt;
+    }
+
+    public Instant getUpdatedAt() {
+        return updatedAt;
+    }
+
+    public void setUpdatedAt(Instant updatedAt) {
+        this.updatedAt = updatedAt;
+    }
+
+    private Instant createdAt ;
+
+    private Instant updatedAt;
+
 
     public CategoryDTO() {
     }
@@ -22,6 +45,8 @@ public class CategoryDTO implements Serializable {
     public CategoryDTO(Category category) {
         this.id = category.getId();
         this.name = category.getName();
+        this.createdAt = category.getCreatedAt();
+        this.updatedAt = category.getUpdatedAt();
     }
 
     public Long getId() {

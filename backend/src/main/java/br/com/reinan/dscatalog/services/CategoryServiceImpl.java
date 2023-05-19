@@ -6,6 +6,7 @@ import br.com.reinan.dscatalog.repositories.CategoryRepository;
 import br.com.reinan.dscatalog.services.contract.CategoryService;
 import br.com.reinan.dscatalog.services.exceptions.DataBaseException;
 import br.com.reinan.dscatalog.services.exceptions.ResorceNotFoundException;
+import jakarta.persistence.criteria.CriteriaBuilder;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.dao.EmptyResultDataAccessException;
@@ -14,6 +15,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.Instant;
 import java.util.NoSuchElementException;
 import java.util.Optional;
 
@@ -51,6 +53,7 @@ public class CategoryServiceImpl implements CategoryService {
             Category entity = obj.get();
             entity.setName(dto.getName());
             entity = repository.save(entity);
+            entity.setUpdatedAt(Instant.now());
             return new CategoryDTO(entity);
         } catch (NoSuchElementException e) {
             throw new ResorceNotFoundException("Id not found " + id);
