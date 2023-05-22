@@ -9,8 +9,8 @@ spring:
 
   h2:
     console:
-      enabled: on
-      path: /h2-console
+      enabled: true
+      path: /h2
   jpa:
     show-sql: false
 

@@ -1,6 +1,5 @@
-package br.com.reinan.dscatalog.security.entities;
+package br.com.reinan.dscatalog.entities;
 
-import br.com.reinan.dscatalog.entities.User;
 import jakarta.persistence.*;
 import lombok.Data;
 
