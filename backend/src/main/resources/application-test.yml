@@ -9,10 +9,10 @@ spring:
 
   h2:
     console:
-      enabled: true
-      path: /h2
+      enabled: on
+      path: /h2-console
   jpa:
-    show-sql: true
+    show-sql: false
 
 reinan:
   jwt:
