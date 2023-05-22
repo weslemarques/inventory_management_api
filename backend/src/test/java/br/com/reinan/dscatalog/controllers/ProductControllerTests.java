@@ -1,7 +1,7 @@
 package br.com.reinan.dscatalog.controllers;
 
 import br.com.reinan.dscatalog.config.WebSecurityConfig;
-import br.com.reinan.dscatalog.dto.ProductDTO;
+import br.com.reinan.dscatalog.dto.response.ProductDTO;
 import br.com.reinan.dscatalog.services.ProductServiceImpl;
 import br.com.reinan.dscatalog.services.exceptions.DataBaseException;
 import br.com.reinan.dscatalog.services.exceptions.ResorceNotFoundException;

@@ -1,9 +1,9 @@
 package br.com.reinan.dscatalog.services;
 
-import br.com.reinan.dscatalog.dto.RoleDTO;
-import br.com.reinan.dscatalog.dto.UserDTO;
-import br.com.reinan.dscatalog.dto.UserInsertDTO;
-import br.com.reinan.dscatalog.dto.UserUpdateDTO;
+import br.com.reinan.dscatalog.dto.response.RoleDTO;
+import br.com.reinan.dscatalog.dto.response.UserDTO;
+import br.com.reinan.dscatalog.dto.request.UserInsertDTO;
+import br.com.reinan.dscatalog.dto.request.UserUpdateDTO;
 import br.com.reinan.dscatalog.entities.Role;
 import br.com.reinan.dscatalog.entities.User;
 import br.com.reinan.dscatalog.repositories.RoleRepository;
@@ -16,7 +16,6 @@ import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -42,7 +41,7 @@ public class UserServiceImpl implements  UserService {
     @Transactional(readOnly = true)
     public Page<UserDTO> findAll(Pageable pageable) {
         Page<User> list = userRepository.findAll(pageable);
-        return list.map(u -> new UserDTO(u));
+        return list.map(UserDTO::new);
     }
 
     @Transactional(readOnly = true)

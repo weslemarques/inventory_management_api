@@ -10,7 +10,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.transaction.annotation.Transactional;
 
-import br.com.reinan.dscatalog.dto.ProductDTO;
+import br.com.reinan.dscatalog.dto.response.ProductDTO;
 import br.com.reinan.dscatalog.entities.Product;
 import br.com.reinan.dscatalog.services.ProductServiceImpl;
 import br.com.reinan.dscatalog.services.exceptions.ResorceNotFoundException;

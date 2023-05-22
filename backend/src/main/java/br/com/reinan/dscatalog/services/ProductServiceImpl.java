@@ -1,8 +1,8 @@
 package br.com.reinan.dscatalog.services;
 
-import br.com.reinan.dscatalog.Util.mapper.ProductMapper;
-import br.com.reinan.dscatalog.dto.CategoryDTO;
-import br.com.reinan.dscatalog.dto.ProductDTO;
+import br.com.reinan.dscatalog.Util.mapper.ObjectMapper;
+import br.com.reinan.dscatalog.dto.response.CategoryDTO;
+import br.com.reinan.dscatalog.dto.response.ProductDTO;
 import br.com.reinan.dscatalog.entities.Category;
 import br.com.reinan.dscatalog.entities.Product;
 import br.com.reinan.dscatalog.repositories.CategoryRepository;
@@ -30,20 +30,20 @@ public class ProductServiceImpl implements ProductService {
     @Transactional(readOnly = true)
     public Page<ProductDTO> findAll(Pageable pageable) {
         Page<Product> list = repository.findAll(pageable);
-        return list.map(ProductMapper::toDto);
+        return list.map(ProductDTO::new);
     }
 
     @Transactional(readOnly = true)
     public ProductDTO findById(Long id) {
 
-        Product obj = repository.findById(id).orElseThrow(() -> new ResorceNotFoundException("Entity Not Found "));
-        return ProductMapper.toDto(obj);
+        Product entity = repository.findById(id).orElseThrow(() -> new ResorceNotFoundException("Entity Not Found "));
+        return new ProductDTO(entity, entity.getCategories());
     }
 
     @Transactional
     public ProductDTO insert(ProductDTO dto) {
         Product entity = new Product();
-        ProductMapper.toEntity(dto, entity);
+        ObjectMapper.toEntity(dto, entity);
         entity = repository.save(entity);
         return new ProductDTO(entity);
     }
@@ -53,7 +53,7 @@ public class ProductServiceImpl implements ProductService {
 
         Product entity = repository.findById(id)
                 .orElseThrow(() -> new ResorceNotFoundException("Id not found " + id));
-        ProductMapper.toEntity(dto, entity);
+        ObjectMapper.toEntity(dto, entity);
         entity = repository.save(entity);
         return new ProductDTO(entity);
     }

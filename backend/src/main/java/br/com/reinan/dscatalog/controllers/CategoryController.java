@@ -1,6 +1,6 @@
 package br.com.reinan.dscatalog.controllers;
 
-import br.com.reinan.dscatalog.dto.CategoryDTO;
+import br.com.reinan.dscatalog.dto.response.CategoryDTO;
 import br.com.reinan.dscatalog.services.CategoryServiceImpl;
 import br.com.reinan.dscatalog.services.exceptions.DataBaseException;
 import org.springframework.beans.factory.annotation.Autowired;
