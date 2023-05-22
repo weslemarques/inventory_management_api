@@ -6,10 +6,9 @@ import lombok.Setter;
 
 import java.io.Serializable;
 
-@Setter
 @Getter
-public class TokenRefreshRequestDTO implements Serializable {
-
+@Setter
+public class TokenRefreshRequest implements Serializable {
 
     @NotBlank
     private String refreshToken;

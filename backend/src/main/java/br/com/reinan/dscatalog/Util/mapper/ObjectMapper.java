@@ -4,7 +4,7 @@ import br.com.reinan.dscatalog.dto.response.ProductDTO;
 import br.com.reinan.dscatalog.entities.Product;
 import org.modelmapper.ModelMapper;
 
-public class ProductMapper {
+public class ObjectMapper {
 
     private ModelMapper mapper;
 

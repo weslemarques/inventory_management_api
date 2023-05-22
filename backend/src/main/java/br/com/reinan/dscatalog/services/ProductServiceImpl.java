@@ -1,6 +1,6 @@
 package br.com.reinan.dscatalog.services;
 
-import br.com.reinan.dscatalog.Util.mapper.ProductMapper;
+import br.com.reinan.dscatalog.Util.mapper.ObjectMapper;
 import br.com.reinan.dscatalog.dto.response.CategoryDTO;
 import br.com.reinan.dscatalog.dto.response.ProductDTO;
 import br.com.reinan.dscatalog.entities.Category;
@@ -43,7 +43,7 @@ public class ProductServiceImpl implements ProductService {
     @Transactional
     public ProductDTO insert(ProductDTO dto) {
         Product entity = new Product();
-        ProductMapper.toEntity(dto, entity);
+        ObjectMapper.toEntity(dto, entity);
         entity = repository.save(entity);
         return new ProductDTO(entity);
     }
@@ -53,7 +53,7 @@ public class ProductServiceImpl implements ProductService {
 
         Product entity = repository.findById(id)
                 .orElseThrow(() -> new ResorceNotFoundException("Id not found " + id));
-        ProductMapper.toEntity(dto, entity);
+        ObjectMapper.toEntity(dto, entity);
         entity = repository.save(entity);
         return new ProductDTO(entity);
     }
