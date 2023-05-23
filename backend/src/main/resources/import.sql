@@ -2,15 +2,18 @@ INSERT INTO tb_user (first_name, last_name, email, password) VALUES ('Alex', 'Br
 INSERT INTO tb_user (first_name, last_name, email, password) VALUES ('Maria', 'Green', 'maria@gmail.com', '$2a$12$Lmu/u2lwmSNge6RBaZNwAOCNcD84lWdbNg/IWhkPT1d6OHMW2KOWO');
 INSERT INTO tb_user (first_name, last_name, email, password) VALUES ('Joao', 'Green', 'joao@gmail.com', '$2a$12$c0BQfIlABzR2SA758MSkpeLWPYsK3FkUUuZpFOLBKVhxi/L0VOX6q');
 INSERT INTO tb_user (first_name, last_name, email, password) VALUES ('Pedro', 'Green', 'pedro@gmail.com', '$2a$12$uazcbF9P0zawTGJwVfWS0.hqON2WKdJ9yJ5F4lhBHbViiUFwcDVze');
+INSERT INTO tb_user (first_name, last_name, email, password) VALUES ('Mario', 'Green', 'mario@gmail.com', '$2a$12$FWC8Gz8ddi8KgowPQM72lue115le3riG8BRENQXwfqrYQPK7YNwGy');
 
 INSERT INTO tb_role (authority) VALUES ('ROLE_OPERATOR');
 INSERT INTO tb_role (authority) VALUES ('ROLE_ADMIN');
+INSERT INTO tb_role (authority) VALUES ('ROLE_USER');
 
 INSERT INTO tb_user_role (user_id, role_id) VALUES (1, 1);
 INSERT INTO tb_user_role (user_id, role_id) VALUES (2, 1);
 INSERT INTO tb_user_role (user_id, role_id) VALUES (2, 2);
 INSERT INTO tb_user_role (user_id, role_id) VALUES (3, 2);
 INSERT INTO tb_user_role (user_id, role_id) VALUES (3, 1);
+INSERT INTO tb_user_role (user_id, role_id) VALUES (4, 3);
 
 
 INSERT INTO tb_category (name, created_At) VALUES ('Books', NOW());

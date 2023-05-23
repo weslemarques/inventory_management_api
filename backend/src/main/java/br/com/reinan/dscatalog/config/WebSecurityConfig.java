@@ -27,6 +27,8 @@ public class WebSecurityConfig {
                 .authorizeHttpRequests()
                 .requestMatchers("/auth/**", "/refreshtoken").permitAll()
                 .requestMatchers(HttpMethod.GET, "/products/**", "/categories/**").permitAll()
+                .requestMatchers(HttpMethod.DELETE, "/products").hasAnyRole("OPERATOR", "ADMIN")
+                .requestMatchers(HttpMethod.POST, "/products/**").hasAnyRole("OPERATOR")
                 .requestMatchers("/users", "/users/**").hasRole("ADMIN")
                 .anyRequest().authenticated()
                 .and()
