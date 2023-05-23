@@ -1,11 +1,16 @@
 package br.com.reinan.dscatalog.services;
 
 import br.com.reinan.dscatalog.dto.request.UserLoginDTO;
-import br.com.reinan.dscatalog.dto.security.JwtResponse;
+import br.com.reinan.dscatalog.dto.securityDtos.JwtResponse;
+import br.com.reinan.dscatalog.dto.securityDtos.TokenRefreshRequest;
+import br.com.reinan.dscatalog.dto.securityDtos.TokenRefreshResponse;
+import br.com.reinan.dscatalog.entities.RefreshToken;
 import br.com.reinan.dscatalog.entities.Role;
 import br.com.reinan.dscatalog.entities.User;
 import br.com.reinan.dscatalog.security.jwt.JwtUtils;
 import br.com.reinan.dscatalog.services.contract.AuthService;
+import br.com.reinan.dscatalog.services.contract.RefreshTokenService;
+import br.com.reinan.dscatalog.services.exceptions.ResorceNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -14,8 +19,6 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.Set;
-import java.util.stream.Collectors;
 
 @Service
 public class AuthServiceImpl implements AuthService {
@@ -25,6 +28,9 @@ public class AuthServiceImpl implements AuthService {
 
     @Autowired
     private JwtUtils jwtUtils;
+
+    @Autowired
+    private RefreshTokenService refreshTokenService;
 
     //    @Override
     public JwtResponse authentication(UserLoginDTO login) {
@@ -41,10 +47,25 @@ public class AuthServiceImpl implements AuthService {
         List<String> roles = user.getAuthorities().stream().map(Role::getAuthority).toList();
 
         String token = jwtUtils.generateJwtToken(user);
-        String refreshToken = jwtUtils.generateJwtToken(user);
+        String refreshToken = refreshTokenService.createRefreshToken(user.getId()).getToken();
 
         return new JwtResponse(user, token, refreshToken, roles);
 
+    }
+
+    public TokenRefreshResponse refreshToken(TokenRefreshRequest request) {
+        String refreshToken = request.getRefreshToken();
+
+        return refreshTokenService.findByToken(refreshToken)
+                .map(refreshTokenService::verifyExpiration)
+                .map(RefreshToken::getUser)
+                .map(user -> {
+                            String token = jwtUtils.generateJwtToken(user);
+                            RefreshToken refreshToken1 = refreshTokenService.createRefreshToken(user.getId());
+                            refreshTokenService.deleteByToken(refreshToken);
+                            return new TokenRefreshResponse(token, refreshToken1.getToken());
+                        }
+                ).orElseThrow(() -> new ResorceNotFoundException(""));
 
     }
 }

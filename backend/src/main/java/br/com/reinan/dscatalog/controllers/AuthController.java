@@ -1,7 +1,7 @@
 package br.com.reinan.dscatalog.controllers;
 
 import br.com.reinan.dscatalog.dto.request.UserLoginDTO;
-import br.com.reinan.dscatalog.dto.security.JwtResponse;
+import br.com.reinan.dscatalog.dto.securityDtos.JwtResponse;
 import br.com.reinan.dscatalog.entities.User;
 import br.com.reinan.dscatalog.security.jwt.JwtUtils;
 import br.com.reinan.dscatalog.services.contract.AuthService;

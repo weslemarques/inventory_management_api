@@ -2,10 +2,16 @@ package br.com.reinan.dscatalog.services.contract;
 
 import br.com.reinan.dscatalog.entities.RefreshToken;
 
+import java.util.Optional;
+
 public interface RefreshTokenService {
-    public String findByToken(String token);
+    public Optional<RefreshToken> findByToken(String token);
 
-    public String createRefreshToken(Long userId);
+    public RefreshToken createRefreshToken(Long userId);
 
-    public String verifyExpiration(RefreshToken refreshToken);
+    public RefreshToken verifyExpiration(RefreshToken refreshToken);
+
+    public void detele(RefreshToken refreshToken);
+
+    public  void deleteByToken(String token);
 }
