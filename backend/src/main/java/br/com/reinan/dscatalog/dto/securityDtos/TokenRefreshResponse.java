@@ -1,7 +1,10 @@
 package br.com.reinan.dscatalog.dto.securityDtos;
 
+import lombok.Getter;
+
 import java.io.Serializable;
 
+@Getter
 public class TokenRefreshResponse implements Serializable {
 
     private String accessToken;

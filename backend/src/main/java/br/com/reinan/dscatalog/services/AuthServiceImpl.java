@@ -56,16 +56,15 @@ public class AuthServiceImpl implements AuthService {
     public TokenRefreshResponse refreshToken(TokenRefreshRequest request) {
         String refreshToken = request.getRefreshToken();
 
-        return refreshTokenService.findByToken(refreshToken)
-                .map(refreshTokenService::verifyExpiration)
-                .map(RefreshToken::getUser)
-                .map(user -> {
-                            String token = jwtUtils.generateJwtToken(user);
-                            RefreshToken refreshToken1 = refreshTokenService.createRefreshToken(user.getId());
-                            refreshTokenService.deleteByToken(refreshToken);
-                            return new TokenRefreshResponse(token, refreshToken1.getToken());
-                        }
-                ).orElseThrow(() -> new ResorceNotFoundException(""));
+
+        User user =
+                refreshTokenService.findByToken(refreshToken)
+                        .map(refreshTokenService::verifyExpiration)
+                        .map(RefreshToken::getUser).orElseThrow(() -> new ResorceNotFoundException(""));
+        String token = jwtUtils.generateJwtToken(user);
+        RefreshToken refreshToken1 = refreshTokenService.createRefreshToken(user.getId());
+        return new TokenRefreshResponse(token, refreshToken1.getToken());
+
 
     }
 }

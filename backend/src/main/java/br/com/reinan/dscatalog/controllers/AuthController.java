@@ -2,6 +2,8 @@ package br.com.reinan.dscatalog.controllers;
 
 import br.com.reinan.dscatalog.dto.request.UserLoginDTO;
 import br.com.reinan.dscatalog.dto.securityDtos.JwtResponse;
+import br.com.reinan.dscatalog.dto.securityDtos.TokenRefreshRequest;
+import br.com.reinan.dscatalog.dto.securityDtos.TokenRefreshResponse;
 import br.com.reinan.dscatalog.entities.User;
 import br.com.reinan.dscatalog.security.jwt.JwtUtils;
 import br.com.reinan.dscatalog.services.contract.AuthService;
@@ -17,8 +19,6 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/auth")
 public class AuthController {
 
-
-
     @Autowired
     JwtUtils jwtUtils;
 
@@ -33,12 +33,10 @@ public class AuthController {
     }
 
     @PostMapping("/refreshtoken")
-    public void refreshToken() {
+    public ResponseEntity<TokenRefreshResponse> refreshToken( @Valid @RequestBody TokenRefreshRequest refreshRequest) {
+       TokenRefreshResponse responseToken = authService.refreshToken(refreshRequest);
 
-        String token = jwtUtils.generateJwtToken(new User("jaoa", "medeiros", "medeiros@gmail.com", "senhajoao"));
-
-        System.out.println(token);
-        System.out.println(jwtUtils.getUsernameFromJwtToken(token));
+       return ResponseEntity.ok(responseToken);
 
     }
 

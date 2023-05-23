@@ -48,7 +48,7 @@ public class RefreshTokenServiceImpl implements RefreshTokenService {
 
     @Override
     public RefreshToken verifyExpiration(RefreshToken refreshToken) {
-        if(refreshToken.getExpiryDate().isAfter(Instant.now())){
+        if(refreshToken.getExpiryDate().isBefore(Instant.now())){
             refreshTokenRepository.delete(refreshToken);
             throw new TokenExpiredException("Esse token está expirado, Faça login novamente");
         }
@@ -60,10 +60,5 @@ public class RefreshTokenServiceImpl implements RefreshTokenService {
     public void detele(RefreshToken refreshToken) {
         refreshTokenRepository.delete(refreshToken);
     }
-
-    public void deleteByToken( String token){
-        refreshTokenRepository.deleteByToken(token);
-    }
-
 
 }

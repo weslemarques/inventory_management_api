@@ -25,7 +25,7 @@ public class WebSecurityConfig {
         http
                 .csrf().disable().cors().disable()
                 .authorizeHttpRequests()
-                .requestMatchers("/auth/**").permitAll()
+                .requestMatchers("/auth/**", "/refreshtoken").permitAll()
                 .requestMatchers(HttpMethod.GET, "/products/**", "/categories/**").permitAll()
                 .requestMatchers("/users", "/users/**").hasRole("ADMIN")
                 .anyRequest().authenticated()

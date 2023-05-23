@@ -5,13 +5,12 @@ import br.com.reinan.dscatalog.entities.RefreshToken;
 import java.util.Optional;
 
 public interface RefreshTokenService {
-    public Optional<RefreshToken> findByToken(String token);
+    Optional<RefreshToken> findByToken(String token);
 
-    public RefreshToken createRefreshToken(Long userId);
+    RefreshToken createRefreshToken(Long userId);
 
-    public RefreshToken verifyExpiration(RefreshToken refreshToken);
+    RefreshToken verifyExpiration(RefreshToken refreshToken);
 
-    public void detele(RefreshToken refreshToken);
+    void detele(RefreshToken refreshToken);
 
-    public  void deleteByToken(String token);
 }
