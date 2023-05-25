@@ -3,7 +3,6 @@ package br.com.reinan.dscatalog.security.jwt;
 
 import br.com.reinan.dscatalog.entities.User;
 import br.com.reinan.dscatalog.services.exceptions.TokenExpiredException;
-import br.com.reinan.dscatalog.services.exceptions.TokenInvalidException;
 import com.auth0.jwt.JWT;
 import com.auth0.jwt.algorithms.Algorithm;
 import org.springframework.beans.factory.annotation.Value;
@@ -24,30 +23,30 @@ public class JwtUtils {
         return JWT.create().withIssuer("com.reinan")
                 .withSubject(userPrincial.getEmail())
                 .withClaim("id", userPrincial.getId())
-                .withClaim("roles", userPrincial.getAuthorities().stream().map(r ->r.getAuthority()).toList())
+                .withClaim("roles", userPrincial.getAuthorities().stream().map(r -> r.getAuthority()).toList())
                 .withExpiresAt(new Date(new Date().getTime() + tokenExpiration))
                 .sign(Algorithm.HMAC256(jwtSecret));
     }
 
-    public String getUsernameFromJwtToken( String token){
+    public String getUsernameFromJwtToken(String token) {
         return JWT.decode(token).getSubject();
     }
 
-    public boolean validateJwtToken(String authToken){
-       if(isExpired(authToken)){
+    public boolean validateJwtToken(String authToken) {
+        if (isExpired(authToken)) {
             throw new TokenExpiredException("Token Expirado");
-       }
-       return true;
+        }
+        return true;
     }
 
-    public boolean isExpired(String jwtToken){
+    public boolean isExpired(String jwtToken) {
+        try {
 
-        try{
-        return  JWT.decode(jwtToken).getIssuedAt().before(new Date());
-
-        }catch (Exception e){
-            throw new TokenInvalidException("Token Invalid");
+            return JWT.decode(jwtToken).getExpiresAt().before(new Date());
+        } catch (Exception e) {
+            throw new TokenExpiredException("TO");
         }
     }
 
 }
+    
