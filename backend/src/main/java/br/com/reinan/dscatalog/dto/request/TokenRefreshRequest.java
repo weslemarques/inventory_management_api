@@ -1,4 +1,4 @@
-package br.com.reinan.dscatalog.dto.securityDtos;
+package br.com.reinan.dscatalog.dto.request;
 
 import jakarta.validation.constraints.NotBlank;
 import lombok.Getter;

@@ -1,9 +1,9 @@
 package br.com.reinan.dscatalog.services;
 
 import br.com.reinan.dscatalog.dto.request.UserLoginDTO;
-import br.com.reinan.dscatalog.dto.securityDtos.JwtResponse;
-import br.com.reinan.dscatalog.dto.securityDtos.TokenRefreshRequest;
-import br.com.reinan.dscatalog.dto.securityDtos.TokenRefreshResponse;
+import br.com.reinan.dscatalog.dto.response.JwtResponse;
+import br.com.reinan.dscatalog.dto.request.TokenRefreshRequest;
+import br.com.reinan.dscatalog.dto.response.TokenRefreshResponse;
 import br.com.reinan.dscatalog.entities.RefreshToken;
 import br.com.reinan.dscatalog.entities.Role;
 import br.com.reinan.dscatalog.entities.User;

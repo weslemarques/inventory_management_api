@@ -1,4 +1,4 @@
-package br.com.reinan.dscatalog.dto.securityDtos;
+package br.com.reinan.dscatalog.dto.response;
 
 import br.com.reinan.dscatalog.entities.User;
 import lombok.Getter;
