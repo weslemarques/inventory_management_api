@@ -1,6 +1,5 @@
 package br.com.reinan.dscatalog.config;
 
-import br.com.reinan.dscatalog.services.FilterToken;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -23,7 +22,7 @@ public class WebSecurityConfig {
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http
-                .csrf().disable().cors().disable()git s
+                .csrf().disable().cors().disable()
                 .authorizeHttpRequests()
                 .requestMatchers(HttpMethod.GET, "/products/**", "/categories/**").permitAll()
                 .requestMatchers("/auth/**").permitAll()

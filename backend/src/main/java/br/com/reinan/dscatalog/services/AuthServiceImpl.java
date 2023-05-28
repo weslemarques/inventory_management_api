@@ -1,7 +1,10 @@
 package br.com.reinan.dscatalog.services;
 
-import br.com.reinan.dscatalog.dto.UserLoginDTO;
+import br.com.reinan.dscatalog.dto.request.UserLoginDTO;
+import br.com.reinan.dscatalog.dto.security.JwtResponse;
+import br.com.reinan.dscatalog.entities.Role;
 import br.com.reinan.dscatalog.entities.User;
+import br.com.reinan.dscatalog.security.jwt.JwtUtils;
 import br.com.reinan.dscatalog.services.contract.AuthService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -10,6 +13,8 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 public class AuthServiceImpl implements AuthService {
 
@@ -17,9 +22,10 @@ public class AuthServiceImpl implements AuthService {
     private AuthenticationManager authenticationManager;
 
     @Autowired
-    private TokenService tokenUtil;
+    private JwtUtils jwtUtils;
+
     @Override
-    public String authentication(UserLoginDTO login) {
+    public JwtResponse authentication(UserLoginDTO login) {
 
         UsernamePasswordAuthenticationToken usernamePasswordAuthenticationToken =
                 new UsernamePasswordAuthenticationToken(login.getEmail(), login.getPassword());
@@ -30,7 +36,11 @@ public class AuthServiceImpl implements AuthService {
         SecurityContextHolder.getContext().setAuthentication(authenticate);
 
         var user = (User) authenticate.getPrincipal();
+        List<String> roles = user.getAuthorities().stream().map(Role::getAuthority).toList();
 
-        return tokenUtil.generateToken(user);
+        String token = jwtUtils.generateJwtToken(user);
+        String refreshToken = jwtUtils.generateJwtToken(user);
+
+        return new JwtResponse(user, token, refreshToken, roles);
     }
 }
