@@ -1,13 +1,12 @@
 package br.com.reinan.dscatalog.controllers;
 
+import br.com.reinan.dscatalog.dto.request.TokenRefreshRequest;
 import br.com.reinan.dscatalog.dto.request.UserLoginDTO;
 import br.com.reinan.dscatalog.dto.response.JwtResponse;
-import br.com.reinan.dscatalog.dto.request.TokenRefreshRequest;
 import br.com.reinan.dscatalog.dto.response.TokenRefreshResponse;
 import br.com.reinan.dscatalog.security.jwt.JwtUtils;
 import br.com.reinan.dscatalog.services.contract.AuthService;
 import jakarta.validation.Valid;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -15,14 +14,18 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping("/auth")
+@RequestMapping("/v1/auth")
 public class AuthController {
 
-    @Autowired
+    final
     JwtUtils jwtUtils;
 
-    @Autowired
-    private AuthService authService;
+    private final AuthService authService;
+
+    public AuthController(JwtUtils jwtUtils, AuthService authService) {
+        this.jwtUtils = jwtUtils;
+        this.authService = authService;
+    }
 
     @PostMapping("/signin")
     public ResponseEntity<JwtResponse> authentication(@Valid @RequestBody UserLoginDTO login) {

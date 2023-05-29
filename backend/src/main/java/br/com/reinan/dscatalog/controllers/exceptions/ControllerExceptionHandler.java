@@ -3,7 +3,6 @@ package br.com.reinan.dscatalog.controllers.exceptions;
 import br.com.reinan.dscatalog.services.exceptions.DataBaseException;
 import br.com.reinan.dscatalog.services.exceptions.ResorceNotFoundException;
 import br.com.reinan.dscatalog.services.exceptions.TokenExpiredException;
-import br.com.reinan.dscatalog.services.exceptions.TokenInvalidException;
 import br.com.reinan.dscatalog.services.exceptions.TokenInvalido;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.http.HttpStatus;
@@ -15,7 +14,6 @@ import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseStatus;
-import org.springframework.web.bind.annotation.RestController;
 
 import java.time.Instant;
 
@@ -97,8 +95,6 @@ public class ControllerExceptionHandler{
         return ResponseEntity.status(status).body(err);
 
     }
-
-    @ResponseStatus(HttpStatus.UNAUTHORIZED)
     @ExceptionHandler(TokenExpiredException.class)
     public ResponseEntity<StandardError> authenticationFailed(
             TokenInvalido e,

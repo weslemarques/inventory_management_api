@@ -40,12 +40,7 @@ public class JwtUtils {
     }
 
     public boolean isExpired(String jwtToken) {
-        try {
-
             return JWT.decode(jwtToken).getExpiresAt().before(new Date());
-        } catch (Exception e) {
-            throw new TokenExpiredException("TO");
-        }
     }
 
 }

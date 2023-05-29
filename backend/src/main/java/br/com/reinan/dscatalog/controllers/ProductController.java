@@ -15,7 +15,7 @@ import java.net.URI;
 
 @RestController
 @CrossOrigin("*")
-@RequestMapping("/products")
+@RequestMapping("/v1/products")
 public class ProductController {
 
     @Autowired

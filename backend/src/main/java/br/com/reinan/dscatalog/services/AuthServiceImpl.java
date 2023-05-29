@@ -1,8 +1,8 @@
 package br.com.reinan.dscatalog.services;
 
+import br.com.reinan.dscatalog.dto.request.TokenRefreshRequest;
 import br.com.reinan.dscatalog.dto.request.UserLoginDTO;
 import br.com.reinan.dscatalog.dto.response.JwtResponse;
-import br.com.reinan.dscatalog.dto.request.TokenRefreshRequest;
 import br.com.reinan.dscatalog.dto.response.TokenRefreshResponse;
 import br.com.reinan.dscatalog.entities.RefreshToken;
 import br.com.reinan.dscatalog.entities.Role;
@@ -56,14 +56,14 @@ public class AuthServiceImpl implements AuthService {
     public TokenRefreshResponse refreshToken(TokenRefreshRequest request) {
         String refreshToken = request.getRefreshToken();
 
-
         User user =
                 refreshTokenService.findByToken(refreshToken)
                         .map(refreshTokenService::verifyExpiration)
                         .map(RefreshToken::getUser).orElseThrow(() -> new ResorceNotFoundException(""));
         String token = jwtUtils.generateJwtToken(user);
-        RefreshToken refreshToken1 = refreshTokenService.createRefreshToken(user.getId());
-        return new TokenRefreshResponse(token, refreshToken1.getToken());
+
+        RefreshToken newRefreshToken = refreshTokenService.createRefreshToken(user.getId());
+        return new TokenRefreshResponse(token, newRefreshToken.getToken());
 
     }
 }

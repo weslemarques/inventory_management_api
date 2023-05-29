@@ -36,7 +36,7 @@ public class RefreshTokenServiceImpl implements RefreshTokenService {
 
     @Override
     @Transactional
-    public  RefreshToken createRefreshToken(Long userId) {
+    public RefreshToken createRefreshToken(Long userId) {
         RefreshToken refreshToken = new RefreshToken();
         refreshToken.setUser(userRepository.findById(userId).orElseThrow(() -> new ResorceNotFoundException("Id not foud")));
         refreshToken.setExpiryDate(Instant.now().plusMillis(refreshTokenExpirationMs));
@@ -48,12 +48,11 @@ public class RefreshTokenServiceImpl implements RefreshTokenService {
 
     @Override
     public RefreshToken verifyExpiration(RefreshToken refreshToken) {
-        if(refreshToken.getExpiryDate().isBefore(Instant.now())){
+        if (refreshToken.getExpiryDate().isBefore(Instant.now())) {
             refreshTokenRepository.delete(refreshToken);
             throw new TokenExpiredException("Esse token está expirado, Faça login novamente");
         }
-
-        return refreshToken;
+       return refreshToken;
     }
 
     @Override

@@ -16,7 +16,7 @@ import java.net.URI;
 
 @RestController
 @CrossOrigin("*")
-@RequestMapping("/categories")
+@RequestMapping("/v1/categories")
 public class CategoryController {
 
     @Autowired

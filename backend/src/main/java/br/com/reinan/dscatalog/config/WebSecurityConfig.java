@@ -1,5 +1,6 @@
 package br.com.reinan.dscatalog.config;
 
+import br.com.reinan.dscatalog.config.exceptionConfig.handler.UnauthorizedHandler;
 import br.com.reinan.dscatalog.security.filter.FilterToken;
 import jakarta.servlet.Filter;
 import jakarta.servlet.FilterChain;
@@ -12,6 +13,7 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 
 @Configuration
 @EnableWebSecurity
@@ -22,19 +24,26 @@ public class WebSecurityConfig {
 
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
-        http
+
+        http.authorizeHttpRequests() // Autorização de requests.
+                .requestMatchers("/v3/api-docs/**", "/swagger-ui.html", "/swagger-ui/**").permitAll() // Permitindo os recursos do swagger. (Todos podem acessar).
+                .requestMatchers(AntPathRequestMatcher.antMatcher("/h2-console/**")).permitAll()
+
+                .and()
                 .csrf().disable().cors().disable()
                 .authorizeHttpRequests()
-                .requestMatchers("/auth/**", "/refreshtoken").permitAll()
-                .requestMatchers(HttpMethod.GET, "/products/**", "/categories/**").permitAll()
-                .requestMatchers(HttpMethod.DELETE, "/products").hasAnyRole("OPERATOR", "ADMIN")
-                .requestMatchers(HttpMethod.POST, "/products/**").hasAnyRole("OPERATOR")
+                .requestMatchers("/v1/auth/**", "/v1/refreshtoken", "/v1/api-docs").permitAll()
+                .requestMatchers(HttpMethod.GET, "/v1/products/**", "/v1/categories/**").permitAll()
+                .requestMatchers(HttpMethod.DELETE, "/v1/products").hasAnyRole("OPERATOR", "ADMIN")
+                .requestMatchers(HttpMethod.POST, "/v1/products/**").hasAnyRole("OPERATOR")
                 .requestMatchers("/users", "/users/**").hasRole("ADMIN")
                 .anyRequest().authenticated()
                 .and()
                 .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
                 .and()
-                .addFilterBefore(filterToken, UsernamePasswordAuthenticationFilter.class);
+                .addFilterBefore(filterToken, UsernamePasswordAuthenticationFilter.class)
+                .exceptionHandling().authenticationEntryPoint(new UnauthorizedHandler());
+//                .and().exceptionHandling().accessDeniedHandler();
         return http.build();
     }
 }

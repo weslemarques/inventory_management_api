@@ -28,7 +28,7 @@ public class FilterToken extends OncePerRequestFilter {
             String token = decodeToken(request);
             if(token != null){
                 if(!jwtUtils.validateJwtToken(token))
-                    throw new TokenExpiredException("Token Epirado");
+                    throw new TokenExpiredException("Token Expirado");
                 User user = recoverUser(token);
                 UsernamePasswordAuthenticationToken authentication = new UsernamePasswordAuthenticationToken(user, null,user.getAuthorities());
 
