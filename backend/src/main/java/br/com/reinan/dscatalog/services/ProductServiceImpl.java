@@ -1,11 +1,8 @@
 package br.com.reinan.dscatalog.services;
 
 import br.com.reinan.dscatalog.Util.mapper.ObjectMapper;
-import br.com.reinan.dscatalog.dto.response.CategoryDTO;
 import br.com.reinan.dscatalog.dto.response.ProductDTO;
-import br.com.reinan.dscatalog.entities.Category;
 import br.com.reinan.dscatalog.entities.Product;
-import br.com.reinan.dscatalog.repositories.CategoryRepository;
 import br.com.reinan.dscatalog.repositories.ProductRepository;
 import br.com.reinan.dscatalog.services.contract.ProductService;
 import br.com.reinan.dscatalog.services.exceptions.DataBaseException;
@@ -23,9 +20,6 @@ public class ProductServiceImpl implements ProductService {
 
     @Autowired
     private ProductRepository repository;
-
-    @Autowired
-    private CategoryRepository categoryRepository;
 
     @Transactional(readOnly = true)
     public Page<ProductDTO> findAll(Pageable pageable) {
@@ -66,21 +60,6 @@ public class ProductServiceImpl implements ProductService {
             throw new ResorceNotFoundException("Id not found");
         } catch (DataIntegrityViolationException e) {
             throw new DataBaseException("Data Base Violation");
-        }
-    }
-
-    private void copyDtoToEntity(ProductDTO dto, Product entity) {
-        entity.setName(dto.getName());
-        entity.setDescription(dto.getDescription());
-        entity.setPrice(dto.getPrice());
-
-        entity.setImgUrl(dto.getImgUrl());
-        entity.setDate(dto.getDate());
-
-        entity.getCategories().clear();
-        for (CategoryDTO cat : dto.getCategories()) {
-            Category category = categoryRepository.findById(cat.getId()).get();
-            entity.getCategories().add(category);
         }
     }
 

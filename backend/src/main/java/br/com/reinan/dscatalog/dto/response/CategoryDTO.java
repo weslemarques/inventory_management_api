@@ -4,7 +4,6 @@ import java.io.Serializable;
 import java.time.Instant;
 
 import br.com.reinan.dscatalog.entities.Category;
-import jakarta.persistence.Column;
 
 public class CategoryDTO implements Serializable {
 
