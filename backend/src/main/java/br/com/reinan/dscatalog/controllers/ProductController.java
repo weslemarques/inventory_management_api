@@ -2,6 +2,7 @@ package br.com.reinan.dscatalog.controllers;
 
 import br.com.reinan.dscatalog.dto.response.ProductDTO;
 import br.com.reinan.dscatalog.services.contract.ProductService;
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -16,6 +17,7 @@ import java.net.URI;
 @RestController
 @CrossOrigin("*")
 @RequestMapping("/v1/products")
+@SecurityRequirement(name = "Bearer ")
 public class ProductController {
 
     @Autowired

@@ -2,8 +2,6 @@ package br.com.reinan.dscatalog.config;
 
 import br.com.reinan.dscatalog.config.exceptionConfig.handler.UnauthorizedHandler;
 import br.com.reinan.dscatalog.security.filter.FilterToken;
-import jakarta.servlet.Filter;
-import jakarta.servlet.FilterChain;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -32,7 +30,7 @@ public class WebSecurityConfig {
                 .and()
                 .csrf().disable().cors().disable()
                 .authorizeHttpRequests()
-                .requestMatchers("/v1/auth/**", "/v1/refreshtoken", "/v1/api-docs").permitAll()
+                .requestMatchers("/v1/auth/**", "/v1/refreshtoken").permitAll()
                 .requestMatchers(HttpMethod.GET, "/v1/products/**", "/v1/categories/**").permitAll()
                 .requestMatchers(HttpMethod.DELETE, "/v1/products").hasAnyRole("OPERATOR", "ADMIN")
                 .requestMatchers(HttpMethod.POST, "/v1/products/**").hasAnyRole("OPERATOR")

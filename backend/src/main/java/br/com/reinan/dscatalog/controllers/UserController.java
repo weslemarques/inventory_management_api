@@ -4,6 +4,7 @@ import br.com.reinan.dscatalog.dto.request.UserInsertDTO;
 import br.com.reinan.dscatalog.dto.request.UserUpdateDTO;
 import br.com.reinan.dscatalog.dto.response.UserDTO;
 import br.com.reinan.dscatalog.services.contract.UserService;
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -16,6 +17,7 @@ import java.net.URI;
 
 @RestController
 @RequestMapping("/v1/users")
+@SecurityRequirement(name = "Bearer ")
 public class UserController {
 
     @Autowired
