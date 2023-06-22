@@ -3,6 +3,8 @@ package br.com.reinan.dscatalog.controllers;
 import br.com.reinan.dscatalog.dto.response.CategoryDTO;
 import br.com.reinan.dscatalog.services.CategoryServiceImpl;
 import br.com.reinan.dscatalog.services.exceptions.DataBaseException;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.data.domain.Page;
@@ -17,12 +19,14 @@ import java.net.URI;
 @RestController
 @CrossOrigin("*")
 @RequestMapping("/v1/categories")
+@SecurityRequirement(name = "Bearer ")
 public class CategoryController {
 
     @Autowired
     private CategoryServiceImpl service;
 
     @GetMapping
+    @Operation(summary = "Access the logged user informations", security = {@SecurityRequirement(name = "bearer")})
     public ResponseEntity<Page<CategoryDTO>> findAll(Pageable pageable) {
         Page<CategoryDTO> list = service.findAll(pageable);
         return ResponseEntity.ok(list);

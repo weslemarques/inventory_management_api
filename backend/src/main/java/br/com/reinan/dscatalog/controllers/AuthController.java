@@ -6,6 +6,7 @@ import br.com.reinan.dscatalog.dto.response.JwtResponse;
 import br.com.reinan.dscatalog.dto.response.TokenRefreshResponse;
 import br.com.reinan.dscatalog.security.jwt.JwtUtils;
 import br.com.reinan.dscatalog.services.contract.AuthService;
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import jakarta.validation.Valid;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
