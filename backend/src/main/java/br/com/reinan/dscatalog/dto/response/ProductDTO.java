@@ -30,6 +30,10 @@ public class ProductDTO implements Serializable {
     @PastOrPresent(message = "A data do produto nao pode ser futura")
     private Instant date;
 
+    private Instant createdAt = Instant.now();
+
+    private Instant updatedAt;
+
     private List<CategoryDTO> categories = new ArrayList<>();
 
     public ProductDTO() {
@@ -107,6 +111,22 @@ public class ProductDTO implements Serializable {
     public void setDate(Instant date) {
         this.date = date;
     }
+    public Instant getCreatedAt() {
+        return createdAt;
+    }
+
+    public void setCreatedAt(Instant createdAt) {
+        this.createdAt = createdAt;
+    }
+
+    public Instant getUpdatedAt() {
+        return updatedAt;
+    }
+
+    public void setUpdatedAt(Instant updatedAt) {
+        this.updatedAt = updatedAt;
+    }
+
 
     @Override
     public int hashCode() {

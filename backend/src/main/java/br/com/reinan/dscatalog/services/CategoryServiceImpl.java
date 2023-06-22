@@ -6,6 +6,8 @@ import br.com.reinan.dscatalog.repositories.CategoryRepository;
 import br.com.reinan.dscatalog.services.contract.CategoryService;
 import br.com.reinan.dscatalog.services.exceptions.DataBaseException;
 import br.com.reinan.dscatalog.services.exceptions.ResorceNotFoundException;
+import org.apache.catalina.mapper.Mapper;
+import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.dao.EmptyResultDataAccessException;
@@ -23,42 +25,42 @@ public class CategoryServiceImpl implements CategoryService {
 
     @Autowired
     private CategoryRepository repository;
+    @Autowired
+    private ModelMapper mapper;
+
 
     @Transactional(readOnly = true)
     public Page<CategoryDTO> findAll(Pageable pageable) {
         Page<Category> list = repository.findAll(pageable);
-        return list.map(c -> new CategoryDTO(c));
+        return  list.map(c -> mapper.map(c, CategoryDTO.class));
     }
-
     @Transactional(readOnly = true)
     public CategoryDTO findById(Long id) {
         Optional<Category> obj = repository.findById(id);
         Category category = obj.orElseThrow(() -> new ResorceNotFoundException("Entity Not Found "));
-        return new CategoryDTO(category);
+        return mapper.map(category, CategoryDTO.class);
     }
-
     @Transactional
     public CategoryDTO insert(CategoryDTO dto) {
         Category entity = new Category();
         entity.setName(dto.getName());
         entity = repository.save(entity);
-        return new CategoryDTO(entity);
+        return mapper.map(entity, CategoryDTO.class);
     }
-
     @Transactional
     public CategoryDTO update(Long id, CategoryDTO dto) {
         try {
             Optional<Category> obj = repository.findById(id);
             Category entity = obj.get();
             entity.setName(dto.getName());
-            entity = repository.save(entity);
             entity.setUpdatedAt(Instant.now());
-            return new CategoryDTO(entity);
+            entity = repository.save(entity);
+            return mapper.map(entity, CategoryDTO.class);
+
         } catch (NoSuchElementException e) {
-            throw new ResorceNotFoundException("Id not found " + id);
+            throw new ResorceNotFoundException("Category not found " + id);
         }
     }
-
     @Transactional
     public void delete(Long id) {
         try {
