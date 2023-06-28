@@ -13,9 +13,6 @@ spring:
       path: /h2
   jpa:
     show-sql: false
-  graphql:
-    cors:
-      allowed-origins: *
 
 reinan:
   jwt:
