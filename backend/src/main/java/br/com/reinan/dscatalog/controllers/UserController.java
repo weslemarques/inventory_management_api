@@ -18,6 +18,7 @@ import java.net.URI;
 @RestController
 @RequestMapping("/v1/users")
 @SecurityRequirement(name = "Bearer ")
+@CrossOrigin("*")
 public class UserController {
 
     @Autowired
