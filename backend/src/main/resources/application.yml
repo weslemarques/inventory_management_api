@@ -5,6 +5,7 @@ spring:
     open-in-view: false
 
 
+
 #security.basic.enabled=false
 #  spring.datasource.url=jdbc:h2:mem:testdb
 #  spring.datasource.username=sa
