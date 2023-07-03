@@ -1,5 +1,6 @@
 package br.com.reinan.dscatalog.services;
 
+import br.com.reinan.dscatalog.dto.request.CategoryInsertDTO;
 import br.com.reinan.dscatalog.dto.response.CategoryDTO;
 import br.com.reinan.dscatalog.entities.Category;
 import br.com.reinan.dscatalog.repositories.CategoryRepository;
@@ -41,9 +42,8 @@ public class CategoryServiceImpl implements CategoryService {
         return mapper.map(category, CategoryDTO.class);
     }
     @Transactional
-    public CategoryDTO insert(CategoryDTO dto) {
-        Category entity = new Category();
-        entity.setName(dto.getName());
+    public CategoryDTO insert(CategoryInsertDTO dto) {
+        var entity =  mapper.map(dto,Category.class);
         entity = repository.save(entity);
         return mapper.map(entity, CategoryDTO.class);
     }

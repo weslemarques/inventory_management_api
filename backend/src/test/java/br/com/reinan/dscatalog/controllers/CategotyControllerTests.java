@@ -46,7 +46,7 @@ public class CategotyControllerTests {
     @Test
     public void testFindAll() throws Exception {
 
-        mvc.perform(get("/categories")
+        mvc.perform(get("/v1/categories")
                 .accept(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk());
         verify(service).findAll(any(Pageable.class));

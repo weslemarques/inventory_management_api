@@ -1,5 +1,6 @@
 package br.com.reinan.dscatalog.controllers;
 
+import br.com.reinan.dscatalog.dto.request.CategoryInsertDTO;
 import br.com.reinan.dscatalog.dto.response.CategoryDTO;
 import br.com.reinan.dscatalog.services.CategoryServiceImpl;
 import br.com.reinan.dscatalog.services.exceptions.DataBaseException;
@@ -40,14 +41,14 @@ public class CategoryController {
 
     @PostMapping
     @PreAuthorize("hasRole('ADMIN')")
-    public ResponseEntity<CategoryDTO> insert(@RequestBody CategoryDTO dto) {
-        dto = service.insert(dto);
+    public ResponseEntity<CategoryDTO> insert(@RequestBody CategoryInsertDTO request) {
+        CategoryDTO responseCategory = service.insert(request);
         URI uri = ServletUriComponentsBuilder
                 .fromCurrentRequest()
                 .path("/{id}")
-                .buildAndExpand(dto.getId())
+                .buildAndExpand(responseCategory.getId())
                 .toUri();
-        return ResponseEntity.created(uri).body(dto);
+        return ResponseEntity.created(uri).body(responseCategory);
     }
 
     @PutMapping("/{id}")
