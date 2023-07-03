@@ -26,7 +26,6 @@ public class WebSecurityConfig {
         http.authorizeHttpRequests() // Autorização de requests.
                 .requestMatchers("/v3/api-docs/**", "/swagger-ui.html", "/swagger-ui/**").permitAll() // Permitindo os recursos do swagger. (Todos podem acessar).
                 .requestMatchers(AntPathRequestMatcher.antMatcher("/h2-console/**")).permitAll()
-
                 .and()
                 .csrf().disable().cors().disable()
                 .authorizeHttpRequests()
@@ -41,7 +40,7 @@ public class WebSecurityConfig {
                 .and()
                 .addFilterBefore(filterToken, UsernamePasswordAuthenticationFilter.class)
                 .exceptionHandling().authenticationEntryPoint(new UnauthorizedHandler());
-//                .and().exceptionHandling().accessDeniedHandler();
+             // .and().exceptionHandling().accessDeniedHandler();
         return http.build();
     }
 

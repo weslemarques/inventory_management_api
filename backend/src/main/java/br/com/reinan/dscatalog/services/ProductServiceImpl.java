@@ -41,7 +41,6 @@ public class ProductServiceImpl implements ProductService {
 
     @Transactional
     public ProductDTO insert(ProductDTO dto) {
-
         var entity = mapper.map(dto, Product.class);
         entity = repository.save(entity);
         return new ProductDTO(entity);
