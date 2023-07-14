@@ -33,14 +33,14 @@ public class WebSecurityConfig {
                 .requestMatchers(HttpMethod.GET, "/v1/products/**", "/v1/categories/**").permitAll()
                 .requestMatchers(HttpMethod.DELETE, "/v1/products").hasAnyRole("OPERATOR", "ADMIN")
                 .requestMatchers(HttpMethod.POST, "/v1/products/**").hasAnyRole("OPERATOR")
-                .requestMatchers("/users", "/users/**").hasRole("ADMIN")
+                .requestMatchers("/v1/users", "/v1/users/**").hasRole("ADMIN")
                 .anyRequest().authenticated()
                 .and()
                 .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
                 .and()
                 .addFilterBefore(filterToken, UsernamePasswordAuthenticationFilter.class)
                 .exceptionHandling().authenticationEntryPoint(new UnauthorizedHandler());
-             // .and().exceptionHandling().accessDeniedHandler();
+                // .and().exceptionHandling().accessDeniedHandler();
         return http.build();
     }
 
