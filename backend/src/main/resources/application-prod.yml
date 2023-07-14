@@ -1,0 +1,22 @@
+spring:
+  datasource:
+    url: jdbc:h2:mem:testdbapplication-test.yml
+    username: sa
+    password:
+    driver-class-name: org.h2.Driver
+
+
+
+  h2:
+    console:
+      enabled: true
+      path: /h2
+  jpa:
+    show-sql: false
+
+reinan:
+  jwt:
+       secret: A+X;fTJP&Pd,TD9dwVq(hsHX,ya^<wsD_UK7L+@=S;{'CydP]{v@}G'b>et;yz$*\yL5S8EJN:%P:X%H9>#nYLrX}@\s?CH,2emzBc!Q[V'AYa~uzF8WR~AUr/V$9([S9X#zj/CH('#]B_Hc+%fGhe27YB;^j4\Xk=Ju"Ap~_&<L;=!Z;!,2UP;!hF3P]j85#*`&T]/kB/W^6$v~u6L>kY^f)sy4:qTq_Ec!-z!@aAp~s>
+       accessTokenExpirationMs: 3600000
+       refreshTokenExpirationMs: 86400000
+
