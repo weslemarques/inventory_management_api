@@ -21,7 +21,7 @@ public class RefreshTokenServiceImpl implements RefreshTokenService {
 
     private final UserRepository userRepository;
 
-    @Value("${reinan.jwt.refreshTokenExpirationMs}")
+    @Value("${security.jwt.refreshTokenExpirationMs}")
     private Long refreshTokenExpirationMs;
 
     public RefreshTokenServiceImpl(RefreshTokenRepository refreshTokenRepository, UserRepository userRepository) {

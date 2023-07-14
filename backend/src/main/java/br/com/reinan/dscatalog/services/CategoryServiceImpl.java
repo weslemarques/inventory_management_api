@@ -7,7 +7,6 @@ import br.com.reinan.dscatalog.repositories.CategoryRepository;
 import br.com.reinan.dscatalog.services.contract.CategoryService;
 import br.com.reinan.dscatalog.services.exceptions.DataBaseException;
 import br.com.reinan.dscatalog.services.exceptions.ResorceNotFoundException;
-import org.apache.catalina.mapper.Mapper;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
@@ -50,15 +49,14 @@ public class CategoryServiceImpl implements CategoryService {
     @Transactional
     public CategoryDTO update(Long id, CategoryDTO dto) {
         try {
-            Optional<Category> obj = repository.findById(id);
-            Category entity = obj.get();
+            Category entity = repository.findById(id).orElseThrow(() -> new ResorceNotFoundException("Category not found " + id));
             entity.setName(dto.getName());
             entity.setUpdatedAt(Instant.now());
             entity = repository.save(entity);
             return mapper.map(entity, CategoryDTO.class);
 
-        } catch (NoSuchElementException e) {
-            throw new ResorceNotFoundException("Category not found " + id);
+        } catch (Exception e) {
+             throw new RuntimeException("Não foi possivel processar sua solicitação");
         }
     }
     @Transactional
