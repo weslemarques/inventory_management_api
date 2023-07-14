@@ -1,5 +1,6 @@
 package br.com.reinan.dscatalog.services;
 
+import br.com.reinan.dscatalog.dto.request.CategoryInsertDTO;
 import br.com.reinan.dscatalog.dto.response.CategoryDTO;
 import br.com.reinan.dscatalog.entities.Category;
 import br.com.reinan.dscatalog.repositories.CategoryRepository;
@@ -95,7 +96,7 @@ public class CategoryServiceTests {
     @Test
     public void insertShouldPersitObjectInDataBase() {
         Assertions.assertDoesNotThrow(() -> {
-            service.insert(dto);
+            service.insert(any());
         });
 
         verify(repository).save(any());
