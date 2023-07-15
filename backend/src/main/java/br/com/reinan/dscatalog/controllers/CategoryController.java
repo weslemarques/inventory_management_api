@@ -3,6 +3,7 @@ package br.com.reinan.dscatalog.controllers;
 import br.com.reinan.dscatalog.dto.request.CategoryInsertDTO;
 import br.com.reinan.dscatalog.dto.response.CategoryDTO;
 import br.com.reinan.dscatalog.services.CategoryServiceImpl;
+import br.com.reinan.dscatalog.services.contract.CategoryService;
 import br.com.reinan.dscatalog.services.exceptions.DataBaseException;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
@@ -24,7 +25,12 @@ import java.net.URI;
 public class CategoryController {
 
     @Autowired
-    private CategoryServiceImpl service;
+    private CategoryService service;
+
+
+    public CategoryController(CategoryService  service){
+        this.service = service;
+    }
 
     @GetMapping
     @Operation(summary = "Access the logged user informations", security = {@SecurityRequirement(name = "bearer")})
