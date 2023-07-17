@@ -95,7 +95,7 @@ public class CategoryServiceTests {
     @Test
     public void insertShouldPersitObjectInDataBase() {
         Assertions.assertDoesNotThrow(() -> {
-            service.insert(dto);
+            service.insert(any());
         });
 
         verify(repository).save(any());

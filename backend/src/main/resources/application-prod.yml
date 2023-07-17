@@ -1,9 +1,9 @@
 spring:
   datasource:
-    url: jdbc:h2:mem:testdbapplication-test.yml
-    username: sa
-    password:
-    driver-class-name: org.h2.Driver
+    url: jdbc:postgresql://localhost:5432/forum
+    username: postgres
+    password: $#3345EtseT
+    driver-class-name: org.postgresql.Driver
 
 
 

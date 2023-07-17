@@ -13,14 +13,14 @@ import java.util.Date;
 @Component
 public class JwtUtils {
 
-    @Value("${reinan.jwt.secret}")
+    @Value("${security.jwt.secret}")
     private String jwtSecret;
 
-    @Value("${reinan.jwt.accessTokenExpirationMs}")
+    @Value("${security.jwt.accessTokenExpirationMs}")
     private int tokenExpiration;
 
     public String generateJwtToken(User userPrincial) {
-        return JWT.create().withIssuer("com.reinan")
+        return JWT.create().withIssuer("com.dscatalog")
                 .withSubject(userPrincial.getEmail())
                 .withClaim("id", userPrincial.getId())
                 .withClaim("roles", userPrincial.getAuthorities().stream().map(r -> r.getAuthority()).toList())

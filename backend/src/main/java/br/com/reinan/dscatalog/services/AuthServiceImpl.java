@@ -52,7 +52,6 @@ public class AuthServiceImpl implements AuthService {
         return new JwtResponse(user, token, refreshToken, roles);
 
     }
-
     public TokenRefreshResponse refreshToken(TokenRefreshRequest request) {
         String refreshToken = request.getRefreshToken();
 
