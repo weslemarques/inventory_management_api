@@ -7,6 +7,7 @@ import br.com.reinan.dscatalog.services.contract.CategoryService;
 import br.com.reinan.dscatalog.services.exceptions.DataBaseException;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
+import org.springdoc.core.annotations.ParameterObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.data.domain.Page;
@@ -34,7 +35,7 @@ public class CategoryController {
 
     @GetMapping
     @Operation(summary = "Access the logged user informations", security = {@SecurityRequirement(name = "bearer")})
-    public ResponseEntity<Page<CategoryDTO>> findAll(Pageable pageable) {
+    public ResponseEntity<Page<CategoryDTO>> findAll(@ParameterObject Pageable pageable) {
         Page<CategoryDTO> list = service.findAll(pageable);
         return ResponseEntity.ok(list);
     }
