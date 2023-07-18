@@ -13,7 +13,7 @@ public class RoleDTO implements Serializable {
 
     public RoleDTO() {
 
-    }
+        }
 
     public RoleDTO(Long id, String authority) {
         this.id = id;

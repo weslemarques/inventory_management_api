@@ -7,11 +7,11 @@ import jakarta.validation.ConstraintValidator;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import br.com.reinan.dscatalog.controllers.exceptions.FieldMessage;
-import br.com.reinan.dscatalog.dto.request.UserInsertDTO;
+import br.com.reinan.dscatalog.dto.request.UserRequestDTO;
 import br.com.reinan.dscatalog.repositories.UserRepository;
 import jakarta.validation.ConstraintValidatorContext;
 
-public class UserInsertValidator implements ConstraintValidator<UserInsertValid, UserInsertDTO> {
+public class UserInsertValidator implements ConstraintValidator<UserInsertValid, UserRequestDTO> {
 
     @Autowired
     private UserRepository repository;
@@ -21,7 +21,7 @@ public class UserInsertValidator implements ConstraintValidator<UserInsertValid,
     }
 
     @Override
-    public boolean isValid(UserInsertDTO dto, ConstraintValidatorContext context) {
+    public boolean isValid(UserRequestDTO dto, ConstraintValidatorContext context) {
 
         List<FieldMessage> list = new ArrayList<>();
 
