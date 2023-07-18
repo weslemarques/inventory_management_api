@@ -1,6 +1,7 @@
 package br.com.reinan.dscatalog.controllers;
 
 import br.com.reinan.dscatalog.config.WebSecurityConfig;
+import br.com.reinan.dscatalog.dto.request.ProductRequestDTO;
 import br.com.reinan.dscatalog.dto.response.ProductDTO;
 import br.com.reinan.dscatalog.services.ProductServiceImpl;
 import br.com.reinan.dscatalog.services.exceptions.DataBaseException;
@@ -38,6 +39,8 @@ public class ProductControllerTests {
 
     private ProductDTO productDto;
     private PageImpl<ProductDTO> page;
+
+    private ProductRequestDTO requestDTO;
     private Long existId;
     private Long notExistId;
     private Long dependenceId;
@@ -51,6 +54,7 @@ public class ProductControllerTests {
         dependenceId = 3L;
         objMapper = new ObjectMapper();
         productDto = Factory.createProductDto();
+        requestDTO = Factory.createProductRequest();
         page = new PageImpl<>(List.of(productDto));
 
         when(service.findAll(any())).thenReturn(page);
@@ -62,7 +66,7 @@ public class ProductControllerTests {
         doThrow(ResorceNotFoundException.class).when(service).delete(notExistId);
         doThrow(DataBaseException.class).when(service).delete(dependenceId);
 
-        when(service.insert(productDto)).thenReturn(productDto);
+        when(service.insert(requestDTO)).thenReturn(productDto);
 
         when(service.update(existId, productDto)).thenReturn(productDto);
         doThrow(ResorceNotFoundException.class).when(service).update(notExistId, productDto);

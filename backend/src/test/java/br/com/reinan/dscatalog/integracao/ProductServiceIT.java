@@ -1,5 +1,6 @@
 package br.com.reinan.dscatalog.integracao;
 
+import br.com.reinan.dscatalog.dto.request.ProductRequestDTO;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -101,7 +102,7 @@ public class ProductServiceIT {
     @Test
     public void insertShouldPersistEntityInDataBase() {
         Assertions.assertDoesNotThrow(() -> {
-            service.insert(new ProductDTO(product));
+            service.insert(Factory.createProductRequest());
         });
     }
 }

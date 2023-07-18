@@ -1,5 +1,6 @@
 package br.com.reinan.dscatalog.services;
 
+import br.com.reinan.dscatalog.dto.request.ProductRequestDTO;
 import br.com.reinan.dscatalog.dto.response.ProductDTO;
 import br.com.reinan.dscatalog.entities.Product;
 import br.com.reinan.dscatalog.repositories.ProductRepository;
@@ -20,11 +21,14 @@ import java.time.Instant;
 @Service
 public class ProductServiceImpl implements ProductService {
 
-    @Autowired
     private ProductRepository repository;
 
-    @Autowired
     private ModelMapper mapper;
+
+    public ProductServiceImpl(ProductRepository repository, ModelMapper mapper) {
+        this.repository = repository;
+        this.mapper = mapper;
+    }
 
     @Transactional(readOnly = true)
     public Page<ProductDTO> findAll(Pageable pageable) {
@@ -40,7 +44,7 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Transactional
-    public ProductDTO insert(ProductDTO dto) {
+    public ProductDTO insert(ProductRequestDTO dto) {
         var entity = mapper.map(dto, Product.class);
         entity = repository.save(entity);
         return new ProductDTO(entity);

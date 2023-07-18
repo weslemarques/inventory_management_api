@@ -1,5 +1,6 @@
 package br.com.reinan.dscatalog.services;
 
+import br.com.reinan.dscatalog.dto.request.ProductRequestDTO;
 import br.com.reinan.dscatalog.dto.response.ProductDTO;
 import br.com.reinan.dscatalog.entities.Category;
 import br.com.reinan.dscatalog.entities.Product;
@@ -41,20 +42,20 @@ public class ProductServiceTests {
 
     private Long existingId;
     private Long notExistingId;
-    private Product product;
-    private PageImpl<Product> page;
-    private Category category;
     private ProductDTO dto;
+
+    private ProductRequestDTO requestDTO;
 
     @BeforeEach
     void setUp() throws Exception {
 
         existingId = 1L;
         notExistingId = 1000L;
-        product = Factory.createProduct();
-        category = Factory.createCategory();
+        Product product = Factory.createProduct();
+        Category category = Factory.createCategory();
         dto = Factory.createProductDto();
-        page = new PageImpl<>(List.of(product));
+        requestDTO = Factory.createProductRequest();
+        PageImpl<Product> page = new PageImpl<>(List.of(product));
 
         when(repository.findById(existingId)).thenReturn(Optional.of(product));
         when(categoryRepository.findById(existingId)).thenReturn(Optional.of(category));
@@ -62,7 +63,7 @@ public class ProductServiceTests {
         when(repository.save(any())).thenReturn(product);
         doNothing().when(repository).deleteById(existingId);
         doThrow(ResorceNotFoundException.class).when(repository).deleteById(notExistingId);
-        Mockito.when(repository.findAll((Pageable) any())).thenReturn(page);
+        when(repository.findAll((Pageable) any())).thenReturn(page);
     }
 
     @Test
@@ -85,7 +86,7 @@ public class ProductServiceTests {
     }
 
     @Test
-    public void updateShouldReturnEntityUpadate() {
+    public void updateShouldReturnEntityUpdate() {
         ProductDTO entity = service.update(existingId, dto);
 
         Assertions.assertNotNull(entity);
@@ -95,7 +96,7 @@ public class ProductServiceTests {
     @Test
     public void updateShouldThrowsResorceNotFoundExceptionWhenNotExistsId() {
         Assertions.assertThrows(ResorceNotFoundException.class, () -> {
-            service.update(notExistingId, new ProductDTO());
+            service.update(notExistingId, dto);
         });
 
         verify(repository).findById(notExistingId);
@@ -133,7 +134,7 @@ public class ProductServiceTests {
     @Test
     public void insertShouldPersistEntityInDataBase() {
         Assertions.assertDoesNotThrow(() -> {
-            service.insert(new ProductDTO(product));
+            service.insert(requestDTO);
         });
     }
 

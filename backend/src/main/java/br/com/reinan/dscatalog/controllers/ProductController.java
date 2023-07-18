@@ -1,5 +1,6 @@
 package br.com.reinan.dscatalog.controllers;
 
+import br.com.reinan.dscatalog.dto.request.ProductRequestDTO;
 import br.com.reinan.dscatalog.dto.response.ProductDTO;
 import br.com.reinan.dscatalog.services.contract.ProductService;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
@@ -38,14 +39,14 @@ public class ProductController {
 
     @PostMapping
     @PreAuthorize("hasRole('ADMIN')")
-    public ResponseEntity<ProductDTO> insert(@Valid @RequestBody ProductDTO dto) {
-        dto = service.insert(dto);
+    public ResponseEntity<ProductDTO> insert(@Valid @RequestBody ProductRequestDTO dto) {
+       ProductDTO responseDTO = service.insert(dto);
         URI uri = ServletUriComponentsBuilder
                 .fromCurrentRequest()
                 .path("/{id}")
-                .buildAndExpand(dto.getId())
+                .buildAndExpand(responseDTO.getId())
                 .toUri();
-        return ResponseEntity.created(uri).body(dto);
+        return ResponseEntity.created(uri).body(responseDTO);
     }
     @PutMapping("/{id}")
     @PreAuthorize("hasRole('ADMIN')")
