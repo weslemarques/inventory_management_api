@@ -51,14 +51,15 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Transactional
-    public ProductDTO update(Long id, ProductDTO dto) {
-
+    public ProductDTO update(Long id, ProductRequestDTO dto) {
         Product entity = repository.findById(id)
                 .orElseThrow(() -> new ResorceNotFoundException("Id not found " + id));
         mapper.map(dto, entity);
         entity.setUpdatedAt(Instant.now());
         entity = repository.save(entity);
-        return mapper.map(entity, ProductDTO.class);
+        return new ProductDTO(entity);
+
+
     }
 
     @Transactional

@@ -9,6 +9,6 @@ public interface ProductService {
     public Page<ProductDTO> findAll(Pageable pageable);
     public ProductDTO findById(Long id);
     public ProductDTO insert(ProductRequestDTO dto);
-    public ProductDTO update(Long id, ProductDTO dto);
+    public ProductDTO update(Long id, ProductRequestDTO dto);
     public void delete(Long id);
 }

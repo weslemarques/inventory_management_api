@@ -21,7 +21,9 @@ public class ProductDTO extends ProductBaseDTO implements Serializable {
     private Long id;
 
 
+    public ProductDTO() {
 
+    }
 
     public ProductDTO(Long id, String name, String description, Double price, String imgUrl, Instant date) {
         setId(id);

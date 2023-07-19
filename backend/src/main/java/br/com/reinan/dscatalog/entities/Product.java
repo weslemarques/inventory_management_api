@@ -77,7 +77,8 @@ public class Product implements Serializable {
     }
 
     public void setName(String name) {
-        this.name = name;
+        if (name != null)
+            this.name = name;
     }
 
     public String getDescription() {
@@ -85,7 +86,8 @@ public class Product implements Serializable {
     }
 
     public void setDescription(String description) {
-        this.description = description;
+        if (description != null)
+         this.description = description;
     }
 
     public Double getPrice() {
@@ -93,7 +95,8 @@ public class Product implements Serializable {
     }
 
     public void setPrice(Double price) {
-        this.price = price;
+        if (price != null)
+         this.price = price;
     }
 
     public String getImgUrl() {
@@ -101,7 +104,7 @@ public class Product implements Serializable {
     }
 
     public void setImgUrl(String imgUrl) {
-        this.imgUrl = imgUrl;
+        if (imgUrl != null) this.imgUrl = imgUrl;
     }
 
     public Set<Category> getCategories() {
@@ -113,7 +116,7 @@ public class Product implements Serializable {
     }
 
     public void setDate(Instant date) {
-        this.date = date;
+        if (date != null) this.date = date;
     }
 
     @Override
