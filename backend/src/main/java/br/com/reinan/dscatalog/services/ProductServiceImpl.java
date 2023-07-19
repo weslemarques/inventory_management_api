@@ -55,10 +55,10 @@ public class ProductServiceImpl implements ProductService {
 
         Product entity = repository.findById(id)
                 .orElseThrow(() -> new ResorceNotFoundException("Id not found " + id));
-        mapper.map(dto, Product.class);
+        mapper.map(dto, entity);
         entity.setUpdatedAt(Instant.now());
         entity = repository.save(entity);
-        return new ProductDTO(entity);
+        return mapper.map(entity, ProductDTO.class);
     }
 
     @Transactional

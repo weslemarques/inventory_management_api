@@ -37,12 +37,6 @@ public class ProductServiceIT {
 
     }
 
-    @Test
-    public void deleteShouldDeleteObjectWhenIdexist() {
-        Assertions.assertDoesNotThrow(() -> {
-            service.delete(existingId);
-        });
-    }
 
     @Test
     public void deleteShouldThrowsResorceNotFoundExceptionWhenNotExistsId() {
@@ -61,6 +55,12 @@ public class ProductServiceIT {
         Assertions.assertEquals("PS5 Plus", entity.getName());
         Assertions.assertEquals(600.0, entity.getPrice());
 
+    }
+    @Test
+    public void deleteShouldDeleteObjectWhenIdexist() {
+        Assertions.assertDoesNotThrow(() -> {
+            service.delete(existingId);
+        });
     }
 
     @Test

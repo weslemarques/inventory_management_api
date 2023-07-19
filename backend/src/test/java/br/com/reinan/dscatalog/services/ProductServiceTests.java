@@ -6,6 +6,7 @@ import br.com.reinan.dscatalog.entities.Category;
 import br.com.reinan.dscatalog.entities.Product;
 import br.com.reinan.dscatalog.repositories.CategoryRepository;
 import br.com.reinan.dscatalog.repositories.ProductRepository;
+import br.com.reinan.dscatalog.services.contract.ProductService;
 import br.com.reinan.dscatalog.services.exceptions.ResorceNotFoundException;
 import br.com.reinan.dscatalog.tests.Factory;
 import org.junit.jupiter.api.Assertions;
@@ -15,6 +16,7 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Mockito;
+import org.modelmapper.ModelMapper;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.PageRequest;
@@ -45,6 +47,9 @@ public class ProductServiceTests {
     private ProductDTO dto;
 
     private ProductRequestDTO requestDTO;
+    @Mock
+
+    private ModelMapper mapper;
 
     @BeforeEach
     void setUp() throws Exception {

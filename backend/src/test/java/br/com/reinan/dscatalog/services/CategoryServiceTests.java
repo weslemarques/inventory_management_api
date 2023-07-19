@@ -11,6 +11,7 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
+import org.modelmapper.ModelMapper;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
@@ -35,9 +36,11 @@ public class CategoryServiceTests {
 
     private Long existsId;
     private Long notExistsId;
-    private Category category;
     private CategoryDTO dto;
-    private PageImpl<Category> page;
+
+    @Mock
+
+    private ModelMapper mapper;
 
 
     @BeforeEach
@@ -45,9 +48,9 @@ public class CategoryServiceTests {
 
         dto = Factory.createCategoryDto();
         existsId = 1L;
-        category = Factory.createCategory();
+        Category category = Factory.createCategory();
         notExistsId = 1000L;
-        page = new PageImpl<>(List.of(category));
+        PageImpl<Category> page = new PageImpl<>(List.of(category));
         doNothing().when(repository).deleteById(existsId);
         doThrow(EmptyResultDataAccessException.class).when(repository).deleteById(notExistsId);
         when(repository.findById(existsId)).thenReturn(Optional.of(category));

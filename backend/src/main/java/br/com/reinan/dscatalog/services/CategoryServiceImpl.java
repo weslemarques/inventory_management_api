@@ -8,7 +8,6 @@ import br.com.reinan.dscatalog.services.contract.CategoryService;
 import br.com.reinan.dscatalog.services.exceptions.DataBaseException;
 import br.com.reinan.dscatalog.services.exceptions.ResorceNotFoundException;
 import org.modelmapper.ModelMapper;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.data.domain.Page;
@@ -22,11 +21,15 @@ import java.util.Optional;
 @Service
 public class CategoryServiceImpl implements CategoryService {
 
-    @Autowired
-    private CategoryRepository repository;
-    @Autowired
-    private ModelMapper mapper;
+    private final CategoryRepository repository;
 
+    private final ModelMapper mapper;
+
+
+    public CategoryServiceImpl(CategoryRepository repository, ModelMapper mapper) {
+        this.repository = repository;
+        this.mapper = mapper;
+    }
 
     @Transactional(readOnly = true)
     public Page<CategoryDTO> findAll(Pageable pageable) {
