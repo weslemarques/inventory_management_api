@@ -10,7 +10,7 @@ import br.com.reinan.dscatalog.entities.User;
 import br.com.reinan.dscatalog.security.jwt.JwtUtils;
 import br.com.reinan.dscatalog.services.contract.AuthService;
 import br.com.reinan.dscatalog.services.contract.RefreshTokenService;
-import br.com.reinan.dscatalog.services.exceptions.ResorceNotFoundException;
+import br.com.reinan.dscatalog.services.exceptions.ResourceNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -58,7 +58,7 @@ public class AuthServiceImpl implements AuthService {
         User user =
                 refreshTokenService.findByToken(refreshToken)
                         .map(refreshTokenService::verifyExpiration)
-                        .map(RefreshToken::getUser).orElseThrow(() -> new ResorceNotFoundException(""));
+                        .map(RefreshToken::getUser).orElseThrow(() -> new ResourceNotFoundException(""));
         String token = jwtUtils.generateJwtToken(user);
 
         RefreshToken newRefreshToken = refreshTokenService.createRefreshToken(user.getId());

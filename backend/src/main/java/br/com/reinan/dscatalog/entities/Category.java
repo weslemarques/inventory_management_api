@@ -1,7 +1,9 @@
 package br.com.reinan.dscatalog.entities;
 
+import jakarta.annotation.Nullable;
 import jakarta.persistence.*;
 
+import java.io.Serial;
 import java.io.Serializable;
 import java.time.Instant;
 import java.util.HashSet;
@@ -11,6 +13,7 @@ import java.util.Set;
 @Table(name = "tb_category")
 public class Category implements Serializable {
 
+    @Serial
     private static final long serialVersionUID = 1L;
 
     @Id
@@ -22,18 +25,19 @@ public class Category implements Serializable {
     private Instant createdAt = Instant.now();
 
     @Column(columnDefinition = "TIMESTAMP WITHOUT TIME ZONE")
+    @Nullable
     private Instant updatedAt;
 
     public void setCreatedAt(Instant createdAt) {
         this.createdAt = createdAt;
     }
 
-    public void setUpdatedAt(Instant updatedAt) {
+    public void setUpdatedAt(@Nullable Instant updatedAt) {
         this.updatedAt = updatedAt;
     }
 
     @ManyToMany(mappedBy = "categories")
-    private Set<Product> products = new HashSet<>();
+    private final Set<Product> products = new HashSet<>();
 
     public Category() {
     }

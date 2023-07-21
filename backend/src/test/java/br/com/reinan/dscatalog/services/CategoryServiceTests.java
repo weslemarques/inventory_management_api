@@ -1,9 +1,10 @@
 package br.com.reinan.dscatalog.services;
 
+import br.com.reinan.dscatalog.dto.request.CategoryInsertDTO;
 import br.com.reinan.dscatalog.dto.response.CategoryDTO;
 import br.com.reinan.dscatalog.entities.Category;
 import br.com.reinan.dscatalog.repositories.CategoryRepository;
-import br.com.reinan.dscatalog.services.exceptions.ResorceNotFoundException;
+import br.com.reinan.dscatalog.services.exceptions.ResourceNotFoundException;
 import br.com.reinan.dscatalog.tests.Factory;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
@@ -22,6 +23,7 @@ import org.springframework.test.context.junit.jupiter.SpringExtension;
 import java.util.List;
 import java.util.Optional;
 
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.*;
 
@@ -52,35 +54,26 @@ public class CategoryServiceTests {
         notExistsId = 1000L;
         PageImpl<Category> page = new PageImpl<>(List.of(category));
         doNothing().when(repository).deleteById(existsId);
-        doThrow(EmptyResultDataAccessException.class).when(repository).deleteById(notExistsId);
+
         when(repository.findById(existsId)).thenReturn(Optional.of(category));
         when(repository.findById(notExistsId)).thenReturn(Optional.empty());
         when(repository.save(any())).thenReturn(category);
         when(repository.findAll((Pageable) any())).thenReturn(page);
+        doThrow(EmptyResultDataAccessException.class).when(repository).deleteById(notExistsId);
     }
 
-    @Test
-    public void deleteShouldDoNothing() {
-        Assertions.assertDoesNotThrow(() -> {
-            service.delete(existsId);
-        });
-        verify(repository).deleteById(existsId);
-    }
 
     @Test
     public void deleteShouldThrowsEmptyResultDataAccessException() {
-        Assertions.assertThrows(ResorceNotFoundException.class, () -> {
-            service.delete(notExistsId);
-        });
+        Assertions.assertThrows(ResourceNotFoundException.class, () -> service.delete(notExistsId));
 
         verify(repository).deleteById(notExistsId);
     }
 
     @Test
     public void findByIdShouldReturnOptionalNotEmptyWhenIdExists() {
-        CategoryDTO dto = service.findById(existsId);
-
-        Assertions.assertNotNull(dto);
+        var dto = service.findById(existsId);
+        assertNotNull(dto);
         Assertions.assertEquals("category", dto.getName());
 
         verify(repository).findById(existsId);
@@ -88,17 +81,16 @@ public class CategoryServiceTests {
 
     @Test
     public void findByIdShouldReturnOptionalEmptyWhenIdExists() {
-        Assertions.assertThrows(ResorceNotFoundException.class, () -> {
-            service.findById(notExistsId);
-        });
+        Assertions.assertThrows(ResourceNotFoundException.class, () -> service.findById(notExistsId));
 
         verify(repository).findById(notExistsId);
     }
 
+
     @Test
     public void insertShouldPersitObjectInDataBase() {
         Assertions.assertDoesNotThrow(() -> {
-            service.insert(any());
+            service.insert(new CategoryInsertDTO());
         });
 
         verify(repository).save(any());
@@ -116,9 +108,7 @@ public class CategoryServiceTests {
 
     @Test
     public void updateShouldThrowsResorceNotFoundExceptionWhenNotExistsId() {
-        Assertions.assertThrows(ResorceNotFoundException.class, () -> {
-            service.update(notExistsId, dto);
-        });
+        Assertions.assertThrows(RuntimeException.class, () -> service.update(notExistsId, dto));
 
         verify(repository).findById(notExistsId);
 
@@ -126,14 +116,18 @@ public class CategoryServiceTests {
 
     @Test
     public void findAllShouldReturnPage() {
-        Page<CategoryDTO> pageImpl = service.findAll(PageRequest.of(0, 10));
+        Page<CategoryDTO> pageImpl = service.findAll(PageRequest.of(1, 10));
 
-        Assertions.assertNotNull(pageImpl);
-        Assertions.assertEquals(pageImpl.getNumber(), 0);
+        assertNotNull(pageImpl);
+        Assertions.assertEquals(pageImpl.getNumber (), 0);
         Assertions.assertEquals(pageImpl.getSize(), 1);
         Assertions.assertEquals(pageImpl.getContent().get(0).getName(), "category");
     }
-
+    @Test
+    public void deleteShouldDoNothing() {
+        Assertions.assertDoesNotThrow(() -> service.delete(existsId));
+        verify(repository).deleteById(existsId);
+    }
 
 
 

@@ -39,13 +39,13 @@ public class Factory {
     }
 
     public static Category createCategory() {
-        Category category = new Category(1L, "category");
-        return category;
+       return new Category(1L, "category");
+
     }
 
     public static Category createInsertCategory() {
-        Category category = new Category("category");
-        return category;
+
+        return new Category("category");
     }
 
     public static CategoryDTO createCategoryDto() {

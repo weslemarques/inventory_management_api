@@ -6,7 +6,7 @@ import br.com.reinan.dscatalog.entities.Category;
 import br.com.reinan.dscatalog.repositories.CategoryRepository;
 import br.com.reinan.dscatalog.services.contract.CategoryService;
 import br.com.reinan.dscatalog.services.exceptions.DataBaseException;
-import br.com.reinan.dscatalog.services.exceptions.ResorceNotFoundException;
+import br.com.reinan.dscatalog.services.exceptions.ResourceNotFoundException;
 import org.modelmapper.ModelMapper;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.dao.EmptyResultDataAccessException;
@@ -39,7 +39,7 @@ public class CategoryServiceImpl implements CategoryService {
     @Transactional(readOnly = true)
     public CategoryDTO findById(Long id) {
         Optional<Category> obj = repository.findById(id);
-        Category category = obj.orElseThrow(() -> new ResorceNotFoundException("Entity Not Found "));
+        Category category = obj.orElseThrow(() -> new ResourceNotFoundException("Entity Not Found "));
         return mapper.map(category, CategoryDTO.class);
     }
     @Transactional
@@ -51,7 +51,7 @@ public class CategoryServiceImpl implements CategoryService {
     @Transactional
     public CategoryDTO update(Long id, CategoryDTO dto) {
         try {
-            Category entity = repository.findById(id).orElseThrow(() -> new ResorceNotFoundException("Category not found " + id));
+            Category entity = repository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Category not found " + id));
             entity.setName(dto.getName());
             entity.setUpdatedAt(Instant.now());
             entity = repository.save(entity);
@@ -66,7 +66,7 @@ public class CategoryServiceImpl implements CategoryService {
         try {
             repository.deleteById(id);
         } catch (EmptyResultDataAccessException e) {
-            throw new ResorceNotFoundException("Id not found");
+            throw new ResourceNotFoundException("Id not found");
         } catch (DataIntegrityViolationException e) {
             throw new DataBaseException("Data Base Violation");
         }
