@@ -92,7 +92,7 @@ public class ProductServiceTests {
 
     @Test
     public void updateShouldReturnEntityUpdate() {
-        ProductDTO entity = service.update(existingId, dto);
+        ProductDTO entity = service.update(existingId, requestDTO);
 
         Assertions.assertNotNull(entity);
         verify(repository).findById(existingId);
@@ -101,7 +101,7 @@ public class ProductServiceTests {
     @Test
     public void updateShouldThrowsResorceNotFoundExceptionWhenNotExistsId() {
         Assertions.assertThrows(ResorceNotFoundException.class, () -> {
-            service.update(notExistingId, dto);
+            service.update(notExistingId, requestDTO);
         });
 
         verify(repository).findById(notExistingId);

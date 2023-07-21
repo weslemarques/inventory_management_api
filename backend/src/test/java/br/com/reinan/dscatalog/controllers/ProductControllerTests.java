@@ -68,8 +68,8 @@ public class ProductControllerTests {
 
         when(service.insert(requestDTO)).thenReturn(productDto);
 
-        when(service.update(existId, productDto)).thenReturn(productDto);
-        doThrow(ResorceNotFoundException.class).when(service).update(notExistId, productDto);
+        when(service.update(existId, requestDTO)).thenReturn(productDto);
+        doThrow(ResorceNotFoundException.class).when(service).update(notExistId, requestDTO);
 
     }
 
