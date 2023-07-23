@@ -1,7 +1,7 @@
 package br.com.reinan.dscatalog.controllers.exceptions;
 
 import br.com.reinan.dscatalog.services.exceptions.DataBaseException;
-import br.com.reinan.dscatalog.services.exceptions.ResorceNotFoundException;
+import br.com.reinan.dscatalog.services.exceptions.ResourceNotFoundException;
 import br.com.reinan.dscatalog.services.exceptions.TokenExpiredException;
 import br.com.reinan.dscatalog.services.exceptions.TokenInvalido;
 import jakarta.servlet.http.HttpServletRequest;
@@ -20,10 +20,10 @@ import java.time.Instant;
 @ControllerAdvice
 public class ControllerExceptionHandler{
 
-    @ExceptionHandler(ResorceNotFoundException.class)
+    @ExceptionHandler(ResourceNotFoundException.class)
     @ResponseStatus(HttpStatus.NOT_FOUND)
     public ResponseEntity<StandardError> entityNotFound(
-            ResorceNotFoundException e,
+            ResourceNotFoundException e,
             HttpServletRequest request) {
         HttpStatus status = HttpStatus.NOT_FOUND;
         StandardError err = new StandardError();

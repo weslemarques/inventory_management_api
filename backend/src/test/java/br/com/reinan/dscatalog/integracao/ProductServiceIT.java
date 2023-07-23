@@ -1,5 +1,10 @@
 package br.com.reinan.dscatalog.integracao;
 
+import br.com.reinan.dscatalog.dto.request.ProductRequestDTO;
+import br.com.reinan.dscatalog.dto.response.ProductDTO;
+import br.com.reinan.dscatalog.services.ProductServiceImpl;
+import br.com.reinan.dscatalog.services.exceptions.ResourceNotFoundException;
+import br.com.reinan.dscatalog.tests.Factory;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -10,12 +15,6 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.transaction.annotation.Transactional;
 
-import br.com.reinan.dscatalog.dto.response.ProductDTO;
-import br.com.reinan.dscatalog.entities.Product;
-import br.com.reinan.dscatalog.services.ProductServiceImpl;
-import br.com.reinan.dscatalog.services.exceptions.ResorceNotFoundException;
-import br.com.reinan.dscatalog.tests.Factory;
-
 @SpringBootTest()
 @Transactional
 public class ProductServiceIT {
@@ -24,18 +23,37 @@ public class ProductServiceIT {
     private ProductServiceImpl service;
     private Long existingId;
     private Long notExistingId;
-    private Product product;
-    private ProductDTO dto;
+
+    private ProductRequestDTO requestDTO;
 
     @BeforeEach
     void setUp() throws Exception {
         existingId = 1L;
         notExistingId = 1000L;
-        product = Factory.createProduct();
-        dto = Factory.createProductDto();
+        ProductDTO dto = Factory.createProductDto();
+        requestDTO = Factory.createProductRequest();
 
     }
 
+
+    @Test
+    public void deleteShouldThrowsResourceNotFoundExceptionWhenNotExistsId() {
+
+        Assertions.assertThrows(ResourceNotFoundException.class, () -> {
+            service.delete(notExistingId);
+        });
+
+    }
+
+    @Test
+    public void updateShouldReturnEntityUpadate() {
+        ProductDTO entity = service.update(existingId, requestDTO);
+
+        Assertions.assertNotNull(entity);
+        Assertions.assertEquals("Percy Jackson", entity.getName());
+        Assertions.assertEquals(40.0, entity.getPrice());
+
+    }
     @Test
     public void deleteShouldDeleteObjectWhenIdexist() {
         Assertions.assertDoesNotThrow(() -> {
@@ -44,28 +62,9 @@ public class ProductServiceIT {
     }
 
     @Test
-    public void deleteShouldThrowsResorceNotFoundExceptionWhenNotExistsId() {
-
-        Assertions.assertThrows(ResorceNotFoundException.class, () -> {
-            service.delete(notExistingId);
-        });
-
-    }
-
-    @Test
-    public void updateShouldReturnEntityUpadate() {
-        ProductDTO entity = service.update(existingId, new ProductDTO(product));
-
-        Assertions.assertNotNull(entity);
-        Assertions.assertEquals("PS5 Plus", entity.getName());
-        Assertions.assertEquals(600.0, entity.getPrice());
-
-    }
-
-    @Test
     public void updateShouldThrowsResorceNotFoundExceptionWhenNotExistsId() {
-        Assertions.assertThrows(ResorceNotFoundException.class, () -> {
-            service.update(notExistingId, dto);
+        Assertions.assertThrows(ResourceNotFoundException.class, () -> {
+            service.update(notExistingId, requestDTO);
         });
     }
 
@@ -80,7 +79,7 @@ public class ProductServiceIT {
 
     @Test
     public void findByIdShouldThrowsResorceNotFoundExceptionWhenNotExistsId() {
-        Assertions.assertThrows(ResorceNotFoundException.class, () -> {
+        Assertions.assertThrows(ResourceNotFoundException.class, () -> {
             service.findById(notExistingId);
         });
 
@@ -101,7 +100,7 @@ public class ProductServiceIT {
     @Test
     public void insertShouldPersistEntityInDataBase() {
         Assertions.assertDoesNotThrow(() -> {
-            service.insert(new ProductDTO(product));
+            service.insert(Factory.createProductRequest());
         });
     }
 }

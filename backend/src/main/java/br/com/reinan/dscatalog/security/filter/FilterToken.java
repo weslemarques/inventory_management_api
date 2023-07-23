@@ -3,7 +3,7 @@ package br.com.reinan.dscatalog.security.filter;
 import br.com.reinan.dscatalog.entities.User;
 import br.com.reinan.dscatalog.repositories.UserRepository;
 import br.com.reinan.dscatalog.security.jwt.JwtUtils;
-import br.com.reinan.dscatalog.services.exceptions.ResorceNotFoundException;
+import br.com.reinan.dscatalog.services.exceptions.ResourceNotFoundException;
 import br.com.reinan.dscatalog.services.exceptions.TokenExpiredException;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
@@ -41,7 +41,7 @@ public class FilterToken extends OncePerRequestFilter {
     public User recoverUser(String token){
         String username = jwtUtils.getUsernameFromJwtToken(token);
         return  userRepository.findByEmail(username)
-                .orElseThrow(() -> new ResorceNotFoundException("user not found"));
+                .orElseThrow(() -> new ResourceNotFoundException("user not found"));
     }
 
     public  String decodeToken(HttpServletRequest request){

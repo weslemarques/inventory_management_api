@@ -1,5 +1,6 @@
 package br.com.reinan.dscatalog.dto.response;
 
+import java.io.Serial;
 import java.io.Serializable;
 import java.time.Instant;
 
@@ -7,10 +8,15 @@ import br.com.reinan.dscatalog.entities.Category;
 
 public class CategoryDTO implements Serializable {
 
+    @Serial
     private static final long serialVersionUID = 1L;
 
     private Long id;
     private String name;
+
+    private Instant createdAt ;
+
+    private Instant updatedAt;
 
     public Instant getCreatedAt() {
         return createdAt;
@@ -28,9 +34,7 @@ public class CategoryDTO implements Serializable {
         this.updatedAt = updatedAt;
     }
 
-    private Instant createdAt ;
 
-    private Instant updatedAt;
 
 
     public CategoryDTO() {

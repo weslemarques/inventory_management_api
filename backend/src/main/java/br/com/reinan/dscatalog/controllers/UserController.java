@@ -1,12 +1,12 @@
 package br.com.reinan.dscatalog.controllers;
 
-import br.com.reinan.dscatalog.dto.request.UserInsertDTO;
+import br.com.reinan.dscatalog.dto.request.UserRequestDTO;
 import br.com.reinan.dscatalog.dto.request.UserUpdateDTO;
 import br.com.reinan.dscatalog.dto.response.UserDTO;
 import br.com.reinan.dscatalog.services.contract.UserService;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import jakarta.validation.Valid;
-import org.springframework.beans.factory.annotation.Autowired;
+import org.springdoc.core.annotations.ParameterObject;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
@@ -21,11 +21,14 @@ import java.net.URI;
 @CrossOrigin("*")
 public class UserController {
 
-    @Autowired
-    private UserService service;
+    private final UserService service;
+
+    public UserController(UserService service) {
+        this.service = service;
+    }
 
     @GetMapping
-    public ResponseEntity<Page<UserDTO>> findAll(Pageable pageable) {
+    public ResponseEntity<Page<UserDTO>> findAll(@ParameterObject Pageable pageable) {
         Page<UserDTO> list = service.findAll(pageable);
         return ResponseEntity.ok(list);
     }
@@ -38,7 +41,7 @@ public class UserController {
     }
 
     @PostMapping
-    public ResponseEntity<UserDTO> insert(@Valid @RequestBody UserInsertDTO dtoInsert) {
+    public ResponseEntity<UserDTO> insert(@Valid @RequestBody UserRequestDTO dtoInsert) {
         UserDTO dto = service.insert(dtoInsert);
         URI uri = ServletUriComponentsBuilder
                 .fromCurrentRequest()

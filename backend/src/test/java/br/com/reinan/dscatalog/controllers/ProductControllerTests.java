@@ -1,10 +1,11 @@
 package br.com.reinan.dscatalog.controllers;
 
 import br.com.reinan.dscatalog.config.WebSecurityConfig;
+import br.com.reinan.dscatalog.dto.request.ProductRequestDTO;
 import br.com.reinan.dscatalog.dto.response.ProductDTO;
 import br.com.reinan.dscatalog.services.ProductServiceImpl;
 import br.com.reinan.dscatalog.services.exceptions.DataBaseException;
-import br.com.reinan.dscatalog.services.exceptions.ResorceNotFoundException;
+import br.com.reinan.dscatalog.services.exceptions.ResourceNotFoundException;
 import br.com.reinan.dscatalog.tests.Factory;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
@@ -38,6 +39,8 @@ public class ProductControllerTests {
 
     private ProductDTO productDto;
     private PageImpl<ProductDTO> page;
+
+    private ProductRequestDTO requestDTO;
     private Long existId;
     private Long notExistId;
     private Long dependenceId;
@@ -51,21 +54,22 @@ public class ProductControllerTests {
         dependenceId = 3L;
         objMapper = new ObjectMapper();
         productDto = Factory.createProductDto();
+        requestDTO = Factory.createProductRequest();
         page = new PageImpl<>(List.of(productDto));
 
         when(service.findAll(any())).thenReturn(page);
 
         when(service.findById(existId)).thenReturn(productDto);
-        doThrow(ResorceNotFoundException.class).when(service).findById(notExistId);
+        doThrow(ResourceNotFoundException.class).when(service).findById(notExistId);
 
         doNothing().when(service).delete(existId);
-        doThrow(ResorceNotFoundException.class).when(service).delete(notExistId);
+        doThrow(ResourceNotFoundException.class).when(service).delete(notExistId);
         doThrow(DataBaseException.class).when(service).delete(dependenceId);
 
-        when(service.insert(productDto)).thenReturn(productDto);
+        when(service.insert(requestDTO)).thenReturn(productDto);
 
-        when(service.update(existId, productDto)).thenReturn(productDto);
-        doThrow(ResorceNotFoundException.class).when(service).update(notExistId, productDto);
+        when(service.update(existId, requestDTO)).thenReturn(productDto);
+        doThrow(ResourceNotFoundException.class).when(service).update(notExistId, requestDTO);
 
     }
 

@@ -2,6 +2,7 @@ package br.com.reinan.dscatalog.tests;
 
 import java.time.Instant;
 
+import br.com.reinan.dscatalog.dto.request.ProductRequestDTO;
 import br.com.reinan.dscatalog.dto.response.CategoryDTO;
 import br.com.reinan.dscatalog.dto.response.ProductDTO;
 import br.com.reinan.dscatalog.entities.Category;
@@ -18,11 +19,17 @@ public class Factory {
     }
 
     public static Product createProductUpdate() {
-        Product product = new Product("Percy Jackson", 40.0, Instant.parse("2020-07-20T10:00:00Z"),
-                "Percy Jackson Book", "");
+        Product product = new Product();
 
         product.getCategories().add(new Category(1L, "Books"));
         return product;
+    }
+    public static ProductRequestDTO createProductRequest() {
+        ProductRequestDTO request = new ProductRequestDTO("Percy Jackson", 40.0, Instant.parse("2020-07-20T10:00:00Z"),
+                "Percy Jackson Book", "");
+
+        request.getCategories().add(new CategoryDTO(1L, "Eletronics"));
+        return request;
     }
 
     public static ProductDTO createProductDto() {
@@ -32,13 +39,13 @@ public class Factory {
     }
 
     public static Category createCategory() {
-        Category category = new Category(1L, "category");
-        return category;
+       return new Category(1L, "category");
+
     }
 
     public static Category createInsertCategory() {
-        Category category = new Category("category");
-        return category;
+
+        return new Category("category");
     }
 
     public static CategoryDTO createCategoryDto() {
