@@ -11,7 +11,7 @@ import br.com.reinan.dscatalog.repositories.RoleRepository;
 import br.com.reinan.dscatalog.repositories.UserRepository;
 import br.com.reinan.dscatalog.services.contract.UserService;
 import br.com.reinan.dscatalog.services.exceptions.DataBaseException;
-import br.com.reinan.dscatalog.services.exceptions.ResorceNotFoundException;
+import br.com.reinan.dscatalog.services.exceptions.ResourceNotFoundException;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.data.domain.Page;
@@ -48,7 +48,7 @@ public class UserServiceImpl implements  UserService {
     @Transactional(readOnly = true)
     public UserDTO findById(Long id) {
         Optional<User> obj = userRepository.findById(id);
-        User entity = obj.orElseThrow(() -> new ResorceNotFoundException("Entity Not Found "));
+        User entity = obj.orElseThrow(() -> new ResourceNotFoundException("Entity Not Found "));
         return new UserDTO(entity);
     }
 
@@ -70,7 +70,7 @@ public class UserServiceImpl implements  UserService {
             entity = userRepository.save(entity);
             return new UserDTO(entity);
         } catch (NoSuchElementException e) {
-            throw new ResorceNotFoundException("Id not found " + id);
+            throw new ResourceNotFoundException("Id not found " + id);
         }
     }
 
@@ -79,7 +79,7 @@ public class UserServiceImpl implements  UserService {
         try {
             userRepository.deleteById(id);
         } catch (EmptyResultDataAccessException e) {
-            throw new ResorceNotFoundException("Id not found");
+            throw new ResourceNotFoundException("Id not found");
         } catch (DataIntegrityViolationException e) {
             throw new DataBaseException("Data Base Violation");
         }

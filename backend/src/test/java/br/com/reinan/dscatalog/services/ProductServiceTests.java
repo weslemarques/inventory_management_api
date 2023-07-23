@@ -6,8 +6,7 @@ import br.com.reinan.dscatalog.entities.Category;
 import br.com.reinan.dscatalog.entities.Product;
 import br.com.reinan.dscatalog.repositories.CategoryRepository;
 import br.com.reinan.dscatalog.repositories.ProductRepository;
-import br.com.reinan.dscatalog.services.contract.ProductService;
-import br.com.reinan.dscatalog.services.exceptions.ResorceNotFoundException;
+import br.com.reinan.dscatalog.services.exceptions.ResourceNotFoundException;
 import br.com.reinan.dscatalog.tests.Factory;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
@@ -15,7 +14,6 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
-import org.mockito.Mockito;
 import org.modelmapper.ModelMapper;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
@@ -44,7 +42,6 @@ public class ProductServiceTests {
 
     private Long existingId;
     private Long notExistingId;
-    private ProductDTO dto;
 
     private ProductRequestDTO requestDTO;
     @Mock
@@ -52,13 +49,12 @@ public class ProductServiceTests {
     private ModelMapper mapper;
 
     @BeforeEach
-    void setUp() throws Exception {
+    void setUp() {
 
         existingId = 1L;
         notExistingId = 1000L;
         Product product = Factory.createProduct();
         Category category = Factory.createCategory();
-        dto = Factory.createProductDto();
         requestDTO = Factory.createProductRequest();
         PageImpl<Product> page = new PageImpl<>(List.of(product));
 
@@ -67,25 +63,21 @@ public class ProductServiceTests {
         when(repository.findById(notExistingId)).thenReturn(Optional.empty());
         when(repository.save(any())).thenReturn(product);
         doNothing().when(repository).deleteById(existingId);
-        doThrow(ResorceNotFoundException.class).when(repository).deleteById(notExistingId);
+        doThrow(ResourceNotFoundException.class).when(repository).deleteById(notExistingId);
         when(repository.findAll((Pageable) any())).thenReturn(page);
     }
 
     @Test
     public void deleteShouldDeleteObjectWhenIdexist() {
-        Assertions.assertDoesNotThrow(() -> {
-            service.delete(existingId);
-        });
+        Assertions.assertDoesNotThrow(() -> service.delete(existingId));
 
         verify(repository, times(1)).deleteById(anyLong());
     }
 
     @Test
-    public void deleteShouldThrowsResorceNotFoundExceptionWhenNotExistsId() {
+    public void deleteShouldThrowsResourceNotFoundExceptionWhenNotExistsId() {
 
-        Assertions.assertThrows(ResorceNotFoundException.class, () -> {
-            service.delete(notExistingId);
-        });
+        Assertions.assertThrows(ResourceNotFoundException.class, () -> service.delete(notExistingId));
 
         verify(repository, times(1)).deleteById(notExistingId);
     }
@@ -100,9 +92,7 @@ public class ProductServiceTests {
 
     @Test
     public void updateShouldThrowsResorceNotFoundExceptionWhenNotExistsId() {
-        Assertions.assertThrows(ResorceNotFoundException.class, () -> {
-            service.update(notExistingId, requestDTO);
-        });
+        Assertions.assertThrows(ResourceNotFoundException.class, () -> service.update(notExistingId, requestDTO));
 
         verify(repository).findById(notExistingId);
     }
@@ -117,10 +107,8 @@ public class ProductServiceTests {
     }
 
     @Test
-    public void findByIdShouldThrowsResorceNotFoundExceptionWhenNotExistsId() {
-        Assertions.assertThrows(ResorceNotFoundException.class, () -> {
-            service.findById(notExistingId);
-        });
+    public void findByIdShouldThrowsResourceNotFoundExceptionWhenNotExistsId() {
+        Assertions.assertThrows(ResourceNotFoundException.class, () -> service.findById(notExistingId));
 
         verify(repository).findById(notExistingId);
     }

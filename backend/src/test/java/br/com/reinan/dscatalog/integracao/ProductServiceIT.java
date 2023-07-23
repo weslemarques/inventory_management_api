@@ -2,9 +2,8 @@ package br.com.reinan.dscatalog.integracao;
 
 import br.com.reinan.dscatalog.dto.request.ProductRequestDTO;
 import br.com.reinan.dscatalog.dto.response.ProductDTO;
-import br.com.reinan.dscatalog.entities.Product;
 import br.com.reinan.dscatalog.services.ProductServiceImpl;
-import br.com.reinan.dscatalog.services.exceptions.ResorceNotFoundException;
+import br.com.reinan.dscatalog.services.exceptions.ResourceNotFoundException;
 import br.com.reinan.dscatalog.tests.Factory;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
@@ -31,7 +30,6 @@ public class ProductServiceIT {
     void setUp() throws Exception {
         existingId = 1L;
         notExistingId = 1000L;
-        Product product = Factory.createProduct();
         ProductDTO dto = Factory.createProductDto();
         requestDTO = Factory.createProductRequest();
 
@@ -39,9 +37,9 @@ public class ProductServiceIT {
 
 
     @Test
-    public void deleteShouldThrowsResorceNotFoundExceptionWhenNotExistsId() {
+    public void deleteShouldThrowsResourceNotFoundExceptionWhenNotExistsId() {
 
-        Assertions.assertThrows(ResorceNotFoundException.class, () -> {
+        Assertions.assertThrows(ResourceNotFoundException.class, () -> {
             service.delete(notExistingId);
         });
 
@@ -65,7 +63,7 @@ public class ProductServiceIT {
 
     @Test
     public void updateShouldThrowsResorceNotFoundExceptionWhenNotExistsId() {
-        Assertions.assertThrows(ResorceNotFoundException.class, () -> {
+        Assertions.assertThrows(ResourceNotFoundException.class, () -> {
             service.update(notExistingId, requestDTO);
         });
     }
@@ -81,7 +79,7 @@ public class ProductServiceIT {
 
     @Test
     public void findByIdShouldThrowsResorceNotFoundExceptionWhenNotExistsId() {
-        Assertions.assertThrows(ResorceNotFoundException.class, () -> {
+        Assertions.assertThrows(ResourceNotFoundException.class, () -> {
             service.findById(notExistingId);
         });
 

@@ -4,7 +4,7 @@ import br.com.reinan.dscatalog.entities.RefreshToken;
 import br.com.reinan.dscatalog.repositories.RefreshTokenRepository;
 import br.com.reinan.dscatalog.repositories.UserRepository;
 import br.com.reinan.dscatalog.services.contract.RefreshTokenService;
-import br.com.reinan.dscatalog.services.exceptions.ResorceNotFoundException;
+import br.com.reinan.dscatalog.services.exceptions.ResourceNotFoundException;
 import br.com.reinan.dscatalog.services.exceptions.TokenExpiredException;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
@@ -38,7 +38,7 @@ public class RefreshTokenServiceImpl implements RefreshTokenService {
     @Transactional
     public RefreshToken createRefreshToken(Long userId) {
         RefreshToken refreshToken = new RefreshToken();
-        refreshToken.setUser(userRepository.findById(userId).orElseThrow(() -> new ResorceNotFoundException("Id not foud")));
+        refreshToken.setUser(userRepository.findById(userId).orElseThrow(() -> new ResourceNotFoundException("Id not foud")));
         refreshToken.setExpiryDate(Instant.now().plusMillis(refreshTokenExpirationMs));
         refreshToken.setToken(UUID.randomUUID().toString());
 

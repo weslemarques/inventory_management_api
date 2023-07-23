@@ -5,7 +5,7 @@ import br.com.reinan.dscatalog.dto.request.ProductRequestDTO;
 import br.com.reinan.dscatalog.dto.response.ProductDTO;
 import br.com.reinan.dscatalog.services.ProductServiceImpl;
 import br.com.reinan.dscatalog.services.exceptions.DataBaseException;
-import br.com.reinan.dscatalog.services.exceptions.ResorceNotFoundException;
+import br.com.reinan.dscatalog.services.exceptions.ResourceNotFoundException;
 import br.com.reinan.dscatalog.tests.Factory;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
@@ -60,16 +60,16 @@ public class ProductControllerTests {
         when(service.findAll(any())).thenReturn(page);
 
         when(service.findById(existId)).thenReturn(productDto);
-        doThrow(ResorceNotFoundException.class).when(service).findById(notExistId);
+        doThrow(ResourceNotFoundException.class).when(service).findById(notExistId);
 
         doNothing().when(service).delete(existId);
-        doThrow(ResorceNotFoundException.class).when(service).delete(notExistId);
+        doThrow(ResourceNotFoundException.class).when(service).delete(notExistId);
         doThrow(DataBaseException.class).when(service).delete(dependenceId);
 
         when(service.insert(requestDTO)).thenReturn(productDto);
 
         when(service.update(existId, requestDTO)).thenReturn(productDto);
-        doThrow(ResorceNotFoundException.class).when(service).update(notExistId, requestDTO);
+        doThrow(ResourceNotFoundException.class).when(service).update(notExistId, requestDTO);
 
     }
 
