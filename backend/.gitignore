@@ -4,7 +4,7 @@ target/
 !**/src/main/**/target/
 !**/src/test/**/target/
 
-application-prod.yml
+
 
 ### STS ###
 .apt_generated
@@ -21,6 +21,7 @@ application-prod.yml
 *.iml
 *.ipr
 
+*application-prod.yml
 ### NetBeans ###
 /nbproject/private/
 /nbbuild/
