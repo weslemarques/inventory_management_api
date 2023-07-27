@@ -32,7 +32,6 @@ public class ProductServiceIT {
         notExistingId = 1000L;
         ProductDTO dto = Factory.createProductDto();
         requestDTO = Factory.createProductRequest();
-
     }
 
 
