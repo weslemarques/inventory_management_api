@@ -20,6 +20,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -40,6 +41,8 @@ public class CategoryServiceTests {
     private Long notExistsId;
     private CategoryDTO dto;
 
+    List<Category> categories ;
+
     @Mock
 
     private ModelMapper mapper;
@@ -50,15 +53,16 @@ public class CategoryServiceTests {
 
         dto = Factory.createCategoryDto();
         existsId = 1L;
+        categories = new ArrayList<>();
         Category category = Factory.createCategory();
+        categories.add(category);
         notExistsId = 1000L;
-        PageImpl<Category> page = new PageImpl<>(List.of(category));
         doNothing().when(repository).deleteById(existsId);
 
         when(repository.findById(existsId)).thenReturn(Optional.of(category));
         when(repository.findById(notExistsId)).thenReturn(Optional.empty());
         when(repository.save(any())).thenReturn(category);
-        when(repository.findAll((Pageable) any())).thenReturn(page);
+        when(repository.findAll(isA(Pageable.class))).thenReturn(new PageImpl<>(categories));
         doThrow(EmptyResultDataAccessException.class).when(repository).deleteById(notExistsId);
     }
 
@@ -116,7 +120,8 @@ public class CategoryServiceTests {
 
     @Test
     public void findAllShouldReturnPage() {
-        Page<CategoryDTO> pageImpl = service.findAll(PageRequest.of(1, 10));
+
+        Page<CategoryDTO> pageImpl = service.findAll(PageRequest.of(0,2));
 
         assertNotNull(pageImpl);
         Assertions.assertEquals(pageImpl.getNumber (), 0);

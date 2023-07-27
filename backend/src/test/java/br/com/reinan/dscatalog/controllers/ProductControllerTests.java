@@ -76,7 +76,7 @@ public class ProductControllerTests {
     @Test
     public void testFindAll() throws Exception {
 
-        mvc.perform(get("/products")
+        mvc.perform(get("/v1/products")
                 .accept(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk());
 
