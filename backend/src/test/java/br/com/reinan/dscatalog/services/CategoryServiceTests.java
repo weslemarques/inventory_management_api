@@ -12,7 +12,6 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
-import org.mockito.Mockito;
 import org.modelmapper.ModelMapper;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.data.domain.Page;
@@ -25,6 +24,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.*;
 
@@ -34,8 +34,6 @@ public class CategoryServiceTests {
     @Mock
     private CategoryRepository repository;
 
-    @Mock
-    private ModelMapper mapper;
     @InjectMocks
     private CategoryServiceImpl service;
 
@@ -43,13 +41,11 @@ public class CategoryServiceTests {
     private Long notExistsId;
     private CategoryDTO dto;
 
-<<<<<<< HEAD
-=======
     List<Category> categories ;
 
     @Mock
->>>>>>> main
 
+    private ModelMapper mapper;
 
 
     @BeforeEach
@@ -61,22 +57,12 @@ public class CategoryServiceTests {
         Category category = Factory.createCategory();
         categories.add(category);
         notExistsId = 1000L;
-<<<<<<< HEAD
-        PageImpl<Category> page = new PageImpl<>(List.of(category));
-
-        Mockito.when(repository.findById(existsId)).thenReturn(Optional.of(category));
-        Mockito.when(repository.findById(notExistsId)).thenReturn(Optional.empty());
-        Mockito.when(repository.save(any())).thenReturn(category);
-        Mockito.when(repository.findAll((Pageable) any())).thenReturn(page);
-        doNothing().when(repository).deleteById(existsId);
-=======
         doNothing().when(repository).deleteById(existsId);
 
         when(repository.findById(existsId)).thenReturn(Optional.of(category));
         when(repository.findById(notExistsId)).thenReturn(Optional.empty());
         when(repository.save(any())).thenReturn(category);
         when(repository.findAll(isA(Pageable.class))).thenReturn(new PageImpl<>(categories));
->>>>>>> main
         doThrow(EmptyResultDataAccessException.class).when(repository).deleteById(notExistsId);
     }
 
@@ -90,8 +76,8 @@ public class CategoryServiceTests {
 
     @Test
     public void findByIdShouldReturnOptionalNotEmptyWhenIdExists() {
-        CategoryDTO responseDTO = service.findById(existsId);
-        Assertions.assertNotNull(responseDTO);
+        var dto = service.findById(existsId);
+        assertNotNull(dto);
         Assertions.assertEquals("category", dto.getName());
 
         verify(repository).findById(existsId);
@@ -134,16 +120,11 @@ public class CategoryServiceTests {
 
     @Test
     public void findAllShouldReturnPage() {
-<<<<<<< HEAD
-=======
 
         Page<CategoryDTO> pageImpl = service.findAll(PageRequest.of(0,2));
->>>>>>> main
 
-        Page<CategoryDTO> pageImpl = service.findAll(PageRequest.of(0, 10));
-
-        Assertions.assertNotNull(pageImpl);
-            Assertions.assertEquals(pageImpl.getNumber (), 0);
+        assertNotNull(pageImpl);
+        Assertions.assertEquals(pageImpl.getNumber (), 0);
         Assertions.assertEquals(pageImpl.getSize(), 1);
         Assertions.assertEquals(pageImpl.getContent().get(0).getName(), "category");
     }
@@ -152,5 +133,7 @@ public class CategoryServiceTests {
         Assertions.assertDoesNotThrow(() -> service.delete(existsId));
         verify(repository).deleteById(existsId);
     }
+
+
 
 }

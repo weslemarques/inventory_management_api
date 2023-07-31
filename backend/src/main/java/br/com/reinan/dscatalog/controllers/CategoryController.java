@@ -20,7 +20,6 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 import java.net.URI;
 
 @RestController
-@CrossOrigin("*")
 @RequestMapping("/v1/categories")
 @SecurityRequirement(name = "Bearer ")
 public class CategoryController {
