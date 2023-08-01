@@ -44,6 +44,14 @@ public class CategoryServiceTests {
     List<Category> categories ;
 
     @Mock
+<<<<<<< HEAD
+=======
+<<<<<<< HEAD
+>>>>>>> 806c5fce3fb9329dbdcf52bddf328bfa02b79d56
+=======
+>>>>>>> main
+>>>>>>> 70defb18e289a4918cc4bdf8519f758b0032d35c
+>>>>>>> bfd541ad380ccf5b59c6e14528da2be46dacb169
 
     private ModelMapper mapper;
 
@@ -63,6 +71,14 @@ public class CategoryServiceTests {
         when(repository.findById(notExistsId)).thenReturn(Optional.empty());
         when(repository.save(any())).thenReturn(category);
         when(repository.findAll(isA(Pageable.class))).thenReturn(new PageImpl<>(categories));
+<<<<<<< HEAD
+=======
+<<<<<<< HEAD
+>>>>>>> 806c5fce3fb9329dbdcf52bddf328bfa02b79d56
+=======
+>>>>>>> main
+>>>>>>> 70defb18e289a4918cc4bdf8519f758b0032d35c
+>>>>>>> bfd541ad380ccf5b59c6e14528da2be46dacb169
         doThrow(EmptyResultDataAccessException.class).when(repository).deleteById(notExistsId);
     }
 
@@ -122,6 +138,14 @@ public class CategoryServiceTests {
     public void findAllShouldReturnPage() {
 
         Page<CategoryDTO> pageImpl = service.findAll(PageRequest.of(0,2));
+<<<<<<< HEAD
+=======
+<<<<<<< HEAD
+>>>>>>> 806c5fce3fb9329dbdcf52bddf328bfa02b79d56
+=======
+>>>>>>> main
+>>>>>>> 70defb18e289a4918cc4bdf8519f758b0032d35c
+>>>>>>> bfd541ad380ccf5b59c6e14528da2be46dacb169
 
         assertNotNull(pageImpl);
         Assertions.assertEquals(pageImpl.getNumber (), 0);

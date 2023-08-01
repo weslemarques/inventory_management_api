@@ -24,7 +24,7 @@ public class WebSecurityConfig {
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
 
         http.authorizeHttpRequests() // Autorização de requests.
-                .requestMatchers("/v3/api-docs/**", "/swagger-ui.html", "/swagger-ui/**").permitAll() // Permitindo os recursos do swagger. (Todos podem acessar).
+                .requestMatchers("/v3/api-docs/**", "/swagger-ui.html", "/swagger-ui/**", "/h2").permitAll() // Permitindo os recursos do swagger. (Todos podem acessar).
                 .requestMatchers(AntPathRequestMatcher.antMatcher("/h2-console/**")).permitAll()
                 .and()
                 .csrf().disable().cors().disable()

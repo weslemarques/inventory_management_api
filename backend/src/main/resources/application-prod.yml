@@ -1,18 +1,9 @@
 spring:
   datasource:
-    url: jdbc:postgresql://localhost:5432/forum
+    url: jdbc:postgresql://localhost:5432/dscatalog
     username: 
     password: 
     driver-class-name: org.postgresql.Driver
-
-
-
-  h2:
-    console:
-      enabled: true
-      path: /h2
-  jpa:
-    show-sql: false
 
 security:
   jwt:

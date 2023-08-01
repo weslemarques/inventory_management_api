@@ -44,6 +44,7 @@ public class CategoryServiceImpl implements CategoryService {
     }
     @Transactional
     public CategoryDTO insert(CategoryInsertDTO dto) {
+
         var entity =  mapper.map(dto,Category.class);
         entity = repository.save(entity);
         return mapper.map(entity, CategoryDTO.class);
