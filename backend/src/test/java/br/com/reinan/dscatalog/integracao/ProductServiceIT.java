@@ -30,7 +30,6 @@ public class ProductServiceIT {
     void setUp() throws Exception {
         existingId = 1L;
         notExistingId = 1000L;
-        ProductDTO dto = Factory.createProductDto();
         requestDTO = Factory.createProductRequest();
     }
 
