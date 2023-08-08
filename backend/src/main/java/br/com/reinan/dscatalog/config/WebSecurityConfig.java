@@ -42,7 +42,7 @@ public class WebSecurityConfig {
                 .and()
                 .addFilterBefore(filterToken, UsernamePasswordAuthenticationFilter.class)
                 .exceptionHandling().authenticationEntryPoint(new UnauthorizedHandler());
-                // .and().exceptionHandling().accessDeniedHandler();
+                //.and().exceptionHandling().accessDeniedHandler();
         return http.build();
     }
 

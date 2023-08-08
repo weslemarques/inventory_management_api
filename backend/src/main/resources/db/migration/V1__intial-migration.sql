@@ -20,6 +20,7 @@ CREATE TABLE tb_product (
          img_url varchar(255),
          name varchar(255),
          price float(53),
+         stock int,
          updated_at TIMESTAMP WITHOUT TIME ZONE,
          primary key (id));
 
