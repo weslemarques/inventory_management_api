@@ -115,13 +115,13 @@ public class ProductServiceTests {
 
     @Test
     public void findAllShouldReturnPage() {
-        Pageable page = PageRequest.of(1, 10);
+        Pageable pageable = PageRequest.of(1, 10);
 
-        Page<ProductDTO> result = service.findAll(page);
+        Page<ProductDTO> result = service.findAll(pageable);
 
         Assertions.assertNotNull(result);
 
-        verify(repository).findAll(page);
+        verify(repository).findAll(pageable);
     }
 
     @Test

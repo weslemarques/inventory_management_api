@@ -17,7 +17,7 @@ import org.springframework.web.filter.OncePerRequestFilter;
 
 import java.io.IOException;
 
-@AllArgsConstructor
+
 @Component
 public class FilterToken extends OncePerRequestFilter {
 
