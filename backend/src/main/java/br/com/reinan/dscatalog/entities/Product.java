@@ -1,17 +1,22 @@
 package br.com.reinan.dscatalog.entities;
 
 import jakarta.persistence.*;
-import lombok.*;
+import lombok.AccessLevel;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 import java.io.Serializable;
 import java.time.Instant;
 import java.util.HashSet;
+import java.util.Objects;
 import java.util.Set;
 
 @Entity
 @Table(name = "tb_product")
-@Data
 @NoArgsConstructor
+@Getter
+@Setter
 public class Product implements Serializable {
     private static final long serialVersionUID = 1L;
 
@@ -41,6 +46,30 @@ public class Product implements Serializable {
 
     @Setter(AccessLevel.NONE)
     private Set<Category> categories = new HashSet<>();
+
+    public Product(String name, String description, Double price, String imgUrl, int stock, Instant createdAt, Instant updatedAt, Instant date) {
+        this.name = name;
+        this.description = description;
+        this.price = price;
+        this.imgUrl = imgUrl;
+        this.stock = stock;
+        this.createdAt = createdAt;
+        this.updatedAt = updatedAt;
+        this.date = date;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Product product = (Product) o;
+        return Objects.equals(id, product.id) && Objects.equals(name, product.name);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, name);
+    }
 
     public Product(String name, double price, Instant parse, String description, String imgUrl) {
         this.name = name;
