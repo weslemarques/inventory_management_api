@@ -34,9 +34,6 @@ public class CategoryDTO implements Serializable {
         this.updatedAt = updatedAt;
     }
 
-
-
-
     public CategoryDTO() {
     }
 

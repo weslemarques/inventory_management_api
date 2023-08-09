@@ -1,19 +1,28 @@
 package br.com.reinan.dscatalog.entities;
 
 import jakarta.persistence.*;
+import lombok.AccessLevel;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 import java.io.Serializable;
 import java.time.Instant;
 import java.util.HashSet;
+import java.util.Objects;
 import java.util.Set;
 
 @Entity
 @Table(name = "tb_product")
+@NoArgsConstructor
+@Getter
+@Setter
 public class Product implements Serializable {
     private static final long serialVersionUID = 1L;
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Setter(AccessLevel.NONE)
     private Long id;
     private String name;
 
@@ -21,24 +30,10 @@ public class Product implements Serializable {
     private String description;
     private Double price;
     private String imgUrl;
+
+    private int stock;
     @Column(columnDefinition = "TIMESTAMP WITHOUT TIME ZONE")
     private Instant createdAt = Instant.now();
-
-    public Instant getCreatedAt() {
-        return createdAt;
-    }
-
-    public void setCreatedAt(Instant createdAt) {
-        this.createdAt = createdAt;
-    }
-
-    public Instant getUpdatedAt() {
-        return updatedAt;
-    }
-
-    public void setUpdatedAt(Instant updatedAt) {
-        this.updatedAt = updatedAt;
-    }
 
     @Column(columnDefinition = "TIMESTAMP WITHOUT TIME ZONE")
     private Instant updatedAt;
@@ -49,99 +44,38 @@ public class Product implements Serializable {
     @JoinTable(name = "tb_product_category", joinColumns = @JoinColumn(name = "product_id"), inverseJoinColumns = @JoinColumn(name = "category_id"))
     @ManyToMany(fetch = FetchType.LAZY)
 
-     private Set<Category> categories = new HashSet<>();
+    @Setter(AccessLevel.NONE)
+    private Set<Category> categories = new HashSet<>();
 
-    public Product() {
-
-    }
-
-    // name, price, date, description, img_url
-    public Product(String name, Double price, Instant date, String description, String imgUrl) {
+    public Product(String name, String description, Double price, String imgUrl, int stock, Instant createdAt, Instant updatedAt, Instant date) {
         this.name = name;
         this.description = description;
         this.price = price;
         this.imgUrl = imgUrl;
+        this.stock = stock;
+        this.createdAt = createdAt;
+        this.updatedAt = updatedAt;
         this.date = date;
     }
 
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        if (name != null)
-            this.name = name;
-    }
-
-    public String getDescription() {
-        return description;
-    }
-
-    public void setDescription(String description) {
-        if (description != null)
-         this.description = description;
-    }
-
-    public Double getPrice() {
-        return price;
-    }
-
-    public void setPrice(Double price) {
-        if (price != null)
-         this.price = price;
-    }
-
-    public String getImgUrl() {
-        return imgUrl;
-    }
-
-    public void setImgUrl(String imgUrl) {
-        if (imgUrl != null) this.imgUrl = imgUrl;
-    }
-
-    public Set<Category> getCategories() {
-        return categories;
-    }
-
-    public Instant getDate() {
-        return date;
-    }
-
-    public void setDate(Instant date) {
-        if (date != null) this.date = date;
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Product product = (Product) o;
+        return Objects.equals(id, product.id) && Objects.equals(name, product.name);
     }
 
     @Override
     public int hashCode() {
-        final int prime = 31;
-        int result = 1;
-        result = prime * result + ((id == null) ? 0 : id.hashCode());
-        return result;
+        return Objects.hash(id, name);
     }
 
-    @Override
-    public boolean equals(Object obj) {
-        if (this == obj)
-            return true;
-        if (obj == null)
-            return false;
-        if (getClass() != obj.getClass())
-            return false;
-        Product other = (Product) obj;
-        if (id == null) {
-            if (other.id != null)
-                return false;
-        } else if (!id.equals(other.id))
-            return false;
-        return true;
-    }
+    public Product(String name, double price, Instant parse, String description, String imgUrl) {
+        this.name = name;
+        this.price = price;
+        this.description = description;
+        this.imgUrl = imgUrl;
 
+    }
 }
