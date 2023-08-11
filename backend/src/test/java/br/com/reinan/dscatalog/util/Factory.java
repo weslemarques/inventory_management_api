@@ -1,4 +1,4 @@
-package br.com.reinan.dscatalog.tests;
+package br.com.reinan.dscatalog.util;
 
 import java.time.Instant;
 

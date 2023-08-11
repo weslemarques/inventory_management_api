@@ -16,7 +16,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.Instant;
-import java.util.Optional;
 
 @Service
 public class CategoryServiceImpl implements CategoryService {
@@ -34,13 +33,13 @@ public class CategoryServiceImpl implements CategoryService {
     @Transactional(readOnly = true)
     public Page<CategoryDTO> findAll(Pageable pageable) {
         Page<Category> list = repository.findAll(pageable);
-        return  list.map(c -> mapper.map(c, CategoryDTO.class));
+        return  list.map(CategoryDTO::new);
     }
     @Transactional(readOnly = true)
     public CategoryDTO findById(Long id) {
-        Optional<Category> obj = repository.findById(id);
-        Category category = obj.orElseThrow(() -> new ResourceNotFoundException("Entity Not Found "));
-        return mapper.map(category, CategoryDTO.class);
+        Category category = repository.findById(id)
+                .orElseThrow(() -> new ResourceNotFoundException("Entity Not Found "));
+        return new CategoryDTO(category);
     }
     @Transactional
     public CategoryDTO insert(CategoryInsertDTO dto) {
