@@ -1,12 +1,11 @@
 package br.com.reinan.dscatalog.controllers;
 
-import br.com.reinan.dscatalog.config.WebSecurityConfig;
 import br.com.reinan.dscatalog.dto.request.ProductRequestDTO;
 import br.com.reinan.dscatalog.dto.response.ProductDTO;
 import br.com.reinan.dscatalog.services.ProductServiceImpl;
 import br.com.reinan.dscatalog.services.exceptions.DataBaseException;
 import br.com.reinan.dscatalog.services.exceptions.ResourceNotFoundException;
-import br.com.reinan.dscatalog.tests.Factory;
+import br.com.reinan.dscatalog.util.Factory;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import org.junit.jupiter.api.BeforeEach;
@@ -14,10 +13,10 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
-import org.springframework.context.annotation.Import;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.MediaType;
+import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.ResultActions;
 
@@ -30,8 +29,8 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @WebMvcTest(ProductController.class)
-@Import(WebSecurityConfig.class)
-public class ProductControllerTests {
+@ActiveProfiles("test")
+public class ProductControllerTest {
     @Autowired
     private MockMvc mvc;
     @MockBean
@@ -84,7 +83,7 @@ public class ProductControllerTests {
 
     @Test
     public void testFindById() throws Exception {
-        mvc.perform(get("/products/{id}", existId))
+        mvc.perform(get("/v1/products/{id}", existId))
                 .andExpect(status().isOk());
 
         verify(service).findById(existId);
@@ -92,7 +91,7 @@ public class ProductControllerTests {
 
     @Test
     public void testFindByIdThrowsResorceNotFoundException() throws Exception {
-        mvc.perform(get("/products/{id}", notExistId))
+        mvc.perform(get("/v1/products/{id}", notExistId))
                 .andExpect(status().isNotFound());
 
         verify(service).findById(notExistId);
@@ -100,7 +99,7 @@ public class ProductControllerTests {
 
     @Test
     public void testDeleteVoid() throws Exception {
-        mvc.perform(delete("/products/{id}", existId))
+        mvc.perform(delete("/v1/products/{id}", existId))
                 .andExpect(status().isNoContent());
 
         verify(service).delete(existId);
@@ -108,14 +107,14 @@ public class ProductControllerTests {
 
     @Test
     public void testDeleteThrowsResorceNotFoundException() throws Exception {
-        mvc.perform(delete("/products/{id}", notExistId))
+        mvc.perform(delete("/v1/products/{id}", notExistId))
                 .andExpect(status().isNotFound());
         verify(service).delete(notExistId);
     }
 
     @Test
     public void testDeleteThrowsDataBaseExcepition() throws Exception {
-        mvc.perform(delete("/products/{id}", dependenceId))
+        mvc.perform(delete("/v1/products/{id}", dependenceId))
                 .andExpect(status().isBadRequest());
 
         verify(service).delete(dependenceId);
@@ -126,7 +125,7 @@ public class ProductControllerTests {
         objMapper.registerModule(new JavaTimeModule());
         String jsonBody = objMapper.writeValueAsString(productDto);
 
-        ResultActions result = mvc.perform(post("/products")
+        ResultActions result = mvc.perform(post("/v1/products")
                 .content(jsonBody)
                 .contentType(MediaType.APPLICATION_JSON)
                 .accept(MediaType.APPLICATION_JSON));
@@ -142,7 +141,7 @@ public class ProductControllerTests {
         objMapper.registerModule(new JavaTimeModule());
         String jsonBody = objMapper.writeValueAsString(productDto);
 
-        ResultActions result = mvc.perform(put("/products/{id}", existId)
+        ResultActions result = mvc.perform(put("/v1/products/{id}", existId)
                 .content(jsonBody)
                 .contentType(MediaType.APPLICATION_JSON)
                 .accept(MediaType.APPLICATION_JSON));
@@ -158,7 +157,7 @@ public class ProductControllerTests {
         objMapper.registerModule(new JavaTimeModule());
         String jsonBody = objMapper.writeValueAsString(productDto);
 
-        ResultActions result = mvc.perform(put("/products/{id}", notExistId)
+        ResultActions result = mvc.perform(put("/v1/products/{id}", notExistId)
                 .content(jsonBody)
                 .contentType(MediaType.APPLICATION_JSON)
                 .accept(MediaType.APPLICATION_JSON));

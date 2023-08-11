@@ -34,7 +34,7 @@ public class ProductServiceImpl implements ProductService {
     @Transactional(readOnly = true)
     public Page<ProductDTO> findAll(Pageable pageable) {
         Page<Product> list = repository.findAll(pageable);
-        return list.map(p -> mapper.map(p, ProductDTO.class));
+        return list.map(ProductDTO::new);
     }
 
     @Transactional(readOnly = true)

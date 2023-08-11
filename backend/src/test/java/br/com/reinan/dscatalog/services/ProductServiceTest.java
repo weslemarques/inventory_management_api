@@ -7,7 +7,7 @@ import br.com.reinan.dscatalog.entities.Product;
 import br.com.reinan.dscatalog.repositories.CategoryRepository;
 import br.com.reinan.dscatalog.repositories.ProductRepository;
 import br.com.reinan.dscatalog.services.exceptions.ResourceNotFoundException;
-import br.com.reinan.dscatalog.tests.Factory;
+import br.com.reinan.dscatalog.util.Factory;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -29,7 +29,7 @@ import static org.mockito.ArgumentMatchers.anyLong;
 import static org.mockito.Mockito.*;
 
 @ExtendWith(SpringExtension.class)
-public class ProductServiceTests {
+public class ProductServiceTest {
 
     @Mock
     private ProductRepository repository;
@@ -115,12 +115,12 @@ public class ProductServiceTests {
 
     @Test
     public void findAllShouldReturnPage() {
-        Pageable pageable = PageRequest.of(1, 10);
+        Pageable pageable = PageRequest.of(0, 10);
 
         Page<ProductDTO> result = service.findAll(pageable);
 
         Assertions.assertNotNull(result);
-
+        Assertions.assertEquals(result.getContent().get(0).getName(), "PS5 Plus");
         verify(repository).findAll(pageable);
     }
 
