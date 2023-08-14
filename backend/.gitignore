@@ -22,7 +22,7 @@ target/
 *.ipr
 
 *   application-prod.yml
-*    application-test
+*   application-test.yml
 ### NetBeans ###
 /nbproject/private/
 /nbbuild/

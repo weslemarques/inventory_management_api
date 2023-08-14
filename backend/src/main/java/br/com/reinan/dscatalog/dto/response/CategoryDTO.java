@@ -14,7 +14,7 @@ public class CategoryDTO implements Serializable {
     private Long id;
     private String name;
 
-    private Instant createdAt ;
+    private Instant createdAt;
 
     private Instant updatedAt;
 
@@ -62,7 +62,7 @@ public class CategoryDTO implements Serializable {
     }
 
     public void setName(String name) {
-        this.name = name;
+        if (name != null) this.name = name;
     }
 
 }

@@ -28,6 +28,8 @@ public class ProductDTO extends ProductBaseDTO implements Serializable {
         setDate(date);
     }
 
+     //
+
     // name, price, date, description, img_url
     public ProductDTO(Product prod) {
         setId(prod.getId());

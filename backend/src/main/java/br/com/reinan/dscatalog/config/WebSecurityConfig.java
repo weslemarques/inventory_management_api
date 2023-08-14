@@ -4,6 +4,7 @@ import br.com.reinan.dscatalog.config.exceptionConfig.handler.UnauthorizedHandle
 import br.com.reinan.dscatalog.security.filter.FilterToken;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;

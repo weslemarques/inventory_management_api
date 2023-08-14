@@ -5,7 +5,7 @@ import br.com.reinan.dscatalog.dto.response.CategoryDTO;
 import br.com.reinan.dscatalog.entities.Category;
 import br.com.reinan.dscatalog.repositories.CategoryRepository;
 import br.com.reinan.dscatalog.services.exceptions.ResourceNotFoundException;
-import br.com.reinan.dscatalog.tests.Factory;
+import br.com.reinan.dscatalog.util.Factory;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -29,10 +29,15 @@ import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.*;
 
 @ExtendWith(SpringExtension.class)
-public class CategoryServiceTests {
+public class CategoryServiceTest {
 
     @Mock
     private CategoryRepository repository;
+
+
+    @Mock
+
+    private ModelMapper mapper;
 
     @InjectMocks
     private CategoryServiceImpl service;
@@ -43,9 +48,6 @@ public class CategoryServiceTests {
 
     List<Category> categories ;
 
-    @Mock
-
-    private ModelMapper mapper;
 
 
     @BeforeEach
@@ -76,8 +78,8 @@ public class CategoryServiceTests {
 
     @Test
     public void findByIdShouldReturnOptionalNotEmptyWhenIdExists() {
-        var dto = service.findById(existsId);
-        assertNotNull(dto);
+        CategoryDTO dto = service.findById(existsId);
+        Assertions.assertNotNull(dto);
         Assertions.assertEquals("category", dto.getName());
 
         verify(repository).findById(existsId);

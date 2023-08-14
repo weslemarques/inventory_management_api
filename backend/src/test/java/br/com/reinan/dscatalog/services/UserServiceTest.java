@@ -42,5 +42,6 @@ public class UserServiceTest {
 
         Assertions.assertEquals(page.getSize(), 1); 
         Assertions.assertEquals(page.getTotalPages(), 1);
+        Assertions.assertEquals(page.getContent().get(0).getFirstName(), "Maria");
     }
 }

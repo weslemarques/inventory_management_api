@@ -24,23 +24,23 @@ public class FilterToken extends OncePerRequestFilter {
     private final UserRepository userRepository;
 
     public FilterToken(JwtUtils jwtUtils, UserRepository userRepository) {
-        this.jwtUtils = jwtUtils;
         this.userRepository = userRepository;
+        this.jwtUtils = jwtUtils;
     }
 
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
-            String token = decodeToken(request);
-            if(token != null){
-                if(!jwtUtils.validateJwtToken(token))
-                    throw new TokenExpiredException("Token Expirado");
-                User user = recoverUser(token);
-                UsernamePasswordAuthenticationToken authentication = new UsernamePasswordAuthenticationToken(user, null,user.getAuthorities());
+        String token = decodeToken(request);
+        if(token != null){
+            if(!jwtUtils.validateJwtToken(token))
+                throw new TokenExpiredException("Token Expirado");
+            User user = recoverUser(token);
+            UsernamePasswordAuthenticationToken authentication = new UsernamePasswordAuthenticationToken(user, null,user.getAuthorities());
 
-                SecurityContextHolder.getContext().setAuthentication(authentication);
-            }
+            SecurityContextHolder.getContext().setAuthentication(authentication);
+        }
 
-            filterChain.doFilter(request, response);
+        filterChain.doFilter(request, response);
     }
 
     public User recoverUser(String token){

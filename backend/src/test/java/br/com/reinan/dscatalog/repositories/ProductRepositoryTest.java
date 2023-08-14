@@ -12,10 +12,10 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 
 import br.com.reinan.dscatalog.entities.Product;
-import br.com.reinan.dscatalog.tests.Factory;
+import br.com.reinan.dscatalog.util.Factory;
 
 @DataJpaTest
-public class ProductRepositoryTests {
+public class ProductRepositoryTest {
 
     @Autowired
     private ProductRepository repository;
