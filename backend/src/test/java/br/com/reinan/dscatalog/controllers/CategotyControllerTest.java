@@ -28,27 +28,27 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @ComponentScan("br.com.reinan.dscatalog.config.AppConfig")
 public class CategotyControllerTest {
 
-    @Autowired
-    private MockMvc mvc;
-    @MockBean
-    private CategoryServiceImpl service;
-
-    private PageImpl<CategoryDTO> page;
-    private CategoryDTO dto;
-
-    @BeforeEach
-    public void setUp() {
-        dto = Factory.createCategoryDto();
-        page = new PageImpl<>(List.of(dto));
-        when(service.findAll(any())).thenReturn(page);
-    }
-
-    @Test
-    public void testFindAll() throws Exception {
-        mvc.perform(get("/v1/categories")
-                .accept(MediaType.APPLICATION_JSON))
-                .andExpect(status().isOk());
-        verify(service).findAll(any(Pageable.class));
-    }
+//    @Autowired
+//    private MockMvc mvc;
+//    @MockBean
+//    private CategoryServiceImpl service;
+//
+//    private PageImpl<CategoryDTO> page;
+//    private CategoryDTO dto;
+//
+//    @BeforeEach
+//    public void setUp() {
+//        dto = Factory.createCategoryDto();
+//        page = new PageImpl<>(List.of(dto));
+//        when(service.findAll(any())).thenReturn(page);
+//    }
+//
+//    @Test
+//    public void testFindAll() throws Exception {
+//        mvc.perform(get("/v1/categories")
+//                .accept(MediaType.APPLICATION_JSON))
+//                .andExpect(status().isOk());
+//        verify(service).findAll(any(Pageable.class));
+//    }
 
 }

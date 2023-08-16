@@ -29,7 +29,7 @@ public class ProductServiceIT {
     private ProductRequestDTO requestDTO;
 
     @BeforeEach
-    void setUp() throws Exception {
+    void setUp() {
         existingId = 1L;
         notExistingId = 1000L;
         requestDTO = Factory.createProductRequest();
@@ -38,10 +38,7 @@ public class ProductServiceIT {
 
     @Test
     public void deleteShouldThrowsResourceNotFoundExceptionWhenNotExistsId() {
-
-        Assertions.assertThrows(ResourceNotFoundException.class, () -> {
-            service.delete(notExistingId);
-        });
+        Assertions.assertThrows(ResourceNotFoundException.class, () -> service.delete(notExistingId));
 
     }
 
@@ -56,16 +53,12 @@ public class ProductServiceIT {
     }
     @Test
     public void deleteShouldDeleteObjectWhenIdexist() {
-        Assertions.assertDoesNotThrow(() -> {
-            service.delete(existingId);
-        });
+        Assertions.assertDoesNotThrow(() -> service.delete(existingId));
     }
 
     @Test
     public void updateShouldThrowsResorceNotFoundExceptionWhenNotExistsId() {
-        Assertions.assertThrows(ResourceNotFoundException.class, () -> {
-            service.update(notExistingId, requestDTO);
-        });
+        Assertions.assertThrows(ResourceNotFoundException.class, () -> service.update(notExistingId, requestDTO));
     }
 
     @Test
@@ -79,9 +72,7 @@ public class ProductServiceIT {
 
     @Test
     public void findByIdShouldThrowsResorceNotFoundExceptionWhenNotExistsId() {
-        Assertions.assertThrows(ResourceNotFoundException.class, () -> {
-            service.findById(notExistingId);
-        });
+        Assertions.assertThrows(ResourceNotFoundException.class, () -> service.findById(notExistingId));
 
     }
 
