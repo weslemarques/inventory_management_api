@@ -2,7 +2,7 @@ spring:
   datasource:
     url: jdbc:postgresql://localhost:5432/dscatalog
     username: postgres
-    password: teste123
+    password: 
     driver-class-name: org.postgresql.Driver
 
 security:
