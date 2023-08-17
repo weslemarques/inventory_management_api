@@ -59,8 +59,6 @@ public class ProductServiceImpl implements ProductService {
         entity.setUpdatedAt(Instant.now());
         entity = repository.save(entity);
         return new ProductDTO(entity);
-
-
     }
 
     @Transactional

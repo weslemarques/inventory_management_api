@@ -57,14 +57,14 @@ public class UserServiceTest {
 
 
     @Test
-    public void shouldThrowResourceNotFoundExceptionWhenIdNotExist(){
+    public void findByIdshouldThrowResourceNotFoundExceptionWhenIdNotExist(){
         Assertions.assertThrows(ResourceAccessException.class, () -> userService.findById(nonExistId)
         );
         Mockito.verify(repository).findById(nonExistId);
     }
 
     @Test
-    public void shouldReturnUserWhenExistId(){
+    public void findByIdshouldReturnUserWhenExistId(){
         UserDTO userDTO = userService.findById(existId);
 
         Assertions.assertNotNull(userDTO);
@@ -76,7 +76,7 @@ public class UserServiceTest {
 
 
     @Test
-    public void teste(){
+    public void update(){
 
     }
 
