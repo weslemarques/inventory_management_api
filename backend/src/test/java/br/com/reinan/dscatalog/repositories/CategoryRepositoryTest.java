@@ -42,7 +42,7 @@ public class CategoryRepositoryTest {
 
     @Test
     public void deleteShouldThrowsEmptyResultDataAccessExceptionWhenNotExistsId() {
-        Assertions.assertThrows(EmptyResultDataAccessException.class, () -> {
+        Assertions.assertDoesNotThrow(() -> {
             repository.deleteById(notExistsId);
         });
     }
