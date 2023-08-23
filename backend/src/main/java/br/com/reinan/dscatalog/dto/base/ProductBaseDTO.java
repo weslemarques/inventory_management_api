@@ -1,6 +1,7 @@
 package br.com.reinan.dscatalog.dto.base;
 
 import br.com.reinan.dscatalog.dto.response.CategoryDTO;
+import jakarta.persistence.criteria.CriteriaBuilder;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.PastOrPresent;
 import jakarta.validation.constraints.Positive;
@@ -22,6 +23,9 @@ public abstract class ProductBaseDTO {
     private String description;
 
     private String imgUrl;
+
+    private Instant  createAt;
+    private Instant  updateAt;
 
     public ProductBaseDTO() {
 

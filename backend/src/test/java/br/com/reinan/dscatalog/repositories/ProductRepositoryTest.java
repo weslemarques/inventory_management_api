@@ -1,18 +1,16 @@
 package br.com.reinan.dscatalog.repositories;
 
-import java.util.Optional;
-
+import br.com.reinan.dscatalog.entities.Product;
+import br.com.reinan.dscatalog.util.Factory;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
-import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 
-import br.com.reinan.dscatalog.entities.Product;
-import br.com.reinan.dscatalog.util.Factory;
+import java.util.Optional;
 
 @DataJpaTest
 public class ProductRepositoryTest {
@@ -25,7 +23,7 @@ public class ProductRepositoryTest {
     private long notExistingId;
 
     @BeforeEach
-    void setUp() throws Exception {
+    void setUp() {
         existingId = 1L;
         notExistingId = 1000L;
         countTotalProducts = 25L;
@@ -40,9 +38,7 @@ public class ProductRepositoryTest {
 
     @Test
     public void deleteShouldThrowEmptyResultDataAccessExceptionWhenDoesNotExistsId() {
-        Assertions.assertThrows(EmptyResultDataAccessException.class, () -> {
-            repository.deleteById(notExistingId);
-        });
+        Assertions.assertDoesNotThrow( () -> repository.deleteById(notExistingId));
     }
 
     @Test

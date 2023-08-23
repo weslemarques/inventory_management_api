@@ -85,8 +85,8 @@ public class ProductServiceTest {
     @Test
     public void updateShouldReturnEntityUpdate() {
         ProductDTO entity = service.update(existingId, requestDTO);
-
         Assertions.assertNotNull(entity);
+
         verify(repository).findById(existingId);
     }
 
@@ -130,5 +130,7 @@ public class ProductServiceTest {
             service.insert(requestDTO);
         });
     }
+
+
 
 }
