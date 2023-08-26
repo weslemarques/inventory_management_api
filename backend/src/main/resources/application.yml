@@ -1,10 +1,9 @@
 server:
-  port: 80
-
+  port: 8080
 
 spring:
   profiles:
-      active: ${APP_PROFILE:prod}
+      active: ${APP_PROFILE:test}
   jpa:
     open-in-view: false
 

@@ -21,7 +21,7 @@ services:
        DB_PASSWORD: Teste3345#
        SECRET_KEY: secretKey
      ports:
-       -  "80:80"
+       - "80:80"
      depends_on:
        - db
      networks:
