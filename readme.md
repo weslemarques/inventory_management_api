@@ -128,6 +128,20 @@ The API implements role-based access control (RBAC) using the following roles:
 
 To access the API endpoints, you need to authenticate and provide the appropriate authorization token in the request header. The API uses a token-based authentication mechanism such as JWT (JSON Web Token). You should include the token in the `Authorization` header with the value `Bearer {token}`.
 
+#### Auth Users
+
+- Endpoint: `/auth/signin`
+- Method: POST
+- Description: Auth users.
+- Required Role: PUBLIC
+
+#### Refresh Token 
+
+- Endpoint: `/auth/refreshtoken`
+- Method: POST
+- Description: refresh token.
+- Required Role: PUBLIC
+
 Each endpoint specifies the required role(s) to access it. The API will validate the user's role before allowing or denying access.
 
 ## Error Handling
