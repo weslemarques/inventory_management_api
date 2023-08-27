@@ -39,7 +39,7 @@ jobs:
     - name: Push to Docker Hub Container Registry
       run: 
       
-        docker tag ${{ DOCKER_USERNAME }}/dscatalog:lastet  ${{ DOCKER_USERNAME }}/dscatalog:${{ github.run_id }}
+        docker tag ${{ secrets.DOCKER_USERNAME }}/dscatalog:lastet  ${{ secrets.DOCKER_USERNAME }}/dscatalog:${{ github.run_id }}
         
-        docker push ${{ DOCKER_USERNAME }}/dscatalog:${{ github.run_id }}
-        docker push ${{ DOCKER_USERNAME }}/dscatalog:lastet
+        docker push ${{ secrets.DOCKER_USERNAME }}/dscatalog:${{ github.run_id }}
+        docker push ${{ secrets.DOCKER_USERNAME }}/dscatalog:lastet
