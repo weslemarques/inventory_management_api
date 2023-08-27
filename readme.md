@@ -1,5 +1,7 @@
 # DsCatalog API
 
+[![Docker Hub Repo](https://img.shields.io/docker/pulls/reinan07/dscatalog:lastet.svg)](https://hub.docker.com/repository/docker/reinan07/dscatalog)
+
 A simple API named DsCatalog, which stands for "Digital Store Catalog," provides basic CRUD (Create, Read, Update, Delete) functionality for managing products, categories, and users. The API includes various endpoints to perform operations on these entities.
 
 ## Endpoints
