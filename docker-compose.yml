@@ -12,7 +12,7 @@ services:
     networks:
       - reinan-network
   app:
-     image: reinan07/dscatalog:v2
+     image: reinan07/dscatalog:lastet
      restart: always
      environment:
        APP_PROFILE: prod
@@ -21,7 +21,7 @@ services:
        DB_PASSWORD: Teste3345#
        SECRET_KEY: secretKey
      ports:
-       -  "80:80"
+       - "80:80"
      depends_on:
        - db
      networks:
