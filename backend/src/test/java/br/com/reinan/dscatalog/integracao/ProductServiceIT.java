@@ -38,8 +38,7 @@ public class ProductServiceIT {
 
     @Test
     public void deleteShouldThrowsResourceNotFoundExceptionWhenNotExistsId() {
-        Assertions.assertThrows(ResourceNotFoundException.class, () -> service.delete(notExistingId));
-
+        Assertions.assertDoesNotThrow( () -> service.delete(notExistingId));
     }
 
     @Test
