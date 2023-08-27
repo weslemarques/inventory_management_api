@@ -12,7 +12,7 @@ services:
     networks:
       - reinan-network
   app:
-     image: reinan07/dscatalog:latest
+     image: reinan07/dscatalog
      restart: always
      environment:
        APP_PROFILE: prod
