@@ -38,7 +38,7 @@ jobs:
 
     - name: Push to Docker Hub Container Registry
       run: |
-        docker tag inventorymanagementapi ${{ secrets.DOCKER_USERNAME }}/dscatalog:${{ github.run_id }}
+        docker tag  ${{ secrets.DOCKER_USERNAME }}/dscatalog:latest ${{ secrets.DOCKER_USERNAME }}/dscatalog:${{ github.run_id }}
         
         docker push ${{ secrets.DOCKER_USERNAME }}/dscatalog:${{ github.run_id }}
         docker push ${{ secrets.DOCKER_USERNAME }}/dscatalog:latest
