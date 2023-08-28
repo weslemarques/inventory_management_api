@@ -30,7 +30,7 @@ jobs:
         
     - name: Build Application jar
       working-directory: ./backend
-      run: mvn package clean
+      run: mvn package
 
     - name: Docker Compose Build
       working-directory: ./
