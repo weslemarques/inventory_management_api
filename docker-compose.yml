@@ -14,6 +14,8 @@ services:
   app:
      image: reinan07/dscatalog:latest
      restart: always
+     build: ./backend
+     working_dir: /backend
      environment:
        APP_PROFILE: prod
        DB_URL: jdbc:postgresql://db:5432/dscatalog
