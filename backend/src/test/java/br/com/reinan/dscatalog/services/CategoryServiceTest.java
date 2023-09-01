@@ -5,7 +5,7 @@ import br.com.reinan.dscatalog.dto.response.CategoryDTO;
 import br.com.reinan.dscatalog.entities.Category;
 import br.com.reinan.dscatalog.repositories.CategoryRepository;
 import br.com.reinan.dscatalog.services.exceptions.ResourceNotFoundException;
-import br.com.reinan.dscatalog.util.Factory;
+import br.com.reinan.dscatalog.util.factory.CategoryFactory;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -52,10 +52,10 @@ public class CategoryServiceTest {
     @BeforeEach
     public void setUp() {
 
-        dto = Factory.createCategoryDto();
+        dto = CategoryFactory.createCategoryDto();
         existsId = 1L;
         categories = new ArrayList<>();
-        Category category = Factory.createCategory();
+        Category category = CategoryFactory.createCategory();
         categories.add(category);
         notExistsId = 1000L;
         doNothing().when(repository).deleteById(existsId);
