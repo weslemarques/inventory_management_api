@@ -1,6 +1,7 @@
 package br.com.reinan.dscatalog.security.jwt;
 
 
+import br.com.reinan.dscatalog.entities.Role;
 import br.com.reinan.dscatalog.entities.User;
 import br.com.reinan.dscatalog.services.exceptions.TokenExpiredException;
 import com.auth0.jwt.JWT;
@@ -19,11 +20,11 @@ public class JwtUtils {
     @Value("${security.jwt.accessTokenExpirationMs}")
     private int tokenExpiration;
 
-    public String generateJwtToken(User userPrincial) {
+    public String generateJwtToken(User userPrincipal) {
         return JWT.create().withIssuer("com.dscatalog")
-                .withSubject(userPrincial.getEmail())
-                .withClaim("id", userPrincial.getId())
-                .withClaim("roles", userPrincial.getAuthorities().stream().map(r -> r.getAuthority()).toList())
+                .withSubject(userPrincipal.getEmail())
+                .withClaim("id", userPrincipal.getId())
+                .withClaim("roles", userPrincipal.getAuthorities().stream().map(Role::getAuthority).toList())
                 .withExpiresAt(new Date(new Date().getTime() + tokenExpiration))
                 .sign(Algorithm.HMAC256(jwtSecret));
     }

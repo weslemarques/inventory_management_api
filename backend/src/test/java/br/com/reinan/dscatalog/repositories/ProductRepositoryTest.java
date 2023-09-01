@@ -1,7 +1,7 @@
 package br.com.reinan.dscatalog.repositories;
 
 import br.com.reinan.dscatalog.entities.Product;
-import br.com.reinan.dscatalog.util.Factory;
+import br.com.reinan.dscatalog.util.factory.ProductFactory;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -43,7 +43,7 @@ public class ProductRepositoryTest {
 
     @Test
     public void saveShouldPersistProductWhenIdIsNullAndAutoincrement() {
-        Product product = Factory.createProduct();
+        Product product = ProductFactory.createProduct();
         product = repository.save(product);
 
         Assertions.assertNotNull(product.getId());

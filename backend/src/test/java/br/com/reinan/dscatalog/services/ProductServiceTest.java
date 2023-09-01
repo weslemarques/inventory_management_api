@@ -7,7 +7,7 @@ import br.com.reinan.dscatalog.entities.Product;
 import br.com.reinan.dscatalog.repositories.CategoryRepository;
 import br.com.reinan.dscatalog.repositories.ProductRepository;
 import br.com.reinan.dscatalog.services.exceptions.ResourceNotFoundException;
-import br.com.reinan.dscatalog.util.Factory;
+import br.com.reinan.dscatalog.util.factory.CategoryFactory;
 import br.com.reinan.dscatalog.util.factory.ProductFactory;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
@@ -54,8 +54,8 @@ public class ProductServiceTest {
 
         existingId = 1L;
         notExistingId = 1000L;
-        Product product = Factory.createProduct();
-        Category category = Factory.createCategory();
+        Product product = ProductFactory.createProduct();
+        Category category = CategoryFactory.createCategory();
         requestDTO = ProductFactory.createProductRequest();
         PageImpl<Product> page = new PageImpl<>(List.of(product));
 

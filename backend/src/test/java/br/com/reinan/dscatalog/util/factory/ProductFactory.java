@@ -34,7 +34,6 @@ public class ProductFactory {
 
     public static ProductDTO createProductDto() {
         Product prod = createProduct();
-        ProductDTO dto = new ProductDTO(prod, prod.getCategories());
-        return dto;
+        return new ProductDTO(prod, prod.getCategories());
     }
 }
