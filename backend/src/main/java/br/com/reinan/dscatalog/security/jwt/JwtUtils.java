@@ -6,12 +6,14 @@ import br.com.reinan.dscatalog.entities.User;
 import br.com.reinan.dscatalog.services.exceptions.TokenExpiredException;
 import com.auth0.jwt.JWT;
 import com.auth0.jwt.algorithms.Algorithm;
+import lombok.Getter;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
 import java.util.Date;
 
 @Component
+@Getter
 public class JwtUtils {
 
     @Value("${security.jwt.secret}")
