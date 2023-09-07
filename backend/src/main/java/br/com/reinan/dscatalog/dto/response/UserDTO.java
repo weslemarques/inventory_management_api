@@ -21,7 +21,8 @@ public class UserDTO extends UserBaseDTO implements Serializable  {
         this.id = id;
     }
 
-
+    public UserDTO() {
+    }
 
     public UserDTO(User entity) {
         this.setFirstName(entity.getFirstName());

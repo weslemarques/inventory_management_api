@@ -1,15 +1,19 @@
 package br.com.reinan.dscatalog.entities;
 
 import jakarta.persistence.*;
+import lombok.Getter;
 import org.springframework.security.core.userdetails.UserDetails;
 
+import java.io.Serial;
 import java.util.HashSet;
 import java.util.Set;
 
+@Getter
 @Entity
 @Table(name = "tb_user")
 public class User implements UserDetails {
 
+    @Serial
     private static final long serialVersionUID = 1L;
 
     @Id
@@ -35,48 +39,24 @@ public class User implements UserDetails {
         this.password = password;
     }
 
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public String getFirstName() {
-        return firstName;
+    public void addRole(Role role){
+        if(role != null) roles.add(role);
     }
 
     public void setFirstName(String firstName) {
-        this.firstName = firstName;
-    }
-
-    public String getLastName() {
-        return lastName;
+        if (firstName != null)  this.firstName = firstName;
     }
 
     public void setLastName(String lastName) {
-        this.lastName = lastName;
-    }
-
-    public String getEmail() {
-        return email;
+        if (lastName != null)  this.lastName = lastName;
     }
 
     public void setEmail(String email) {
-        this.email = email;
-    }
-
-    public String getPassword() {
-        return password;
+        if (email != null)   this.email = email;
     }
 
     public void setPassword(String password) {
-        this.password = password;
-    }
-
-    public Set<Role> getRoles() {
-        return roles;
+        if (password != null)  this.password = password;
     }
 
     @Override

@@ -3,7 +3,7 @@ server:
 
 spring:
   profiles:
-    active: ${APP_PROFILE:test}
+    active: ${APP_PROFILE:prod}
   jpa:
     open-in-view: false
 
