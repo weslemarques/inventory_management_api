@@ -4,7 +4,7 @@ name: Continuous Integration with GitHub Actions
 on:
   push:
     branches:
-        - "main" 
+        - "main"
 
 jobs:
   build:
