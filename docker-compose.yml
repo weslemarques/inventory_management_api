@@ -14,7 +14,7 @@ services:
   app:
      image: reinan07/dscatalog
      restart: always
-     build: ./backend
+     build: /backend
      working_dir: /backend
      environment:
        APP_PROFILE: prod
