@@ -28,7 +28,6 @@ jobs:
         cache: maven
         
     - name: Build Application jar
-      working-directory: ./backend
       run: mvn package
 
     - name: Docker Compose Build
