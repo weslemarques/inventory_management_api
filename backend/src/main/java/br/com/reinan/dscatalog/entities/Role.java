@@ -1,17 +1,17 @@
 package br.com.reinan.dscatalog.entities;
 
+import jakarta.persistence.*;
+import lombok.Getter;
 import org.springframework.security.core.GrantedAuthority;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
+import java.io.Serial;
 
 @Entity
 @Table(name = "tb_role")
+@Getter
 public class Role implements GrantedAuthority {
 
+    @Serial
     private static final long serialVersionUID = 1L;
 
     @Id
@@ -27,16 +27,8 @@ public class Role implements GrantedAuthority {
         this.authority = authority;
     }
 
-    public Long getId() {
-        return id;
-    }
-
     public void setId(Long id) {
         this.id = id;
-    }
-
-    public String getAuthority() {
-        return authority;
     }
 
     public void setAuthority(String authority) {

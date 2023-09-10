@@ -6,6 +6,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.io.Serial;
 import java.io.Serializable;
 import java.time.Instant;
 import java.util.HashSet;
@@ -18,6 +19,7 @@ import java.util.Set;
 @Getter
 @Setter
 public class Product implements Serializable {
+    @Serial
     private static final long serialVersionUID = 1L;
 
     @Id
