@@ -1,6 +1,4 @@
-package br.com.reinan.dscatalog.util;
-
-import java.time.Instant;
+package br.com.reinan.dscatalog.util.factory;
 
 import br.com.reinan.dscatalog.dto.request.ProductRequestDTO;
 import br.com.reinan.dscatalog.dto.response.CategoryDTO;
@@ -8,7 +6,9 @@ import br.com.reinan.dscatalog.dto.response.ProductDTO;
 import br.com.reinan.dscatalog.entities.Category;
 import br.com.reinan.dscatalog.entities.Product;
 
-public class Factory {
+import java.time.Instant;
+
+public class ProductFactory {
 
     public static Product createProduct() {
         Product product = new Product("PS5 Plus", 600.0, Instant.parse("2020-07-20T10:00:00Z"),
@@ -34,23 +34,6 @@ public class Factory {
 
     public static ProductDTO createProductDto() {
         Product prod = createProduct();
-        ProductDTO dto = new ProductDTO(prod, prod.getCategories());
-        return dto;
+        return new ProductDTO(prod, prod.getCategories());
     }
-
-    public static Category createCategory() {
-       return new Category(1L, "category");
-
-    }
-
-    public static Category createInsertCategory() {
-
-        return new Category("category");
-    }
-
-    public static CategoryDTO createCategoryDto() {
-        Category cate = createCategory();
-        return new CategoryDTO(cate);
-    }
-
 }

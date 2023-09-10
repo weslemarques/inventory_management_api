@@ -5,18 +5,21 @@ import br.com.reinan.dscatalog.dto.response.ProductDTO;
 import br.com.reinan.dscatalog.services.ProductServiceImpl;
 import br.com.reinan.dscatalog.services.exceptions.DataBaseException;
 import br.com.reinan.dscatalog.services.exceptions.ResourceNotFoundException;
-import br.com.reinan.dscatalog.util.Factory;
+import br.com.reinan.dscatalog.util.factory.ProductFactory;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.InjectMocks;
+import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
+import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.MediaType;
-import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.ResultActions;
 
@@ -29,34 +32,36 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @WebMvcTest(ProductController.class)
-@ActiveProfiles("test")
+@SpringBootTest
+@ExtendWith(MockitoExtension.class)
 public class ProductControllerTest {
-//    @Autowired
-//    private MockMvc mvc;
-//    @MockBean
-//    private ProductServiceImpl service;
-//
-//    private ProductDTO productDto;
-//    private PageImpl<ProductDTO> page;
-//
-//    private ProductRequestDTO requestDTO;
-//    private Long existId;
-//    private Long notExistId;
-//    private Long dependenceId;
-//    private ObjectMapper objMapper;
-//
+
+    @Autowired
+    private MockMvc mvc;
+    @MockBean
+    private ProductServiceImpl service;
+
+
+    private ProductDTO productDto;
+
+    private Long existId;
+    private Long notExistId;
+    private Long dependenceId;
+    PageImpl<ProductDTO> page;
+    private ObjectMapper objMapper;
+
 //    @BeforeEach
-//    void setUpI() throws Exception {
+//    void setUpI() {
 //
 //        existId = 1L;
 //        notExistId = 2L;
 //        dependenceId = 3L;
 //        objMapper = new ObjectMapper();
-//        productDto = Factory.createProductDto();
-//        requestDTO = Factory.createProductRequest();
+//        productDto = ProductFactory.createProductDto();
+//        ProductRequestDTO requestDTO = ProductFactory.createProductRequest();
 //        page = new PageImpl<>(List.of(productDto));
 //
-//        when(service.findAll(any())).thenReturn(page);
+//
 //
 //        when(service.findById(existId)).thenReturn(productDto);
 //        doThrow(ResourceNotFoundException.class).when(service).findById(notExistId);
@@ -70,6 +75,7 @@ public class ProductControllerTest {
 //        when(service.update(existId, requestDTO)).thenReturn(productDto);
 //        doThrow(ResourceNotFoundException.class).when(service).update(notExistId, requestDTO);
 //
+//        when(service.findAll(any())).thenReturn(page);
 //    }
 //
 //    @Test

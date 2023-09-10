@@ -2,12 +2,14 @@ package br.com.reinan.dscatalog.entities;
 
 import jakarta.persistence.*;
 import lombok.Data;
+import lombok.Getter;
 
 import java.time.Instant;
 
 @Entity
 @Data
 @Table(name = "refreshToken")
+@Getter
 public class RefreshToken {
 
     @Id

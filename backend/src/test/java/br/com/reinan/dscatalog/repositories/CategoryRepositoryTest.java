@@ -2,17 +2,16 @@ package br.com.reinan.dscatalog.repositories;
 
 import java.util.Optional;
 
+import br.com.reinan.dscatalog.util.factory.CategoryFactory;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
-import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 
 import br.com.reinan.dscatalog.entities.Category;
-import br.com.reinan.dscatalog.util.Factory;
 
 @DataJpaTest
 public class CategoryRepositoryTest {
@@ -28,7 +27,7 @@ public class CategoryRepositoryTest {
     public void setUp() {
         existsId = 1L;
         notExistsId = 1000L;
-        category = Factory.createInsertCategory();
+        category = CategoryFactory.createInsertCategory();
     }
 
     @Test

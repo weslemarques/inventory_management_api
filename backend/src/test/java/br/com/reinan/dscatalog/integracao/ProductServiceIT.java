@@ -4,7 +4,7 @@ import br.com.reinan.dscatalog.dto.request.ProductRequestDTO;
 import br.com.reinan.dscatalog.dto.response.ProductDTO;
 import br.com.reinan.dscatalog.services.ProductServiceImpl;
 import br.com.reinan.dscatalog.services.exceptions.ResourceNotFoundException;
-import br.com.reinan.dscatalog.util.Factory;
+import br.com.reinan.dscatalog.util.factory.ProductFactory;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -32,7 +32,7 @@ public class ProductServiceIT {
     void setUp() {
         existingId = 1L;
         notExistingId = 1000L;
-        requestDTO = Factory.createProductRequest();
+        requestDTO = ProductFactory.createProductRequest();
     }
 
 
@@ -90,7 +90,7 @@ public class ProductServiceIT {
     @Test
     public void insertShouldPersistEntityInDataBase() {
         Assertions.assertDoesNotThrow(() -> {
-            service.insert(Factory.createProductRequest());
+            service.insert(ProductFactory.createProductRequest());
         });
     }
 }
