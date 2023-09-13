@@ -14,14 +14,11 @@ import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 
-import java.util.logging.Filter;
-
 @Configuration
 @EnableWebSecurity
 public class WebSecurityConfig {
 
-    private FilterToken filterToken;
-    private Filter filter;
+    private final FilterToken filterToken;
 
     public WebSecurityConfig(FilterToken filterToken) {
         this.filterToken = filterToken;
