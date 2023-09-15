@@ -7,6 +7,7 @@ import br.com.reinan.dscatalog.services.exceptions.TokenExpiredException;
 import com.auth0.jwt.JWT;
 import com.auth0.jwt.algorithms.Algorithm;
 import lombok.Getter;
+import lombok.Setter;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
@@ -14,6 +15,7 @@ import java.util.Date;
 
 @Component
 @Getter
+@Setter
 public class JwtUtils {
 
     @Value("${security.jwt.secret}")
@@ -28,7 +30,7 @@ public class JwtUtils {
                 .withClaim("id", userPrincipal.getId())
                 .withClaim("roles", userPrincipal.getAuthorities().stream().map(Role::getAuthority).toList())
                 .withExpiresAt(new Date(new Date().getTime() + tokenExpiration))
-                .sign(Algorithm.HMAC256(jwtSecret));
+                .sign(Algorithm.HMAC256("jwtSecret"));
     }
 
     public String getUsernameFromJwtToken(String token) {

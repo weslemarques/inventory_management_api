@@ -29,7 +29,7 @@ public class WebSecurityConfig {
         http.csrf(AbstractHttpConfigurer::disable)
                 .sessionManagement(
                         session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS)
-                ).authorizeHttpRequests(authorize -> authorize// Autorização de requests.
+                    ).authorizeHttpRequests(authorize -> authorize// Autorização de requests.
                         .requestMatchers("/v3/api-docs/**", "/swagger-ui.html", "/swagger-ui/**", "/h2").permitAll() // Permitindo os recursos do swagger. (Todos podem acessar).
                         .requestMatchers(AntPathRequestMatcher.antMatcher("/h2-console/**")).permitAll())
                 .authorizeHttpRequests(
