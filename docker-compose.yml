@@ -7,7 +7,7 @@ services:
       - "5432:5432"
     environment:
       POSTGRES_USERNAME: postgres
-      POSTGRES_PASSWORD: Teste3345#
+      POSTGRES_PASSWORD: #SUASENHA
       POSTGRES_DB: dscatalog
     networks:
       - reinan-network
@@ -20,7 +20,7 @@ services:
        APP_PROFILE: prod
        DB_URL: jdbc:postgresql://db:5432/dscatalog
        DB_USERNAME: postgres
-       DB_PASSWORD: Teste3345#
+       DB_PASSWORD: #SUASENHA
        SECRET_KEY: secretKey
      ports:
        - "80:80"
