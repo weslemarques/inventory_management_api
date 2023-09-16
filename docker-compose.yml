@@ -10,8 +10,12 @@ services:
       POSTGRES_PASSWORD: Teste3345#
       POSTGRES_DB: dscatalog
     networks:
-      - reinan-network
+      - app-network
+
   app:
+     depends_on:
+      - db
+
      image: reinan07/dscatalog
      restart: always
      build: ./backend
@@ -24,12 +28,11 @@ services:
        SECRET_KEY: secretKey
      ports:
        - "80:80"
-     depends_on:
-       - db
+
      networks:
-       - reinan-network
+       - app-network
 
 networks:
-    reinan-network:
+    app-network:
         driver: bridge
 

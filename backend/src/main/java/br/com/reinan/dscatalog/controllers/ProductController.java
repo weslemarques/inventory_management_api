@@ -22,8 +22,11 @@ import java.net.URI;
 @SecurityRequirement(name = "Bearer ")
 public class ProductController {
 
-    @Autowired
-    private ProductService service;
+    private final ProductService service;
+
+    public ProductController(ProductService service) {
+        this.service = service;
+    }
 
     @GetMapping
     public ResponseEntity<Page<ProductDTO>> findAll(@ParameterObject Pageable pageable) {

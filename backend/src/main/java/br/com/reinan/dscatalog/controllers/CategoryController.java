@@ -7,7 +7,6 @@ import br.com.reinan.dscatalog.services.exceptions.DataBaseException;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import org.springdoc.core.annotations.ParameterObject;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -23,16 +22,14 @@ import java.net.URI;
 @SecurityRequirement(name = "Bearer ")
 public class CategoryController {
 
-    @Autowired
-    private CategoryService service;
-
+    private final CategoryService service;
 
     public CategoryController(CategoryService  service){
         this.service = service;
     }
 
     @GetMapping
-    @Operation(summary = "Access the logged user informations", security = {@SecurityRequirement(name = "bearer")})
+    @Operation(summary = "Deve trazer uma pagina de categorias se o usuario tiver autorização   ")
     public ResponseEntity<Page<CategoryDTO>> findAll(@ParameterObject Pageable pageable) {
         Page<CategoryDTO> list = service.findAll(pageable);
         return ResponseEntity.ok(list);

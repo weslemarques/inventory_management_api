@@ -14,14 +14,11 @@ import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 
-import java.util.logging.Filter;
-
 @Configuration
 @EnableWebSecurity
 public class WebSecurityConfig {
 
-    private FilterToken filterToken;
-    private Filter filter;
+    private final FilterToken filterToken;
 
     public WebSecurityConfig(FilterToken filterToken) {
         this.filterToken = filterToken;
@@ -32,7 +29,7 @@ public class WebSecurityConfig {
         http.csrf(AbstractHttpConfigurer::disable)
                 .sessionManagement(
                         session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS)
-                ).authorizeHttpRequests(authorize -> authorize// Autorização de requests.
+                    ).authorizeHttpRequests(authorize -> authorize// Autorização de requests.
                         .requestMatchers("/v3/api-docs/**", "/swagger-ui.html", "/swagger-ui/**", "/h2").permitAll() // Permitindo os recursos do swagger. (Todos podem acessar).
                         .requestMatchers(AntPathRequestMatcher.antMatcher("/h2-console/**")).permitAll())
                 .authorizeHttpRequests(

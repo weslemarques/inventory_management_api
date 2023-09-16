@@ -30,7 +30,6 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 @WebMvcTest(CategoryController.class)
 @ActiveProfiles("test")
-@ComponentScan("br.com.reinan.dscatalog.config.AppConfig")
 public class CategotyControllerTest {
 
     @Autowired
