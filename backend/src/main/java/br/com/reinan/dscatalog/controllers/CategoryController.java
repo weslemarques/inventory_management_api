@@ -29,7 +29,7 @@ public class CategoryController {
     }
 
     @GetMapping
-    @Operation(summary = "Access the logged user informations", security = {@SecurityRequirement(name = "bearer")})
+    @Operation(summary = "Deve trazer uma pagina de categorias se o usuario tiver autorização   ")
     public ResponseEntity<Page<CategoryDTO>> findAll(@ParameterObject Pageable pageable) {
         Page<CategoryDTO> list = service.findAll(pageable);
         return ResponseEntity.ok(list);

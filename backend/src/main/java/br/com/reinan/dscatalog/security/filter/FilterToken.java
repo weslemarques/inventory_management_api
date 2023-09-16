@@ -34,17 +34,26 @@ public class FilterToken extends OncePerRequestFilter {
 
     @Override
     protected void doFilterInternal( HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
-        String token = decodeToken(request);
-        if(token != null){
-            if(!jwtUtils.validateJwtToken(token))
-                throw new TokenExpiredException("Token Expirado");
-            User user = recoverUser(token);
-            UsernamePasswordAuthenticationToken authentication = new UsernamePasswordAuthenticationToken(user, null,user.getAuthorities());
 
-            SecurityContextHolder.getContext().setAuthentication(authentication);
+        try {
+            String token = decodeToken(request);
+            if(token != null){
+                if(!jwtUtils.validateJwtToken(token))
+                    throw new TokenExpiredException("Token Expirado");
+                User user = recoverUser(token);
+                UsernamePasswordAuthenticationToken authentication = new UsernamePasswordAuthenticationToken(user, null,user.getAuthorities());
+
+                SecurityContextHolder.getContext().setAuthentication(authentication);
+            }
+            filterChain.doFilter(request, response);
+        }catch (TokenExpiredException ex){
+            response.setStatus(HttpServletResponse.SC_FORBIDDEN);
+            response.setCharacterEncoding("UTF-8");
+            response.getWriter().println(ex.getLocalizedMessage());
         }
 
-        filterChain.doFilter(request, response);
+
+
     }
 
     public User recoverUser(String token){
