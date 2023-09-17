@@ -18,6 +18,7 @@ import org.springframework.context.annotation.ComponentScan;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.MediaType;
+import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.web.servlet.MockMvc;
 
@@ -45,37 +46,38 @@ public class CategotyControllerTest {
     String token;
     private CategoryDTO categoryDTO;
 
-//    @BeforeEach
-//    void setUpI() {
-//
-//        existId = 1L;
-//        notExistId = 2L;
-//        dependenceId = 3L;
-//        categoryDTO = CategoryFactory.createCategoryDto();
-//        CategoryInsertDTO categoryInsertDTO = CategoryFactory.requestCategory();
-//        page = new PageImpl<>(List.of(categoryDTO));
-//
-//
-//        when(service.findById(existId)).thenReturn(categoryDTO);
-//        doThrow(ResourceNotFoundException.class).when(service).findById(notExistId);
-//
-//        doNothing().when(service).delete(existId);
-//        doThrow(ResourceNotFoundException.class).when(service).delete(notExistId);
-//        doThrow(DataBaseException.class).when(service).delete(dependenceId);
-//
-//
-//        User userAdmin = UserFactory.createUserAdmin();
-//        token = jwtUtils.generateJwtToken(userAdmin);
-//
-//    }
-//
-//    @Test
-//    public void testFindAll() throws Exception {
-//        mvc.perform(get("/v1/categories")
-//                        .header("Authorization", "Bearer " + token)
-//                        .accept(MediaType.APPLICATION_JSON))
-//                .andExpect(status().isOk());
-//        verify(service).findAll(any(Pageable.class));
-//    }
+    @BeforeEach
+    void setUpI() {
+
+        existId = 1L;
+        notExistId = 2L;
+        dependenceId = 3L;
+        categoryDTO = CategoryFactory.createCategoryDto();
+        CategoryInsertDTO categoryInsertDTO = CategoryFactory.requestCategory();
+        page = new PageImpl<>(List.of(categoryDTO));
+
+
+        when(service.findById(existId)).thenReturn(categoryDTO);
+        doThrow(ResourceNotFoundException.class).when(service).findById(notExistId);
+
+        doNothing().when(service).delete(existId);
+        doThrow(ResourceNotFoundException.class).when(service).delete(notExistId);
+        doThrow(DataBaseException.class).when(service).delete(dependenceId);
+
+
+        User userAdmin = UserFactory.createUserAdmin();
+        token = jwtUtils.generateJwtToken(userAdmin);
+
+    }
+
+    @Test
+    @WithMockUser(username = "maria@gmail.com", password = "teste123", roles = "ADMIN")
+    public void testFindAll() throws Exception {
+        mvc.perform(get("/v1/categories")
+                        .header("Authorization", "Bearer " + token)
+                        .accept(MediaType.APPLICATION_JSON))
+                .andExpect(status().isOk());
+        verify(service).findAll(any(Pageable.class));
+    }
 
 }
