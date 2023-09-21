@@ -16,6 +16,7 @@ import java.util.List;
 @Setter
 public abstract class ProductBaseDTO {
 
+
     @Size(min = 5, max = 60)
     @NotBlank(message = "field required")
     private String name;
@@ -26,10 +27,6 @@ public abstract class ProductBaseDTO {
     private String description;
 
     private String imgUrl;
-
-    private Instant  createAt;
-    private Instant  updateAt;
-
     public ProductBaseDTO() {
 
     }
