@@ -17,10 +17,7 @@ import java.util.Set;
 @Table(name = "tb_product")
 @NoArgsConstructor
 @Getter
-@Setter
-public class Product implements Serializable {
-    @Serial
-    private static final long serialVersionUID = 1L;
+public class Product {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -33,7 +30,7 @@ public class Product implements Serializable {
     private Double price;
     private String imgUrl;
 
-    private int stock;
+    private Integer stock;
     @Column(columnDefinition = "TIMESTAMP WITHOUT TIME ZONE")
     private Instant createdAt = Instant.now();
 
@@ -58,6 +55,41 @@ public class Product implements Serializable {
         this.createdAt = createdAt;
         this.updatedAt = updatedAt;
         this.date = date;
+    }
+
+    public void setId(Long id) {
+        if (id != null)  this.id = id;
+    }
+    public void setName(String name) {
+        if (name != null)  this.name = name;
+    }
+
+    public void setDescription(String description) {
+        if (description != null)  this.description = description;
+    }
+
+    public void setPrice(Double price) {
+        if (price != null) this.price = price;
+    }
+
+    public void setImgUrl(String imgUrl) {
+        if (imgUrl != null) this.imgUrl = imgUrl;
+    }
+
+    public void setStock(Integer stock) {
+        if (stock != null) this.stock = stock;
+    }
+
+    public void setCreatedAt(Instant createdAt) {
+        if (createdAt != null) this.createdAt = createdAt;
+    }
+
+    public void setUpdatedAt(Instant updatedAt) {
+        if (updatedAt != null) this.updatedAt = updatedAt;
+    }
+
+    public void setDate(Instant date) {
+        if (date != null) this.date = date;
     }
 
     @Override
