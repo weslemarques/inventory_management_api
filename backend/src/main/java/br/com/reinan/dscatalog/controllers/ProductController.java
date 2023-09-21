@@ -41,7 +41,6 @@ public class ProductController {
     }
 
     @PostMapping
-    @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<ProductDTO> insert(@Valid @RequestBody ProductRequestDTO dto) {
        ProductDTO responseDTO = service.insert(dto);
         URI uri = ServletUriComponentsBuilder
@@ -52,10 +51,8 @@ public class ProductController {
         return ResponseEntity.created(uri).body(responseDTO);
     }
     @PutMapping("/{id}")
-    @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<ProductDTO> update(@PathVariable Long id, @Valid @RequestBody ProductRequestDTO dto) {
          ProductDTO response = service.update(id, dto);
-
         return ResponseEntity.ok(response);
     }
 

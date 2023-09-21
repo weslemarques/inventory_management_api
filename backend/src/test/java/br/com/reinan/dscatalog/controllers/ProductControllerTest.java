@@ -13,11 +13,11 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.http.MediaType;
-import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.ResultActions;
@@ -31,6 +31,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @WebMvcTest(ProductController.class)
+@AutoConfigureMockMvc(addFilters = false)
 @ExtendWith(SpringExtension.class)
 public class ProductControllerTest {
 
@@ -55,7 +56,7 @@ public class ProductControllerTest {
     void setUpI() {
 
         existId = 1L;
-        notExistId = 2L;
+        notExistId = 1000L;
         dependenceId = 3L;
         objMapper = new ObjectMapper();
         productDto = ProductFactory.createProductDto();
@@ -64,7 +65,6 @@ public class ProductControllerTest {
     }
 
     @Test
-    @WithMockUser(username = "maria@gmail.com")
     public void testFindAll() throws Exception {
 
         when(service.findAll(any())).thenReturn(page);
@@ -73,8 +73,6 @@ public class ProductControllerTest {
     }
 
     @Test
-
-    @WithMockUser(username = "maria@gmail.com")
     public void testFindById() throws Exception {
         when(service.findById(existId)).thenReturn(productDto);
         mvc.perform(get("/v1/products/{id}", existId))
@@ -84,7 +82,6 @@ public class ProductControllerTest {
     }
 
     @Test
-    @WithMockUser(username = "maria@gmail.com")
     public void testFindByIdThrowsResorceNotFoundException() throws Exception {
         doThrow(ResourceNotFoundException.class).when(service).findById(notExistId);
         mvc.perform(get("/v1/products/{id}", notExistId))
@@ -94,8 +91,6 @@ public class ProductControllerTest {
     }
 
     @Test
-
-    @WithMockUser(username = "maria@gmail.com")
     public void testDeleteVoid() throws Exception {
         doNothing().when(service).delete(existId);
         mvc.perform(delete("/v1/products/{id}", existId))
@@ -105,8 +100,6 @@ public class ProductControllerTest {
     }
 
     @Test
-
-    @WithMockUser(username = "maria@gmail.com")
     public void testDeleteThrowsResorceNotFoundException() throws Exception {
         doThrow(ResourceNotFoundException.class).when(service).delete(notExistId);
         mvc.perform(delete("/v1/products/{id}", notExistId))
@@ -115,7 +108,6 @@ public class ProductControllerTest {
     }
 
     @Test
-    @WithMockUser(username = "maria@gmail.com")
     public void testDeleteThrowsDataBaseExcepition() throws Exception {
         doThrow(DataBaseException.class).when(service).delete(dependenceId);
         mvc.perform(delete("/v1/products/{id}", dependenceId))
@@ -125,11 +117,10 @@ public class ProductControllerTest {
     }
 
     @Test
-    @WithMockUser(username = "maria@gmail.com")
     public void testInsert() throws Exception {
-        when(service.insert(requestDTO)).thenReturn(productDto);
+        when(service.insert(any())).thenReturn(productDto);
         objMapper.registerModule(new JavaTimeModule());
-        String jsonBody = objMapper.writeValueAsString(productDto);
+        String jsonBody = objMapper.writeValueAsString(requestDTO);
 
         ResultActions result = mvc.perform(post("/v1/products")
                 .content(jsonBody)
@@ -143,11 +134,10 @@ public class ProductControllerTest {
     }
 
     @Test
-    @WithMockUser(username = "maria@gmail.com")
     public void testUpdate() throws Exception {
         when(service.update(existId, requestDTO)).thenReturn(productDto);
         objMapper.registerModule(new JavaTimeModule());
-        String jsonBody = objMapper.writeValueAsString(productDto);
+        String jsonBody = objMapper.writeValueAsString(requestDTO);
 
         ResultActions result = mvc.perform(put("/v1/products/{id}", existId)
                 .content(jsonBody)
@@ -161,11 +151,10 @@ public class ProductControllerTest {
     }
 
     @Test
-    @WithMockUser(username = "maria@gmail.com")
     public void updateThrowsResorceNotFoundException() throws Exception {
         doThrow(ResourceNotFoundException.class).when(service).update(notExistId, requestDTO);
         objMapper.registerModule(new JavaTimeModule());
-        String jsonBody = objMapper.writeValueAsString(productDto);
+        String jsonBody = objMapper.writeValueAsString(requestDTO);
 
         ResultActions result = mvc.perform(put("/v1/products/{id}", notExistId)
                 .content(jsonBody)

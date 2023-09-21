@@ -48,7 +48,7 @@ public class ProductServiceImpl implements ProductService {
     public ProductDTO insert(ProductRequestDTO dto) {
         var entity = mapper.map(dto, Product.class);
         entity = repository.save(entity);
-        return new ProductDTO(entity);
+        return mapper.map(entity, ProductDTO.class);
     }
 
     @Transactional
@@ -58,7 +58,7 @@ public class ProductServiceImpl implements ProductService {
         mapper.map(dto, entity);
         entity.setUpdatedAt(Instant.now());
         entity = repository.save(entity);
-        return new ProductDTO(entity);
+        return mapper.map(entity, ProductDTO.class);
     }
 
     @Transactional
