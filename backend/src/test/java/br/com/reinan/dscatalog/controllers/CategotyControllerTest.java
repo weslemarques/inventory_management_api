@@ -49,7 +49,6 @@ public class CategotyControllerTest {
 
     private Long dependenceId;
     PageImpl<CategoryDTO> page;
-    String token;
     private CategoryDTO categoryDTO;
     CategoryInsertDTO categoryInsertDTO;
 

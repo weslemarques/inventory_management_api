@@ -2,8 +2,6 @@ package br.com.reinan.dscatalog.controllers;
 
 import br.com.reinan.dscatalog.dto.request.ProductRequestDTO;
 import br.com.reinan.dscatalog.dto.response.ProductDTO;
-import br.com.reinan.dscatalog.entities.Product;
-import br.com.reinan.dscatalog.repositories.ProductRepository;
 import br.com.reinan.dscatalog.security.filter.FilterToken;
 import br.com.reinan.dscatalog.services.ProductServiceImpl;
 import br.com.reinan.dscatalog.services.exceptions.DataBaseException;
@@ -42,10 +40,7 @@ public class ProductControllerTest {
     private MockMvc mvc;
     @MockBean
     private ProductServiceImpl service;
-    @MockBean
-    private ProductRepository repository;
     private ProductDTO productDto;
-    private Product product;
 
     private Long existId;
     @MockBean
@@ -64,7 +59,6 @@ public class ProductControllerTest {
         dependenceId = 3L;
         objMapper = new ObjectMapper();
         productDto = ProductFactory.createProductDto();
-        product = ProductFactory.createProduct();
         requestDTO = ProductFactory.createProductRequest();
         page = new PageImpl<>(List.of(productDto));
     }
@@ -73,16 +67,25 @@ public class ProductControllerTest {
     public void testFindAll() throws Exception {
 
         when(service.findAll(any())).thenReturn(page);
-        ResultActions page1 = mvc.perform(get("/v1/products"))
+            ResultActions result =  mvc.perform(get("/v1/products"))
                 .andExpect(status().isOk());
+
+        result.andExpect(jsonPath("$.content").isNotEmpty());
+        result.andExpect(jsonPath("$.content[0].price").value(600.0));
+        result.andExpect(jsonPath("$.content[0].name").value("PS5 Plus"));
+        result.andExpect(jsonPath("$.content[0].description").value("The new generation PS5 video game"));
+        verify(service).findAll(any());
     }
 
     @Test
     public void testFindById() throws Exception {
         when(service.findById(existId)).thenReturn(productDto);
-        mvc.perform(get("/v1/products/{id}", existId))
+       ResultActions result =  mvc.perform(get("/v1/products/{id}", existId))
                 .andExpect(status().isOk());
 
+        result.andExpect(jsonPath("$.price").value(600.0));
+        result.andExpect(jsonPath("$.name").value("PS5 Plus"));
+        result.andExpect(jsonPath("$.description").value("The new generation PS5 video game"));
         verify(service).findById(existId);
     }
 
@@ -98,9 +101,12 @@ public class ProductControllerTest {
     @Test
     public void testDeleteVoid() throws Exception {
         doNothing().when(service).delete(existId);
-        mvc.perform(delete("/v1/products/{id}", existId))
+        ResultActions result = mvc.perform(delete("/v1/products/{id}", existId))
                 .andExpect(status().isNoContent());
 
+        result.andExpect(jsonPath("$.price").doesNotExist());
+        result.andExpect(jsonPath("$.name").doesNotExist());
+        result.andExpect(jsonPath("$.description").doesNotExist());
         verify(service).delete(existId);
     }
 
@@ -131,13 +137,12 @@ public class ProductControllerTest {
                 .content(jsonBody)
                 .contentType(MediaType.APPLICATION_JSON)
                 .accept(MediaType.APPLICATION_JSON));
-
-        result.andExpect(status().isCreated());
         result.andExpect(jsonPath("$.price").value(600.0));
         result.andExpect(jsonPath("$.name").value("PS5 Plus"));
         result.andExpect(jsonPath("$.description").value("The new generation PS5 video game"));
-    }
+        result.andExpect(status().isCreated());
 
+    }
     @Test
     public void testUpdate() throws Exception {
         when(service.update(any(Long.class), any(ProductRequestDTO.class))).thenReturn(productDto);
