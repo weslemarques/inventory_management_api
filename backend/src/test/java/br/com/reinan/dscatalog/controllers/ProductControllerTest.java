@@ -2,6 +2,8 @@ package br.com.reinan.dscatalog.controllers;
 
 import br.com.reinan.dscatalog.dto.request.ProductRequestDTO;
 import br.com.reinan.dscatalog.dto.response.ProductDTO;
+import br.com.reinan.dscatalog.entities.Product;
+import br.com.reinan.dscatalog.repositories.ProductRepository;
 import br.com.reinan.dscatalog.security.filter.FilterToken;
 import br.com.reinan.dscatalog.services.ProductServiceImpl;
 import br.com.reinan.dscatalog.services.exceptions.DataBaseException;
@@ -40,8 +42,10 @@ public class ProductControllerTest {
     private MockMvc mvc;
     @MockBean
     private ProductServiceImpl service;
-
+    @MockBean
+    private ProductRepository repository;
     private ProductDTO productDto;
+    private Product product;
 
     private Long existId;
     @MockBean
@@ -60,6 +64,7 @@ public class ProductControllerTest {
         dependenceId = 3L;
         objMapper = new ObjectMapper();
         productDto = ProductFactory.createProductDto();
+        product = ProductFactory.createProduct();
         requestDTO = ProductFactory.createProductRequest();
         page = new PageImpl<>(List.of(productDto));
     }
@@ -128,14 +133,14 @@ public class ProductControllerTest {
                 .accept(MediaType.APPLICATION_JSON));
 
         result.andExpect(status().isCreated());
-        result.andExpect(jsonPath("$.price").exists());
-        result.andExpect(jsonPath("$.name").exists());
-        result.andExpect(jsonPath("$.description").exists());
+        result.andExpect(jsonPath("$.price").value(600.0));
+        result.andExpect(jsonPath("$.name").value("PS5 Plus"));
+        result.andExpect(jsonPath("$.description").value("The new generation PS5 video game"));
     }
 
     @Test
     public void testUpdate() throws Exception {
-        when(service.update(existId, requestDTO)).thenReturn(productDto);
+        when(service.update(any(Long.class), any(ProductRequestDTO.class))).thenReturn(productDto);
         objMapper.registerModule(new JavaTimeModule());
         String jsonBody = objMapper.writeValueAsString(requestDTO);
 
@@ -152,7 +157,7 @@ public class ProductControllerTest {
 
     @Test
     public void updateThrowsResorceNotFoundException() throws Exception {
-        doThrow(ResourceNotFoundException.class).when(service).update(notExistId, requestDTO);
+        doThrow(ResourceNotFoundException.class).when(service).update(any(Long.class), any(ProductRequestDTO.class));
         objMapper.registerModule(new JavaTimeModule());
         String jsonBody = objMapper.writeValueAsString(requestDTO);
 
@@ -160,7 +165,6 @@ public class ProductControllerTest {
                 .content(jsonBody)
                 .contentType(MediaType.APPLICATION_JSON)
                 .accept(MediaType.APPLICATION_JSON));
-
         result.andExpect(status().isNotFound());
     }
 
