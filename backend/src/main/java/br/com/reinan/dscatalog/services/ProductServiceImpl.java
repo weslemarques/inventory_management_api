@@ -8,7 +8,6 @@ import br.com.reinan.dscatalog.services.contract.ProductService;
 import br.com.reinan.dscatalog.services.exceptions.DataBaseException;
 import br.com.reinan.dscatalog.services.exceptions.ResourceNotFoundException;
 import org.modelmapper.ModelMapper;
-import org.springframework.context.annotation.ComponentScan;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.data.domain.Page;
@@ -19,7 +18,6 @@ import org.springframework.transaction.annotation.Transactional;
 import java.time.Instant;
 
 @Service
-@ComponentScan("br.com.reinan.dscatalog.config.AppConfig")
 public class ProductServiceImpl implements ProductService {
 
     private ProductRepository repository;
@@ -48,7 +46,7 @@ public class ProductServiceImpl implements ProductService {
     public ProductDTO insert(ProductRequestDTO dto) {
         var entity = mapper.map(dto, Product.class);
         entity = repository.save(entity);
-        return new ProductDTO(entity);
+        return mapper.map(entity, ProductDTO.class);
     }
 
     @Transactional
@@ -58,7 +56,7 @@ public class ProductServiceImpl implements ProductService {
         mapper.map(dto, entity);
         entity.setUpdatedAt(Instant.now());
         entity = repository.save(entity);
-        return new ProductDTO(entity);
+        return new ProductDTO(entity, entity.getCategories());
     }
 
     @Transactional

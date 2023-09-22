@@ -2,9 +2,7 @@ package br.com.reinan.dscatalog.entities;
 
 import jakarta.annotation.Nullable;
 import jakarta.persistence.*;
-import lombok.AccessLevel;
-import lombok.Data;
-import lombok.Setter;
+import lombok.*;
 
 import java.io.Serial;
 import java.io.Serializable;
@@ -14,11 +12,10 @@ import java.util.Set;
 
 @Entity
 @Table(name = "tb_category")
-@Data
-public class Category implements Serializable {
-
-    @Serial
-    private static final long serialVersionUID = 1L;
+@Getter
+@NoArgsConstructor
+@EqualsAndHashCode(of = "id")
+public class Category {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -36,9 +33,6 @@ public class Category implements Serializable {
     @Setter(AccessLevel.NONE)
     private final Set<Product> products = new HashSet<>();
 
-    public Category() {
-    }
-
     public Category(Long id, String name) {
         this.id = id;
         this.name = name;
@@ -49,5 +43,15 @@ public class Category implements Serializable {
     }
 
 
+    public void setName(String name) {
+        if (name != null) this.name = name;
+    }
 
+    public void setCreatedAt(Instant createdAt) {
+        if (createdAt != null) this.createdAt = createdAt;
+    }
+
+    public void setUpdatedAt(@Nullable Instant updatedAt) {
+        if (updatedAt != null)  this.updatedAt = updatedAt;
+    }
 }

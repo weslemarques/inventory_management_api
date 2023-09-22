@@ -4,13 +4,17 @@ import br.com.reinan.dscatalog.dto.base.ProductBaseDTO;
 import br.com.reinan.dscatalog.entities.Category;
 import br.com.reinan.dscatalog.entities.Product;
 import lombok.EqualsAndHashCode;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
 
 import java.io.Serial;
 import java.io.Serializable;
 import java.time.Instant;
 import java.util.Set;
 
+@Getter
 @EqualsAndHashCode(of = "id", callSuper = false)
+@NoArgsConstructor
 public class ProductDTO extends ProductBaseDTO implements Serializable {
 
     @Serial
@@ -21,9 +25,6 @@ public class ProductDTO extends ProductBaseDTO implements Serializable {
     private Instant createAt;
     private Instant updateAt;
 
-    //
-
-    // name, price, date, description, img_url
     public ProductDTO(Product prod) {
         setId(prod.getId());
         setName(prod.getName());
@@ -40,30 +41,16 @@ public class ProductDTO extends ProductBaseDTO implements Serializable {
         categories.forEach(cat -> this.getCategories().add(new CategoryDTO(cat)));
     }
 
-    public Long getId() {
-        return id;
-    }
-
     public void setId(Long id) {
         this.id = id;
-    }
-
-    public Instant getCreateAt() {
-        return createAt;
     }
 
     public void setCreateAt(Instant createAt) {
         this.createAt = createAt;
     }
 
-    public Instant getUpdateAt() {
-        return updateAt;
-    }
-
     public void setUpdateAt(Instant updateAt) {
         this.updateAt = updateAt;
     }
-
-
 
 }

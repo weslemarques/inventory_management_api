@@ -13,7 +13,6 @@ public class ProductFactory {
     public static Product createProduct() {
         Product product = new Product("PS5 Plus", 600.0, Instant.parse("2020-07-20T10:00:00Z"),
                 "The new generation PS5 video game", "");
-
         product.getCategories().add(new Category(1L, "Eletronics"));
         return product;
     }
@@ -27,7 +26,6 @@ public class ProductFactory {
     public static ProductRequestDTO createProductRequest() {
         ProductRequestDTO request = new ProductRequestDTO("Percy Jackson", 40.0, Instant.parse("2020-07-20T10:00:00Z"),
                 "Percy Jackson Book", "");
-
         request.getCategories().add(new CategoryDTO(1L, "Eletronics"));
         return request;
     }
