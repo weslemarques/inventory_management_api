@@ -3,11 +3,8 @@ package br.com.reinan.dscatalog.entities;
 import jakarta.persistence.*;
 import lombok.*;
 
-import java.io.Serial;
-import java.io.Serializable;
 import java.time.Instant;
 import java.util.HashSet;
-import java.util.Objects;
 import java.util.Set;
 
 @Entity
@@ -52,6 +49,14 @@ public class Product {
         this.stock = stock;
         this.createdAt = createdAt;
         this.updatedAt = updatedAt;
+        this.date = date;
+    }
+
+    public Product(String name, double price, Instant date, String description, String imgUrl) {
+        this.name = name;
+        this.description = description;
+        this.price = price;
+        this.imgUrl = imgUrl;
         this.date = date;
     }
 
