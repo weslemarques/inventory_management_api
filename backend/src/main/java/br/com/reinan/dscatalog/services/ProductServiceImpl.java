@@ -20,9 +20,9 @@ import java.time.Instant;
 @Service
 public class ProductServiceImpl implements ProductService {
 
-    private ProductRepository repository;
+    private final ProductRepository repository;
 
-    private ModelMapper mapper;
+    private final ModelMapper mapper;
 
     public ProductServiceImpl(ProductRepository repository, ModelMapper mapper) {
         this.repository = repository;

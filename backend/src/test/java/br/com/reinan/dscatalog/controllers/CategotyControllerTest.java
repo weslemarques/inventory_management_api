@@ -49,7 +49,6 @@ public class CategotyControllerTest {
 
     private Long dependenceId;
     PageImpl<CategoryDTO> page;
-    String token;
     private CategoryDTO categoryDTO;
     CategoryInsertDTO categoryInsertDTO;
 
@@ -71,10 +70,7 @@ public class CategotyControllerTest {
         doNothing().when(service).delete(existId);
         doThrow(ResourceNotFoundException.class).when(service).delete(notExistId);
         doThrow(DataBaseException.class).when(service).delete(dependenceId);
-
-
     }
-
     @Test
     public void testFindAll() throws Exception {
         mvc.perform(get("/v1/categories")

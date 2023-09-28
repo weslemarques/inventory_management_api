@@ -50,16 +50,13 @@ public class CategoryServiceImpl implements CategoryService {
     }
     @Transactional
     public CategoryDTO update(Long id, CategoryDTO dto) {
-        try {
             Category entity = repository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Category not found " + id));
             entity.setName(dto.getName());
             entity.setUpdatedAt(Instant.now());
             entity = repository.save(entity);
             return mapper.map(entity, CategoryDTO.class);
 
-        } catch (Exception e) {
-             throw new RuntimeException("Não foi possivel processar sua solicitação");
-        }
+
     }
     @Transactional
     public void delete(Long id) {

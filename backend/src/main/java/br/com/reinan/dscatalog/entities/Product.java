@@ -1,22 +1,17 @@
 package br.com.reinan.dscatalog.entities;
 
 import jakarta.persistence.*;
-import lombok.AccessLevel;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
-import java.io.Serial;
-import java.io.Serializable;
 import java.time.Instant;
 import java.util.HashSet;
-import java.util.Objects;
 import java.util.Set;
 
 @Entity
 @Table(name = "tb_product")
 @NoArgsConstructor
 @Getter
+@EqualsAndHashCode(of = "id")
 public class Product {
 
     @Id
@@ -57,6 +52,14 @@ public class Product {
         this.date = date;
     }
 
+    public Product(String name, double price, Instant date, String description, String imgUrl) {
+        this.name = name;
+        this.description = description;
+        this.price = price;
+        this.imgUrl = imgUrl;
+        this.date = date;
+    }
+
     public void setId(Long id) {
         if (id != null)  this.id = id;
     }
@@ -92,24 +95,5 @@ public class Product {
         if (date != null) this.date = date;
     }
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        Product product = (Product) o;
-        return Objects.equals(id, product.id) && Objects.equals(name, product.name);
-    }
 
-    @Override
-    public int hashCode() {
-        return Objects.hash(id, name);
-    }
-
-    public Product(String name, double price, Instant parse, String description, String imgUrl) {
-        this.name = name;
-        this.price = price;
-        this.description = description;
-        this.imgUrl = imgUrl;
-
-    }
 }
