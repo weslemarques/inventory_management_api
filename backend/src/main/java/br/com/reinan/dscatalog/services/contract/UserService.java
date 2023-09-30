@@ -10,9 +10,9 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 
 public interface UserService extends UserDetailsService {
 
-    public Page<UserDTO> findAll(Pageable pageable);
-    public UserDTO findById(Long id);
-    public UserDTO insert(UserRequestDTO dto) ;
-    public UserDTO update(Long id, UserUpdateDTO dto);
-    public void delete(Long id) ;
+    Page<UserDTO> findAll(Pageable pageable);
+    UserDTO findById(Long id);
+    UserDTO insert(UserRequestDTO dto) ;
+    UserDTO update(Long id, UserUpdateDTO dto);
+    void delete(Long id) ;
 }
