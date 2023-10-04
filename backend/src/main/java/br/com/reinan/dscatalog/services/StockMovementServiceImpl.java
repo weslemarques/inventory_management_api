@@ -16,7 +16,7 @@ public class StockMovementServiceImpl implements StockMovementService {
     }
 
     @Override
-    public boolean productSale(int amount, Long id) {
+    public boolean sale(int amount, Long id) {
             Product product = productRepository.findById(id).orElseThrow(
                     () -> new ResourceNotFoundException("Product Not Found"));
             product.setStock(product.getStock() - amount);
