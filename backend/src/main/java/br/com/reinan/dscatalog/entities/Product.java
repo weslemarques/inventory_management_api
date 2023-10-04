@@ -36,7 +36,7 @@ public class Product {
     private Instant date;
 
     @JoinTable(name = "tb_product_category", joinColumns = @JoinColumn(name = "product_id"), inverseJoinColumns = @JoinColumn(name = "category_id"))
-    @ManyToMany(fetch = FetchType.LAZY)
+    @ManyToMany(fetch = FetchType.EAGER)
 
     @Setter(AccessLevel.NONE)
     private Set<Category> categories = new HashSet<>();

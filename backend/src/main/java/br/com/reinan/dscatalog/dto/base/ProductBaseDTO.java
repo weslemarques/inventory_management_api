@@ -22,9 +22,10 @@ public abstract class ProductBaseDTO {
     private String name;
     @Positive(message = "the price must be positive")
     private Double price;
-    @PastOrPresent(message = "A data do produto nao pode ser futura")
+    @PastOrPresent(message = "The date product not be future")
     private Instant date;
     private String description;
+    private Integer stock;
 
     private String imgUrl;
     public ProductBaseDTO() {

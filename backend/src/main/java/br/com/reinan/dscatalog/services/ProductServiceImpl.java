@@ -44,7 +44,7 @@ public class ProductServiceImpl implements ProductService {
 
     @Transactional
     public ProductDTO insert(ProductRequestDTO dto) {
-        var entity = mapper.map(dto, Product.class);
+        Product entity = mapper.map(dto, Product.class);
         entity = repository.save(entity);
         return mapper.map(entity, ProductDTO.class);
     }
@@ -69,5 +69,8 @@ public class ProductServiceImpl implements ProductService {
             throw new DataBaseException("Data Base Violation");
         }
     }
+
+
+
 
 }
