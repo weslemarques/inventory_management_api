@@ -18,7 +18,7 @@ import java.net.URI;
 @RestController
 @RequestMapping("/v1/users")
 @SecurityRequirement(name = "Bearer ")
-@CrossOrigin("*")
+@CrossOrigin("http://localhost:4200")
 public class UserController {
 
     private final UserService service;
