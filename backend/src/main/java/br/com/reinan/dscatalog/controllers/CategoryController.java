@@ -20,6 +20,7 @@ import java.net.URI;
 @RestController
 @RequestMapping("/v1/categories")
 @SecurityRequirement(name = "Bearer ")
+@CrossOrigin("*")
 public class CategoryController {
 
     private final CategoryService service;
