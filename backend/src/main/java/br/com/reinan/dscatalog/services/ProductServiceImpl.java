@@ -80,7 +80,7 @@ public class ProductServiceImpl implements ProductService {
     private void addCategories(List<CategoryDTO> listCatDTO, Product entity){
         for (CategoryDTO catDTO: listCatDTO) {
             Category cat = categoryRepository.findById(catDTO.getId())
-                    .orElseThrow(() -> new ResourceNotFoundException("Category not Found"));
+                    .orElseThrow(() -> new ResourceNotFoundException("Categoy not Found"));
             entity.addCategory(cat);
         }
     }
