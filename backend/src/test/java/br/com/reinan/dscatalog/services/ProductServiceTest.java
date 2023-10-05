@@ -58,9 +58,11 @@ public class ProductServiceTest {
         Product product = ProductFactory.createProduct();
         Category category = CategoryFactory.createCategory();
         requestDTO = ProductFactory.createProductRequest();
+
         PageImpl<Product> page = new PageImpl<>(List.of(product));
 
         when(repository.findById(existingId)).thenReturn(Optional.of(product));
+        when(mapper.map(requestDTO,Product.class)).thenReturn(product);
         when(categoryRepository.findById(existingId)).thenReturn(Optional.of(category));
         when(repository.findById(notExistingId)).thenReturn(Optional.empty());
         when(repository.save(any())).thenReturn(product);

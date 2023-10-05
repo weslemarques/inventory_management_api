@@ -5,6 +5,7 @@ import lombok.*;
 
 import java.time.Instant;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 @Entity
@@ -59,6 +60,11 @@ public class Product {
         this.imgUrl = imgUrl;
         this.date = date;
     }
+    public void addCategory(Category category){
+        categories.add(category);
+    }
+
+
 
     public void setId(Long id) {
         if (id != null)  this.id = id;
