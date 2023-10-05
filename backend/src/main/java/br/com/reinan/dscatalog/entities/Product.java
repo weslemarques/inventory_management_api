@@ -5,6 +5,7 @@ import lombok.*;
 
 import java.time.Instant;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 @Entity
@@ -36,7 +37,7 @@ public class Product {
     private Instant date;
 
     @JoinTable(name = "tb_product_category", joinColumns = @JoinColumn(name = "product_id"), inverseJoinColumns = @JoinColumn(name = "category_id"))
-    @ManyToMany(fetch = FetchType.LAZY)
+    @ManyToMany(fetch = FetchType.EAGER)
 
     @Setter(AccessLevel.NONE)
     private Set<Category> categories = new HashSet<>();
@@ -59,6 +60,11 @@ public class Product {
         this.imgUrl = imgUrl;
         this.date = date;
     }
+    public void addCategory(Category category){
+        categories.add(category);
+    }
+
+
 
     public void setId(Long id) {
         if (id != null)  this.id = id;

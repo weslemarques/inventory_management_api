@@ -1,8 +1,11 @@
 package br.com.reinan.dscatalog.services;
 
 import br.com.reinan.dscatalog.dto.request.ProductRequestDTO;
+import br.com.reinan.dscatalog.dto.response.CategoryDTO;
 import br.com.reinan.dscatalog.dto.response.ProductDTO;
+import br.com.reinan.dscatalog.entities.Category;
 import br.com.reinan.dscatalog.entities.Product;
+import br.com.reinan.dscatalog.repositories.CategoryRepository;
 import br.com.reinan.dscatalog.repositories.ProductRepository;
 import br.com.reinan.dscatalog.services.contract.ProductService;
 import br.com.reinan.dscatalog.services.exceptions.DataBaseException;
@@ -16,17 +19,20 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.Instant;
+import java.util.List;
 
 @Service
 public class ProductServiceImpl implements ProductService {
 
     private final ProductRepository repository;
+    CategoryRepository categoryRepository;
 
     private final ModelMapper mapper;
 
-    public ProductServiceImpl(ProductRepository repository, ModelMapper mapper) {
+    public ProductServiceImpl(ProductRepository repository, ModelMapper mapper,CategoryRepository categoryRepository) {
         this.repository = repository;
         this.mapper = mapper;
+        this.categoryRepository = categoryRepository;
     }
 
     @Transactional(readOnly = true)
@@ -44,9 +50,10 @@ public class ProductServiceImpl implements ProductService {
 
     @Transactional
     public ProductDTO insert(ProductRequestDTO dto) {
-        var entity = mapper.map(dto, Product.class);
-        entity = repository.save(entity);
-        return mapper.map(entity, ProductDTO.class);
+        Product product = mapper.map(dto, Product.class);
+        addCategories(dto.getCategories(),product);
+        repository.save(product);
+        return mapper.map(product, ProductDTO.class);
     }
 
     @Transactional
@@ -67,6 +74,14 @@ public class ProductServiceImpl implements ProductService {
             throw new ResourceNotFoundException("Id not found");
         } catch (DataIntegrityViolationException e) {
             throw new DataBaseException("Data Base Violation");
+        }
+    }
+
+    private void addCategories(List<CategoryDTO> listCatDTO, Product entity){
+        for (CategoryDTO catDTO: listCatDTO) {
+            Category cat = categoryRepository.findById(catDTO.getId())
+                    .orElseThrow(() -> new ResourceNotFoundException("Category not Found"));
+            entity.addCategory(cat);
         }
     }
 
