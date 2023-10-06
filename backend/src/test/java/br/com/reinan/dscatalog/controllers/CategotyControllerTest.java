@@ -2,11 +2,11 @@ package br.com.reinan.dscatalog.controllers;
 
 import br.com.reinan.dscatalog.dto.request.CategoryInsertDTO;
 import br.com.reinan.dscatalog.dto.response.CategoryDTO;
+import br.com.reinan.dscatalog.factory.CategoryFactory;
 import br.com.reinan.dscatalog.security.filter.FilterToken;
 import br.com.reinan.dscatalog.services.CategoryServiceImpl;
 import br.com.reinan.dscatalog.services.exceptions.DataBaseException;
 import br.com.reinan.dscatalog.services.exceptions.ResourceNotFoundException;
-import br.com.reinan.dscatalog.util.factory.CategoryFactory;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import org.junit.jupiter.api.BeforeEach;
@@ -89,7 +89,7 @@ public class CategotyControllerTest {
     }
 
     @Test
-    public void testFindByIdThrowsResorceNotFoundException() throws Exception {
+    public void     testFindByIdThrowsResorceNotFoundException() throws Exception {
         doThrow(ResourceNotFoundException.class).when(service).findById(notExistId);
         mvc.perform(get("/v1/categories/{id}", notExistId))
                 .andExpect(status().isNotFound());

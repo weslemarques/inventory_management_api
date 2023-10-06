@@ -9,8 +9,7 @@ import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import lombok.Getter;
-import lombok.Setter;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Component;
@@ -20,10 +19,10 @@ import java.io.IOException;
 
 
 @Component
-@Getter
-@Setter
 public class FilterToken extends OncePerRequestFilter {
 
+    @Value("${cors.originPatterns}")
+    private String allowedOrigin = "";
     private final JwtUtils jwtUtils;
     private final UserRepository userRepository;
 
@@ -35,6 +34,7 @@ public class FilterToken extends OncePerRequestFilter {
     @Override
     protected void doFilterInternal( HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
 
+
         try {
             String token = decodeToken(request);
             if(token != null){
@@ -45,14 +45,14 @@ public class FilterToken extends OncePerRequestFilter {
 
                 SecurityContextHolder.getContext().setAuthentication(authentication);
             }
+
+            allowedCors(response);
             filterChain.doFilter(request, response);
         }catch (TokenExpiredException ex){
             response.setStatus(HttpServletResponse.SC_FORBIDDEN);
             response.setCharacterEncoding("UTF-8");
             response.getWriter().println(ex.getLocalizedMessage());
         }
-
-
 
     }
 
@@ -70,5 +70,9 @@ public class FilterToken extends OncePerRequestFilter {
         return null;
     }
 
-
+    public void allowedCors(HttpServletResponse response) {
+        var allowedPatternsOrigin = allowedOrigin.split(",");
+        response.addHeader("Access-Control-Allow-Origin",allowedPatternsOrigin[0]);
+        response.addHeader("Access-Control-Allow-Headers","*");
+    }
 }

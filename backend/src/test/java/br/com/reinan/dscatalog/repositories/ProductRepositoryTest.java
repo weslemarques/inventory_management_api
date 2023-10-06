@@ -1,7 +1,7 @@
 package br.com.reinan.dscatalog.repositories;
 
 import br.com.reinan.dscatalog.entities.Product;
-import br.com.reinan.dscatalog.util.factory.ProductFactory;
+import br.com.reinan.dscatalog.factory.ProductFactory;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;

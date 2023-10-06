@@ -1,4 +1,4 @@
-package br.com.reinan.dscatalog.util.factory;
+package br.com.reinan.dscatalog.factory;
 
 import br.com.reinan.dscatalog.dto.request.ProductRequestDTO;
 import br.com.reinan.dscatalog.dto.response.CategoryDTO;

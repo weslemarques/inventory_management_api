@@ -2,7 +2,7 @@ package br.com.reinan.dscatalog.repositories;
 
 import java.util.Optional;
 
-import br.com.reinan.dscatalog.util.factory.CategoryFactory;
+import br.com.reinan.dscatalog.factory.CategoryFactory;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;

@@ -13,12 +13,12 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
+import javax.annotation.processing.SupportedOptions;
 import java.net.URI;
 
 @RestController
-@RequestMapping("/v1/users")
+@RequestMapping(value = "/v1/users")
 @SecurityRequirement(name = "Bearer ")
-@CrossOrigin("*")
 public class UserController {
 
     private final UserService service;
