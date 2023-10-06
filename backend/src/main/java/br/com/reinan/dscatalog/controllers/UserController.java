@@ -19,6 +19,7 @@ import java.net.URI;
 @RequestMapping("/v1/users")
 @CrossOrigin("*")
 @SecurityRequirement(name = "Bearer ")
+@CrossOrigin("*")
 public class UserController {
 
     private final UserService service;

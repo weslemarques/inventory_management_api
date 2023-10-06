@@ -38,7 +38,7 @@ public class WebSecurityConfig {
                                 requestMatchers("/v1/auth/**", "/v1/refreshtoken").permitAll()
                                 .requestMatchers(HttpMethod.GET, "/v1/products/**", "/v1/categories/**").permitAll()
                                 .requestMatchers(HttpMethod.DELETE, "/v1/products").hasAnyRole("OPERATOR", "ADMIN")
-                                .requestMatchers(HttpMethod.POST, "/v1/products/**").hasAnyRole("OPERATOR")
+                                .requestMatchers(HttpMethod.POST, "/v1/products/**").hasAnyRole("OPERATOR", "ADMIN")
                                 .requestMatchers("/v1/users", "/v1/users/**").hasRole("ADMIN")
                                 .anyRequest().authenticated()
                 ).headers( header -> header.frameOptions(HeadersConfigurer.FrameOptionsConfig::sameOrigin))
