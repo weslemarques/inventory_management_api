@@ -17,7 +17,6 @@ import java.net.URI;
 
 @RestController
 @RequestMapping("/v1/users")
-@CrossOrigin("*")
 @SecurityRequirement(name = "Bearer ")
 @CrossOrigin("*")
 public class UserController {
