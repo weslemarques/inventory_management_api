@@ -1,13 +1,9 @@
 package br.com.reinan.dscatalog.integracao;
 
-import br.com.reinan.dscatalog.dto.request.ProductRequestDTO;
 import br.com.reinan.dscatalog.dto.response.CategoryDTO;
-import br.com.reinan.dscatalog.dto.response.ProductDTO;
 import br.com.reinan.dscatalog.services.CategoryServiceImpl;
-import br.com.reinan.dscatalog.services.ProductServiceImpl;
 import br.com.reinan.dscatalog.services.exceptions.ResourceNotFoundException;
-import br.com.reinan.dscatalog.util.factory.CategoryFactory;
-import br.com.reinan.dscatalog.util.factory.ProductFactory;
+import br.com.reinan.dscatalog.factory.CategoryFactory;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
