@@ -10,7 +10,7 @@ import br.com.reinan.dscatalog.entities.User;
 import br.com.reinan.dscatalog.security.jwt.JwtUtils;
 import br.com.reinan.dscatalog.services.contract.AuthService;
 import br.com.reinan.dscatalog.services.contract.RefreshTokenService;
-import br.com.reinan.dscatalog.services.exceptions.ResourceNotFoundException;
+import br.com.reinan.dscatalog.services.exceptions.AuthenticationFailed;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -37,13 +37,16 @@ public class AuthServiceImpl implements AuthService {
     //    @Override
     public JwtResponse authentication(UserLoginDTO login) {
 
+        Authentication authenticate;
         UsernamePasswordAuthenticationToken usernamePasswordAuthenticationToken =
                 new UsernamePasswordAuthenticationToken(login.getEmail(), login.getPassword());
-
-        Authentication authenticate = this.authenticationManager
-                .authenticate(usernamePasswordAuthenticationToken);
-
-        SecurityContextHolder.getContext().setAuthentication(authenticate);
+        try{
+            authenticate  = this.authenticationManager
+                    .authenticate(usernamePasswordAuthenticationToken);
+            SecurityContextHolder.getContext().setAuthentication(authenticate);
+        }catch (RuntimeException ex){
+            throw new  AuthenticationFailed("email or password invalid");
+        }
 
         var user = (User) authenticate.getPrincipal();
         List<String> roles = user.getAuthorities().stream().map(Role::getAuthority).toList();
@@ -59,7 +62,7 @@ public class AuthServiceImpl implements AuthService {
 
         RefreshToken refreshTokenRequest =
                 refreshTokenService.findByToken(refreshToken)
-                        .map(refreshTokenService::verifyExpiration).orElseThrow(() -> new ResourceNotFoundException(""));
+                        .map(refreshTokenService::verifyExpiration).orElseThrow(() -> new AuthenticationFailed("Wrong or non-existent token"));
         User user = refreshTokenRequest.getUser();
         refreshTokenService.detele(refreshTokenRequest);
         String token = jwtUtils.generateJwtToken(user);

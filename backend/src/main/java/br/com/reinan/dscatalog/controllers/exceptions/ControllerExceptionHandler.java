@@ -1,9 +1,6 @@
 package br.com.reinan.dscatalog.controllers.exceptions;
 
-import br.com.reinan.dscatalog.services.exceptions.DataBaseException;
-import br.com.reinan.dscatalog.services.exceptions.ResourceNotFoundException;
-import br.com.reinan.dscatalog.services.exceptions.TokenExpiredException;
-import br.com.reinan.dscatalog.services.exceptions.TokenInvalido;
+import br.com.reinan.dscatalog.services.exceptions.*;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -139,7 +136,24 @@ public class ControllerExceptionHandler{
 
         err.setTimestamp(Instant.now());
         err.setStatus(status.value());
-        err.setError("Erro Interno Falhou");
+        err.setError("Error Interno");
+        err.setMessage(e.getMessage());
+        err.setPath(request.getRequestURI());
+
+        return ResponseEntity.status(status).body(err);
+
+    }
+
+    @ExceptionHandler(AuthenticationFailed.class)
+    public ResponseEntity<StandardError> authenticationFailed(
+            RuntimeException e,
+            HttpServletRequest request) {
+        HttpStatus status = HttpStatus.UNAUTHORIZED;
+        StandardError err = new StandardError();
+
+        err.setTimestamp(Instant.now());
+        err.setStatus(status.value());
+        err.setError("Authentication Failed");
         err.setMessage(e.getMessage());
         err.setPath(request.getRequestURI());
 
