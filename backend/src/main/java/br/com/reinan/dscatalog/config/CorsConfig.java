@@ -16,7 +16,7 @@ public class CorsConfig implements WebMvcConfigurer {
        var allowedOrigins = corsOriginPatterns.split(",");
         registry.addMapping("/**")
                 .allowedMethods("*")
-                .allowedOrigins("*");
+                .allowedOrigins(allowedOrigins);
     }
 
 }

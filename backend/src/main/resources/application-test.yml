@@ -1,5 +1,5 @@
 cors:
-  originPatterns: http://localhost:8000,http://localhost:8080
+  originPatterns: http://localhost:8080,http://localhost:8000
 spring:
   datasource:
     url: jdbc:h2:mem:test

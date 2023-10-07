@@ -46,7 +46,6 @@ public class FilterToken extends OncePerRequestFilter {
                 SecurityContextHolder.getContext().setAuthentication(authentication);
             }
 
-            allowedCors(response);
             filterChain.doFilter(request, response);
         }catch (TokenExpiredException ex){
             response.setStatus(HttpServletResponse.SC_FORBIDDEN);
@@ -68,11 +67,5 @@ public class FilterToken extends OncePerRequestFilter {
             return token.replace("Bearer ", "");
         }
         return null;
-    }
-
-    public void allowedCors(HttpServletResponse response) {
-        var allowedPatternsOrigin = allowedOrigin.split(",");
-        response.addHeader("Access-Control-Allow-Origin",allowedPatternsOrigin[0]);
-        response.addHeader("Access-Control-Allow-Headers","*");
     }
 }
