@@ -52,7 +52,6 @@ public class FilterToken extends OncePerRequestFilter {
             response.setCharacterEncoding("UTF-8");
             response.getWriter().println(ex.getLocalizedMessage());
         }
-
     }
 
     public User recoverUser(String token){

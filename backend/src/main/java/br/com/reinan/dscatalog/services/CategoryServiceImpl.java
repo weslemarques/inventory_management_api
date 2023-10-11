@@ -4,7 +4,7 @@ import br.com.reinan.dscatalog.dto.request.CategoryInsertDTO;
 import br.com.reinan.dscatalog.dto.response.CategoryDTO;
 import br.com.reinan.dscatalog.entities.Category;
 import br.com.reinan.dscatalog.repositories.CategoryRepository;
-import br.com.reinan.dscatalog.services.contract.CategoryService;
+import br.com.reinan.dscatalog.controllers.contract.CategoryService;
 import br.com.reinan.dscatalog.services.exceptions.DataBaseException;
 import br.com.reinan.dscatalog.services.exceptions.ResourceNotFoundException;
 import org.modelmapper.ModelMapper;

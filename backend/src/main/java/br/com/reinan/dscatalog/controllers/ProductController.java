@@ -2,7 +2,7 @@ package br.com.reinan.dscatalog.controllers;
 
 import br.com.reinan.dscatalog.dto.request.ProductRequestDTO;
 import br.com.reinan.dscatalog.dto.response.ProductDTO;
-import br.com.reinan.dscatalog.services.contract.ProductService;
+import br.com.reinan.dscatalog.controllers.contract.ProductService;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import jakarta.validation.Valid;
 import org.springdoc.core.annotations.ParameterObject;

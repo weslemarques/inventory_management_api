@@ -5,7 +5,7 @@ import br.com.reinan.dscatalog.dto.request.UserLoginDTO;
 import br.com.reinan.dscatalog.dto.response.JwtResponse;
 import br.com.reinan.dscatalog.dto.response.TokenRefreshResponse;
 import br.com.reinan.dscatalog.security.jwt.JwtUtils;
-import br.com.reinan.dscatalog.services.contract.AuthService;
+import br.com.reinan.dscatalog.controllers.contract.AuthService;
 import jakarta.validation.Valid;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
