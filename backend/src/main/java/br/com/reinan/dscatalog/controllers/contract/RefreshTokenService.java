@@ -1,4 +1,4 @@
-package br.com.reinan.dscatalog.services.contract;
+package br.com.reinan.dscatalog.controllers.contract;
 
 import br.com.reinan.dscatalog.entities.RefreshToken;
 

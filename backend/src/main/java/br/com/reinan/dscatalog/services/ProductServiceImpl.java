@@ -7,7 +7,7 @@ import br.com.reinan.dscatalog.entities.Category;
 import br.com.reinan.dscatalog.entities.Product;
 import br.com.reinan.dscatalog.repositories.CategoryRepository;
 import br.com.reinan.dscatalog.repositories.ProductRepository;
-import br.com.reinan.dscatalog.services.contract.ProductService;
+import br.com.reinan.dscatalog.controllers.contract.ProductService;
 import br.com.reinan.dscatalog.services.exceptions.DataBaseException;
 import br.com.reinan.dscatalog.services.exceptions.ResourceNotFoundException;
 import org.modelmapper.ModelMapper;

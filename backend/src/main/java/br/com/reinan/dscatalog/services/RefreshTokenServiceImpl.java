@@ -3,7 +3,7 @@ package br.com.reinan.dscatalog.services;
 import br.com.reinan.dscatalog.entities.RefreshToken;
 import br.com.reinan.dscatalog.repositories.RefreshTokenRepository;
 import br.com.reinan.dscatalog.repositories.UserRepository;
-import br.com.reinan.dscatalog.services.contract.RefreshTokenService;
+import br.com.reinan.dscatalog.controllers.contract.RefreshTokenService;
 import br.com.reinan.dscatalog.services.exceptions.ResourceNotFoundException;
 import br.com.reinan.dscatalog.services.exceptions.TokenExpiredException;
 import org.springframework.beans.factory.annotation.Value;

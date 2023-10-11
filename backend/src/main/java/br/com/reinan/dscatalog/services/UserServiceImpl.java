@@ -9,7 +9,7 @@ import br.com.reinan.dscatalog.entities.Role;
 import br.com.reinan.dscatalog.entities.User;
 import br.com.reinan.dscatalog.repositories.RoleRepository;
 import br.com.reinan.dscatalog.repositories.UserRepository;
-import br.com.reinan.dscatalog.services.contract.UserService;
+import br.com.reinan.dscatalog.controllers.contract.UserService;
 import br.com.reinan.dscatalog.services.exceptions.DataBaseException;
 import br.com.reinan.dscatalog.services.exceptions.ResourceNotFoundException;
 import lombok.AllArgsConstructor;

@@ -3,7 +3,7 @@ package br.com.reinan.dscatalog.controllers;
 import br.com.reinan.dscatalog.dto.request.UserRequestDTO;
 import br.com.reinan.dscatalog.dto.request.UserUpdateDTO;
 import br.com.reinan.dscatalog.dto.response.UserDTO;
-import br.com.reinan.dscatalog.services.contract.UserService;
+import br.com.reinan.dscatalog.controllers.contract.UserService;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import jakarta.validation.Valid;
 import org.springdoc.core.annotations.ParameterObject;
@@ -13,7 +13,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
-import javax.annotation.processing.SupportedOptions;
 import java.net.URI;
 
 @RestController
