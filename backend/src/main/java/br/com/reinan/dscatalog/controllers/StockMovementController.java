@@ -5,7 +5,6 @@ import br.com.reinan.dscatalog.dto.response.ProductDTO;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PutMapping;
 
 @Controller("/stock")
 public class StockMovementController {
