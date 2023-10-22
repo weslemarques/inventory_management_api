@@ -49,9 +49,6 @@ public class Category {
         if (name != null) this.name = name;
     }
 
-    public void setCreatedAt(Instant createdAt) {
-        if (createdAt != null) this.createdAt = createdAt;
-    }
 
     public void setUpdatedAt(@Nullable Instant updatedAt) {
         if (updatedAt != null)  this.updatedAt = updatedAt;
