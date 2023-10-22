@@ -33,9 +33,9 @@ public class WebSecurityConfig {
                 .sessionManagement(
                         session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS)
                     ).authorizeHttpRequests(authorize -> authorize// Autorização de requests.
-                        .requestMatchers("/v3/api-docs/**", "/swagger-ui.html", "/swagger-ui/**", "/h2").permitAll() // Permitindo os recursos do swagger. (Todos podem acessar).
+                        .requestMatchers("/v3/api-docs/**", "/swagger-ui.html", "/swagger-ui/**", "/h2-console").permitAll() // Permitindo os recursos do swagger. (Todos podem acessar).
                         .requestMatchers(HttpMethod.OPTIONS,"/**").permitAll()
-                        .requestMatchers(AntPathRequestMatcher.antMatcher("/h2-console/**")).permitAll())
+                        .requestMatchers(AntPathRequestMatcher.antMatcher("/h2-console")).permitAll())
                 .authorizeHttpRequests(
                         authorize -> authorize.
 
