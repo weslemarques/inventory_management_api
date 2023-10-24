@@ -2,11 +2,15 @@ package br.com.reinan.dscatalog.services;
 
 import br.com.reinan.dscatalog.controllers.contract.StockMovementService;
 import br.com.reinan.dscatalog.dto.response.ProductDTO;
+import br.com.reinan.dscatalog.entities.Order;
+import br.com.reinan.dscatalog.entities.OrderItem;
 import br.com.reinan.dscatalog.entities.Product;
 import br.com.reinan.dscatalog.repositories.ProductRepository;
 import br.com.reinan.dscatalog.services.exceptions.ResourceNotFoundException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.util.List;
 
 @Service
 public class StockMovementServiceImpl implements StockMovementService {
@@ -19,12 +23,18 @@ public class StockMovementServiceImpl implements StockMovementService {
 
     @Override
     @Transactional
-    public ProductDTO sale(int amount, Long id) {
-            Product product = productRepository.findById(id).orElseThrow(
+    public List<OrderItem> sale(Order order) {
+
+
+        order.getItems().forEach((p) ->{
+            var id_product  = p.getProduct().getId();
+            Product product = productRepository.findById(id_product).orElseThrow(
                     () -> new ResourceNotFoundException("Product Not Found"));
-            product.setStock(product.getStock() - amount);
+            product.setStock(product.getStock() - p.getAmount());
+        });
+
         productRepository.flush();
-        return new ProductDTO(product);
+        return order.getItems().stream().toList();
     }
 
     @Override
