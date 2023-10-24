@@ -65,6 +65,9 @@ public class Product {
     }
 
 
+    public void addStock(int stock){
+        this.stock += stock;
+    }
 
     public void setId(Long id) {
         if (id != null)  this.id = id;
