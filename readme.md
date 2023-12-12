@@ -1,149 +1,44 @@
-# DsCatalog API
+# Cambio Project
 
-[![Docker Hub Repo](https://img.shields.io/docker/pulls/reinan07/dscatalog:lastet.svg)](https://hub.docker.com/repository/docker/reinan07/dscatalog)
+![GitHub repo size](https://img.shields.io/github/repo-size/weslemarques/inventory_management_api?style=for-the-badge)
+![GitHub language count](https://img.shields.io/github/languages/count/weslemarques/inventory_management_api?style=for-the-badge)
+![GitHub forks](https://img.shields.io/github/forks/weslemarques/inventory_management_api?style=for-the-badge)
+![Bitbucket open issues](https://img.shields.io/github/issues/weslemarques/inventory_management_api?style=for-the-badge)
+![Bitbucket open pull requests](https://img.shields.io/github/issues-pr/weslemarques/inventory_management_api?style=for-the-badge)
 
-A simple API named DsCatalog, which stands for "Digital Store Catalog," provides basic CRUD (Create, Read, Update, Delete) functionality for managing products, categories, and users. The API includes various endpoints to perform operations on these entities.
 
-## Endpoints
+> API para gerenciamento de estoque 
 
-### 1. Products
+### Ajustes e melhorias
 
-#### Get all products
+O projeto ainda está em desenvolvimento e as próximas atualizações serão voltadas nas seguintes tarefas:
 
-- Endpoint: `/products`
-- Method: GET
-- Description: Retrieves a list of all products.
-- Required Role: ROLE_ADMIN, ROLE_OPERATOR
+- [x] Criação das entidades
+- [x] Mapeamento para banco de dados
+- [x] Conexão do banco de dados (Docker)
+- [x] Criação do microsserviço de Books
+- [ ] Comunicação do microsserviços como o Server Config
+- [ ] Integração entre os  microsserviços
 
-#### Get a product by ID
+## 💻 Pré-requisitos
 
-- Endpoint: `/products/{id}`
-- Method: GET
-- Description: Retrieves a specific product by its ID.
-- Required Role: ROLE_ADMIN, ROLE_OPERATOR
+Antes de começar, verifique se você atendeu aos seguintes requisitos:
 
-#### Create a new product
+- Você instalou a versão do jdk-17 ou superiores
+- Você tem uma máquina `<Windows / Linux / Mac>`.
+- Você tem o algum banco de dados ou o Docker instalado
 
-- Endpoint: `/products`
-- Method: POST
-- Description: Creates a new product.
-- Required Role: ROLE_ADMIN
 
-#### Update a product
+## 🚀 Como criar a instancia do postgreSQL no docker
 
-- Endpoint: `/products/{id}`
-- Method: PUT
-- Description: Updates an existing product.
-- Required Role: ROLE_ADMIN
+Comandos para o docker:
 
-#### Delete a product
+```
+<docker run -d --name cambio_project -e POSTGRES_PASSWORD=<yourpassword> -e PGDATA=/var/lib/postgresql/data/pgdata -v /custom/mount:/var/lib/postgresql/data -p 5432:5432 -d postgres>
 
-- Endpoint: `/products/{id}`
-- Method: DELETE
-- Description: Deletes a product.
-- Required Role: ROLE_ADMIN
-
-### 2. Categories
-
-#### Get all categories
-
-- Endpoint: `/categories`
-- Method: GET
-- Description: Retrieves a list of all categories.
-- Required Role: ROLE_ADMIN, ROLE_OPERATOR
-
-#### Get a category by ID
-
-- Endpoint: `/categories/{id}`
-- Method: GET
-- Description: Retrieves a specific category by its ID.
-- Required Role: ROLE_ADMIN, ROLE_OPERATOR
-
-#### Create a new category
-
-- Endpoint: `/categories`
-- Method: POST
-- Description: Creates a new category.
-- Required Role: ROLE_ADMIN
-
-#### Update a category
-
-- Endpoint: `/categories/{id}`
-- Method: PUT
-- Description: Updates an existing category.
-- Required Role: ROLE_ADMIN
-
-#### Delete a category
-
-- Endpoint: `/categories/{id}`
-- Method: DELETE
-- Description: Deletes a category.
-- Required Role: ROLE_ADMIN
-
-### 3. Users
-
-#### Get all users
-
-- Endpoint: `/users`
-- Method: GET
-- Description: Retrieves a list of all users.
-- Required Role: ROLE_ADMIN
-
-#### Get a user by ID
-
-- Endpoint: `/users/{id}`
-- Method: GET
-- Description: Retrieves a specific user by their ID.
-- Required Role: ROLE_ADMIN
-
-#### Create a new user
-
-- Endpoint: `/users`
-- Method: POST
-- Description: Creates a new user.
-- Required Role: ROLE_ADMIN
-
-#### Update a user
-
-- Endpoint: `/users/{id}`
-- Method: PUT
-- Description: Updates an existing user.
-- Required Role: ROLE_ADMIN
-
-#### Delete a user
-
-- Endpoint: `/users/{id}`
-- Method: DELETE
-- Description: Deletes a user.
-- Required Role: ROLE_ADMIN
-
-## Roles
-
-The API implements role-based access control (RBAC) using the following roles:
-
-1. `ROLE_ADMIN`: Has full administrative privileges and can perform all operations.
-2. `ROLE_OPERATOR`: Has limited privileges and can perform specific operations.
-
-## Authentication and Authorization
-
-To access the API endpoints, you need to authenticate and provide the appropriate authorization token in the request header. The API uses a token-based authentication mechanism such as JWT (JSON Web Token). You should include the token in the `Authorization` header with the value `Bearer {token}`.
-
-#### Auth Users
-
-- Endpoint: `/auth/signin`
-- Method: POST
-- Description: Auth users.
-- Required Role: PUBLIC
-
-#### Refresh Token 
-
-- Endpoint: `/auth/refreshtoken`
-- Method: POST
-- Description: refresh token.
-- Required Role: PUBLIC
-
-Each endpoint specifies the required role(s) to access it. The API will validate the user's role before allowing or denying access.
-
-## Error Handling
-
-The API provides appropriate error responses in case of invalid requests, missing parameters, or insufficient privileges. The response will include an appropriate HTTP status code and a descriptive
+```
+Comandos para criar os dois bancos:
+```
+create database cambio_service
+create database book_service
+```
