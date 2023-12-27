@@ -1,4 +1,4 @@
-# Cambio Project
+# Inventory Management API
 
 ![GitHub repo size](https://img.shields.io/github/repo-size/weslemarques/inventory_management_api?style=for-the-badge)
 ![GitHub language count](https://img.shields.io/github/languages/count/weslemarques/inventory_management_api?style=for-the-badge)
